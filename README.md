@@ -2,7 +2,7 @@
 
 # SoftLion-Back
 This is a Back-end part of our SoftLion project.
-Front-end part: 
+Front-end part: https://github.com/SoftLion-Co/SoftLion-Client
 
 ## Table of Contents 
 
@@ -17,15 +17,22 @@ Front-end part:
     - [How to work with swagger UI](#how-to-work-with-swagger-ui)
     - [How to work without swagger UI](#how-to-work-without-swagger-ui)
     - [How to run tests](#how-to-run-tests)
-  - [Documentation](#documentation)
-  - [Team]()
- 
 ---
 
 ## Installation
 ### Required to install
 * <a href="https://dotnet.microsoft.com/en-us/download/dotnet/6.0" target="_blank">ASP.NET Core Runtime 6.0.12</a>
 * <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads" target="_blank"> Microsoft SQL Server 2017</a>+
+
+### Clone
+  Clone this repo to your local machine using:
+  ```
+https://github.com/SoftLion-Co/SoftLion-Back.git
+  ```
+  Or if your have an associated SSH key:
+  ```
+git@github.com:SoftLion-Co/SoftLion-Back.git
+  ```
 
 ### Setup
   1. Change connection string  
@@ -73,15 +80,6 @@ Run the Streetcode project in any other profile but "Local" and enter http://loc
 
 ---
 
-## Documentation
-Learn more about our documentation <a href="" target="_blank">*here*</a>.
-
----
-
-## Team
-
-<div align="center">
-</div>
 
 
 
