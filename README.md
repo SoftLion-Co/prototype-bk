@@ -2,7 +2,6 @@
 <h1>SoftLion-Project</h1>
 Welcome to the official GitHub repository for the corporate website of SoftLion, a leading technology solutions provider. This repository houses the source code and related assets for the website, enabling collaboration among developers, designers, and content creators.
 
-<h1>SoftLion-Back</h1>
 This is a Back-end part of our SoftLion project.
 Front-end part: https://github.com/SoftLion-Co/SoftLion-Client
 
