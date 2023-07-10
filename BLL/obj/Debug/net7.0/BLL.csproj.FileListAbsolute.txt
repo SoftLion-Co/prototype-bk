@@ -1,0 +1,15 @@
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\bin\Debug\net7.0\BLL.deps.json
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\bin\Debug\net7.0\BLL.dll
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\bin\Debug\net7.0\BLL.pdb
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\bin\Debug\net7.0\DAL.dll
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\bin\Debug\net7.0\DAL.pdb
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.csproj.AssemblyReference.cache
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.AssemblyInfoInputs.cache
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.AssemblyInfo.cs
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.csproj.CoreCompileInputs.cache
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.csproj.CopyComplete
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.dll
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\refint\BLL.dll
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\BLL.pdb
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\BLL\obj\Debug\net7.0\ref\BLL.dll
