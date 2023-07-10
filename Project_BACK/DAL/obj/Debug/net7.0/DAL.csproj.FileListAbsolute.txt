@@ -1,0 +1,12 @@
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\bin\Debug\net7.0\DAL.deps.json
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\bin\Debug\net7.0\DAL.dll
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\bin\Debug\net7.0\DAL.pdb
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\DAL.csproj.AssemblyReference.cache
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\DAL.AssemblyInfoInputs.cache
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\DAL.AssemblyInfo.cs
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\DAL.csproj.CoreCompileInputs.cache
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\DAL.dll
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\refint\DAL.dll
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\DAL.pdb
+D:\WinUsers\Asus\Desktop\prototype-bk\Project_BACK\DAL\obj\Debug\net7.0\ref\DAL.dll
