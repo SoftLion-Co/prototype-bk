@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace DAL.Context
 {
-    internal class DataContext
+    public class DataContext : DbContext
     {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
+        public DbSet<Description> Descriptions { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        { 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
+        }
     }
 }
