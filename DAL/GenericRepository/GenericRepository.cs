@@ -3,11 +3,6 @@ using DAL.Entities.Base;
 using DAL.Entities.ResponseEntity;
 using DAL.GenericRepository.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.GenericRepository
 {
@@ -37,7 +32,7 @@ namespace DAL.GenericRepository
 
             response.Result = await _context.Set<TEntity>().AsNoTracking().ToListAsync();
             response.Message = $"Remove information from {typeof(GenericRepository<TEntity>).FullName}";
-
+            await _context.SaveChangesAsync();
             return response;
         }
 
@@ -71,6 +66,7 @@ namespace DAL.GenericRepository
 
             response.Result = entity;
             response.Message = $"Inserted all information from {typeof(GenericRepository<TEntity>).FullName}";
+            await _context.SaveChangesAsync();
 
             return response;
         }
@@ -92,6 +88,7 @@ namespace DAL.GenericRepository
 
             response.Result = entity;
             response.Message = $"Updated all information from {typeof(GenericRepository<TEntity>).FullName}";
+            await _context.SaveChangesAsync();
 
             return response;
         }

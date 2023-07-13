@@ -5,9 +5,9 @@ using DAL.Repositories.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class CountryRepository : GenericRepository<Country>, ICountryRepository
+    public class AuthorRepository : GenericRepository<Author>, IAuthorRepository
     {
-        public CountryRepository(DataContext context) : base(context)
+        public AuthorRepository(DataContext context) : base(context)
         {
         }
     }

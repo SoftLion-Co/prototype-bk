@@ -5,10 +5,11 @@ using DAL.Repositories.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class CountryRepository : GenericRepository<Country>, ICountryRepository
+    public class BlogRepository : GenericRepository<Blog>, IBlogRepository
     {
-        public CountryRepository(DataContext context) : base(context)
+        public BlogRepository(DataContext context) : base(context)
         {
+            
         }
     }
 }
