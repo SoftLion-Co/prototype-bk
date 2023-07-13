@@ -2,24 +2,19 @@
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
 using DAL.WrapperRepository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.WrapperRepository
 {
-    internal class WrapperRepository : IWrapperRepository
+    public class WrapperRepository : IWrapperRepository
     {
         private readonly DataContext _context;
 
         private ICountryRepository _countryRepository;
         private ISVGRepository _svgRepository;
         private IPictureRepository _pictureRepository;
-        private IDescriptionRepository _descriptionRepository;
+        private IParagraphRepository _paragraphRepository;
         private IRatingRepository _ratingRepository;
-
+        private IAuthorRepository _authorRepository;
         public WrapperRepository(DataContext context)
         {
             _context = context;
@@ -71,15 +66,27 @@ namespace DAL.WrapperRepository
             }
         }
 
-        public IDescriptionRepository DescriptionRepository
+        public IParagraphRepository ParagraphRepository
         {
             get
             {
-                if (_descriptionRepository == null)
+                if (_paragraphRepository == null)
                 {
-                    _descriptionRepository = new DescriptionRepository(_context);
+                    _paragraphRepository = new ParagraphRepository(_context);
                 }
-                return _descriptionRepository;
+                return _paragraphRepository;
+            }
+        }
+
+        public IAuthorRepository AuthorRepository
+        {
+            get
+            {
+                if (_authorRepository == null)
+                {
+                    _authorRepository = new AuthorRepository(_context);
+                }
+                return _authorRepository;
             }
         }
 
