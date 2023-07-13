@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class SVG : BaseEntity
+    public class Description : BaseEntity
     {
-        public byte[] Content { get; set; } = null!;
+        public string Text { get; set; } = String.Empty;
     }
 }
