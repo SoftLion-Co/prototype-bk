@@ -1,6 +1,9 @@
-﻿namespace DAL.Repositories.Interfaces
+﻿using DAL.Entities;
+using DAL.GenericRepository.Interface;
+
+namespace DAL.Repositories.Interfaces
 {
-    public interface IDescriptionRepository
+    public interface IDescriptionRepository : IGenericRepository<Description>
     {
     }
 }
