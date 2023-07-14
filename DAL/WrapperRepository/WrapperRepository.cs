@@ -15,6 +15,11 @@ namespace DAL.WrapperRepository
         private IParagraphRepository _paragraphRepository;
         private IRatingRepository _ratingRepository;
         private IAuthorRepository _authorRepository;
+        private IProjectRepository _projectRepository;
+        private IBlogRepository _blogRepository;
+        private IOrderProjectRepository _orderProjectRepository;
+        private IOrderBlogRepository _orderBlogRepository;
+
         public WrapperRepository(DataContext context)
         {
             _context = context;
@@ -87,6 +92,54 @@ namespace DAL.WrapperRepository
                     _authorRepository = new AuthorRepository(_context);
                 }
                 return _authorRepository;
+            }
+        }
+
+        public IBlogRepository BlogRepository
+        {
+            get
+            {
+                if (_blogRepository == null)
+                {
+                    _blogRepository = new BlogRepository(_context);
+                }
+                return _blogRepository;
+            }
+        }
+
+        public IProjectRepository ProjectRepository
+        {
+            get
+            {
+                if (_projectRepository == null)
+                {
+                    _projectRepository = new ProjectRepository(_context);
+                }
+                return _projectRepository;
+            }
+        }
+
+        public IOrderBlogRepository OrderBlogRepository
+        {
+            get
+            {
+                if (_orderBlogRepository == null)
+                {
+                    _orderBlogRepository = new OrderBlogRepository(_context);
+                }
+                return _orderBlogRepository;
+            }
+        }
+
+        public IOrderProjectRepository OrderProjectRepository
+        {
+            get
+            {
+                if (_orderProjectRepository == null)
+                {
+                    _orderProjectRepository = new OrderProjectRepository(_context);
+                }
+                return _orderProjectRepository;
             }
         }
 

@@ -17,6 +17,10 @@ namespace DAL.WrapperRepository.Interface
         ISVGRepository SVGRepository { get; }
         IParagraphRepository ParagraphRepository { get; }
         IAuthorRepository AuthorRepository { get; }
+        IBlogRepository BlogRepository { get; }
+        IProjectRepository ProjectRepository { get; }
+        IOrderBlogRepository OrderBlogRepository { get; }
+        IOrderProjectRepository OrderProjectRepository { get; }
 
     }
 }
