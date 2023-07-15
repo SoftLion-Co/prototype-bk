@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MIG.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDatabase : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,8 @@ namespace MIG.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Employment = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Avatar = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -97,6 +98,20 @@ namespace MIG.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Technology",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Technology", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Blog",
                 columns: table => new
                 {
@@ -115,7 +130,7 @@ namespace MIG.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Author",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,6 +143,7 @@ namespace MIG.Migrations
                     Period = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     DateYear = table.Column<int>(type: "int", nullable: false),
                     CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TechnologyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RequestDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RequestList = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SolutionDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -153,6 +169,12 @@ namespace MIG.Migrations
                         principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Project_Technology_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Technology",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,7 +195,7 @@ namespace MIG.Migrations
                         column: x => x.BlogId,
                         principalTable: "Blog",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -196,13 +218,13 @@ namespace MIG.Migrations
                         column: x => x.BlogId,
                         principalTable: "Blog",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Paragraph_Project_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Project",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,13 +246,13 @@ namespace MIG.Migrations
                         column: x => x.BlogId,
                         principalTable: "Blog",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Picture_Project_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Project",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,7 +273,7 @@ namespace MIG.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Project",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -332,6 +354,9 @@ namespace MIG.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customer");
+
+            migrationBuilder.DropTable(
+                name: "Technology");
 
             migrationBuilder.DropTable(
                 name: "Author");

@@ -1,10 +1,7 @@
 ﻿namespace BLL.DTOs.AuthorDTO
 {
-    public class GetAuthorDTO
+    public class InsertAuthorDTO
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public DateTime? UpdatedDateTime { get; set; }
         public string Name { get; set; } = null!;
         public string Surname { get; set; } = null!;
         public string Employment { get; set; } = null!;

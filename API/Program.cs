@@ -1,4 +1,3 @@
-using BLL.MediatR.Author;
 using BLL.Services.Author;
 using DAL.Context;
 using DAL.GenericRepository;
@@ -16,6 +15,7 @@ using DAL.GenericRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using BLL.MediatR.Author.GetAllAuthors;
 
 namespace API
 {

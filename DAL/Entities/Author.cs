@@ -4,11 +4,11 @@ namespace DAL.Entities
 {
     public class Author : BaseEntity
     {
-        public string Name { get; set; } = string.Empty;
-        public string Surname { get; set; } = string.Empty;
-        public string Employment { get; set; } = string.Empty;
+        public string Name { get; set; } = null!;
+        public string Surname { get; set; } = null!;
+        public string Employment { get; set; } = null!;
         public byte[] Avatar { get; set; } = null!;
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; } = null!;
 
         public ICollection<Blog> Blogs { get; set; } = null!;
 

@@ -44,19 +44,22 @@ namespace MIG.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-
                     b.ToTable("Author", (string)null);
-
                 });
 
             modelBuilder.Entity("DAL.Entities.Blog", b =>
@@ -65,9 +68,7 @@ namespace MIG.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-
                     b.Property<Guid?>("AuthorId")
-
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDateTime")
@@ -88,12 +89,10 @@ namespace MIG.Migrations
 
                     b.HasIndex("AuthorId");
 
-
                     b.ToTable("Blog", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Country", b =>
-
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,7 +100,6 @@ namespace MIG.Migrations
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
-
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -221,12 +219,10 @@ namespace MIG.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
 
                     b.ToTable("OrderProject", (string)null);
                 });
@@ -440,16 +436,14 @@ namespace MIG.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Technology", (string)null);
-
                 });
 
             modelBuilder.Entity("DAL.Entities.Blog", b =>
                 {
                     b.HasOne("DAL.Entities.Author", "Author")
-
                         .WithMany("Blogs")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Author");
                 });
@@ -459,12 +453,12 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Blog", "Blog")
                         .WithMany("Paragraphs")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Entities.Project", "Project")
                         .WithMany("Paragraphs")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Blog");
 
@@ -476,12 +470,12 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Blog", "Blog")
                         .WithMany("Pictures")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Entities.Project", "Project")
                         .WithMany("Pictures")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Blog");
 
@@ -517,7 +511,7 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Project", "Project")
                         .WithMany("Ratings")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Project");
                 });
@@ -527,7 +521,7 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Blog", "Blog")
                         .WithMany("SVGs")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Blog");
                 });
@@ -569,7 +563,6 @@ namespace MIG.Migrations
                 {
                     b.Navigation("Projects");
                 });
-
 #pragma warning restore 612, 618
         }
     }
