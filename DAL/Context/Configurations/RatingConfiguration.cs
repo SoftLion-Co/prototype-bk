@@ -21,7 +21,7 @@ namespace DAL.Context.Configurations
                 .HasOne(x => x.Project)
                 .WithMany(x => x.Ratings)
                 .HasForeignKey(p => p.ProjectId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
         }
     }

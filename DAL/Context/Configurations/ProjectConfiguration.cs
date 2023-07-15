@@ -26,22 +26,28 @@ namespace DAL.Context.Configurations
                 .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
 
             builder
+               .HasOne(x => x.Technology)
+               .WithMany(x => x.Projects)
+               .HasForeignKey(x => x.TechnologyId)
+               .OnDelete(deleteBehavior: DeleteBehavior.SetNull);
+
+            builder
                 .HasMany(x => x.Paragraphs)
                 .WithOne(x => x.Project)
                 .HasForeignKey(x => x.ProjectId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
             builder
                .HasMany(x => x.Ratings)
                .WithOne(x => x.Project)
                .HasForeignKey(x => x.ProjectId)
-               .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+               .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
             builder
                .HasMany(x => x.Pictures)
                .WithOne(x => x.Project)
                .HasForeignKey(x => x.ProjectId)
-               .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+               .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
         }
     }
 }

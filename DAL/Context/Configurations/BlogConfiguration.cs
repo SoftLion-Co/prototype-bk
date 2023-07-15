@@ -18,7 +18,7 @@ namespace DAL.Context.Configurations
                 .HasOne(x => x.Author)
                 .WithMany(x => x.Blogs)
                 .HasForeignKey(x => x.AuthorId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
         }
     }

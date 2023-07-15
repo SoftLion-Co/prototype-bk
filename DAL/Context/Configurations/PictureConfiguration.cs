@@ -21,13 +21,13 @@ namespace DAL.Context.Configurations
                 .HasOne(x => x.Blog)
                 .WithMany(x => x.Pictures)
                 .HasForeignKey(p => p.BlogId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
             builder
                 .HasOne(x => x.Project)
                 .WithMany(x => x.Pictures)
                 .HasForeignKey(p => p.ProjectId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
         }
     }
 }
