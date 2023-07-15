@@ -22,7 +22,6 @@ namespace DAL.Context
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Technology> technologies { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         { 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 

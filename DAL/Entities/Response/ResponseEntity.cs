@@ -1,3 +1,4 @@
+
 ﻿namespace DAL.Entities.ResponseEntity
 {
     public class ResponseEntity<TResult>

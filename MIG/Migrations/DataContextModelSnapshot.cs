@@ -54,7 +54,9 @@ namespace MIG.Migrations
 
                     b.HasKey("Id");
 
+
                     b.ToTable("Author", (string)null);
+
                 });
 
             modelBuilder.Entity("DAL.Entities.Blog", b =>
@@ -63,7 +65,9 @@ namespace MIG.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+
                     b.Property<Guid?>("AuthorId")
+
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDateTime")
@@ -84,10 +88,12 @@ namespace MIG.Migrations
 
                     b.HasIndex("AuthorId");
 
+
                     b.ToTable("Blog", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Country", b =>
+
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,6 +101,7 @@ namespace MIG.Migrations
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
+
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -214,10 +221,12 @@ namespace MIG.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
 
                     b.ToTable("OrderProject", (string)null);
                 });
@@ -431,11 +440,13 @@ namespace MIG.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Technology", (string)null);
+
                 });
 
             modelBuilder.Entity("DAL.Entities.Blog", b =>
                 {
                     b.HasOne("DAL.Entities.Author", "Author")
+
                         .WithMany("Blogs")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -558,6 +569,7 @@ namespace MIG.Migrations
                 {
                     b.Navigation("Projects");
                 });
+
 #pragma warning restore 612, 618
         }
     }

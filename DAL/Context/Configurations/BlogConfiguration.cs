@@ -1,3 +1,4 @@
+
 ﻿using DAL.Context.Configurations.Base;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<Blog> builder)
         {
+
             builder.ToTable("Blog");
             builder.Property(e => e.Title).HasMaxLength(30);
 
@@ -17,6 +19,7 @@ namespace DAL.Context.Configurations
                 .WithMany(x => x.Blogs)
                 .HasForeignKey(x => x.AuthorId)
                 .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+
         }
     }
 }

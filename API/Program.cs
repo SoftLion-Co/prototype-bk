@@ -10,6 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
+using DAL.Context;
+using DAL.GenericRepository;
+using DAL.GenericRepository.Interface;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+
 namespace API
 {
     public class Program
@@ -47,6 +54,7 @@ namespace API
             builder.Services.AddAutoMapper(currentAssemblies);
 
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetAllAuthorsQuery>());
+
 
             var app = builder.Build();
 

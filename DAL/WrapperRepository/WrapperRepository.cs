@@ -3,15 +3,18 @@ using DAL.Repositories;
 using DAL.Repositories.Interfaces;
 using DAL.WrapperRepository.Interface;
 
+
 namespace DAL.WrapperRepository
 {
     public class WrapperRepository : IWrapperRepository
+
     {
         private readonly DataContext _context;
 
         private ICountryRepository _countryRepository;
         private ISVGRepository _svgRepository;
         private IPictureRepository _pictureRepository;
+
         private IParagraphRepository _paragraphRepository;
         private IRatingRepository _ratingRepository;
         private IAuthorRepository _authorRepository;
@@ -20,6 +23,7 @@ namespace DAL.WrapperRepository
         private IOrderProjectRepository _orderProjectRepository;
         private IOrderBlogRepository _orderBlogRepository;
         private ITechnologyRepository _technologyRepository;
+
 
         public WrapperRepository(DataContext context)
         {
@@ -71,6 +75,7 @@ namespace DAL.WrapperRepository
                 return _svgRepository;
             }
         }
+
 
         public IParagraphRepository ParagraphRepository
         {
@@ -153,6 +158,7 @@ namespace DAL.WrapperRepository
                     _technologyRepository = new TechnologyRepository(_context);
                 }
                 return _technologyRepository;
+
             }
         }
 
