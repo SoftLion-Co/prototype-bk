@@ -2,23 +2,28 @@
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
 using DAL.WrapperRepository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DAL.WrapperRepository
 {
-    internal class WrapperRepository : IWrapperRepository
+    public class WrapperRepository : IWrapperRepository
+
     {
         private readonly DataContext _context;
 
         private ICountryRepository _countryRepository;
         private ISVGRepository _svgRepository;
         private IPictureRepository _pictureRepository;
-        private IDescriptionRepository _descriptionRepository;
+
+        private IParagraphRepository _paragraphRepository;
         private IRatingRepository _ratingRepository;
+        private IAuthorRepository _authorRepository;
+        private IProjectRepository _projectRepository;
+        private IBlogRepository _blogRepository;
+        private IOrderProjectRepository _orderProjectRepository;
+        private IOrderBlogRepository _orderBlogRepository;
+        private ITechnologyRepository _technologyRepository;
+
 
         public WrapperRepository(DataContext context)
         {
@@ -71,15 +76,89 @@ namespace DAL.WrapperRepository
             }
         }
 
-        public IDescriptionRepository DescriptionRepository
+
+        public IParagraphRepository ParagraphRepository
         {
             get
             {
-                if (_descriptionRepository == null)
+                if (_paragraphRepository == null)
                 {
-                    _descriptionRepository = new DescriptionRepository(_context);
+                    _paragraphRepository = new ParagraphRepository(_context);
                 }
-                return _descriptionRepository;
+                return _paragraphRepository;
+            }
+        }
+
+        public IAuthorRepository AuthorRepository
+        {
+            get
+            {
+                if (_authorRepository == null)
+                {
+                    _authorRepository = new AuthorRepository(_context);
+                }
+                return _authorRepository;
+            }
+        }
+
+        public IBlogRepository BlogRepository
+        {
+            get
+            {
+                if (_blogRepository == null)
+                {
+                    _blogRepository = new BlogRepository(_context);
+                }
+                return _blogRepository;
+            }
+        }
+
+        public IProjectRepository ProjectRepository
+        {
+            get
+            {
+                if (_projectRepository == null)
+                {
+                    _projectRepository = new ProjectRepository(_context);
+                }
+                return _projectRepository;
+            }
+        }
+
+        public IOrderBlogRepository OrderBlogRepository
+        {
+            get
+            {
+                if (_orderBlogRepository == null)
+                {
+                    _orderBlogRepository = new OrderBlogRepository(_context);
+                }
+                return _orderBlogRepository;
+            }
+        }
+
+        public IOrderProjectRepository OrderProjectRepository
+        {
+            get
+            {
+                if (_orderProjectRepository == null)
+                {
+                    _orderProjectRepository = new OrderProjectRepository(_context);
+                }
+                return _orderProjectRepository;
+            }
+        }
+
+        public ITechnologyRepository TechnologyRepository
+        {
+            get
+            {
+                if (_technologyRepository == null)
+                {
+                    _technologyRepository = new TechnologyRepository(_context);
+                }
+                return _technologyRepository;
+
             }
         }
 

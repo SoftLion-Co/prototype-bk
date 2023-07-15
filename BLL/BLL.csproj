@@ -31,4 +31,21 @@
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AutoMapper\Blog\" />
+    <Folder Include="AutoMapper\Country\" />
+    <Folder Include="AutoMapper\Customer\" />
+    <Folder Include="AutoMapper\OrderBlog\" />
+    <Folder Include="AutoMapper\OrderProject\" />
+    <Folder Include="AutoMapper\Project\" />
+    <Folder Include="AutoMapper\Technology\" />
+    <Folder Include="DTOs\BlogDTO\" />
+    <Folder Include="DTOs\CountryDTO\" />
+    <Folder Include="DTOs\CustomerDTO\" />
+    <Folder Include="DTOs\TechnologyDTO\" />
+    <Folder Include="DTOs\OrderBlogDTO\" />
+    <Folder Include="DTOs\OrderProjectDTO\" />
+    <Folder Include="DTOs\ProjectDTO\" />
+  </ItemGroup>
+
 </Project>
