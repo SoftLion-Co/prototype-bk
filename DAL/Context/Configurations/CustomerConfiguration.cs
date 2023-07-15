@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace DAL.Context.Configurations
 {
-    internal class RatingConfiguration : BaseConfiguration<Rating>
+    internal class CustomerConfiguration : BaseConfiguration<Customer>
     {
-        public override void Configure(EntityTypeBuilder<Rating> builder)
+        public override void Configure(EntityTypeBuilder<Customer> builder)
         {
 
-            builder.Property(e => e.Mark).HasColumnType("decimal(2,1)");
+            builder.Property(e => e.Email).HasMaxLength(30);
 
             builder
-                .HasOne(x => x.Project)
-                .WithMany(x => x.Ratings)
-                .HasForeignKey(p => p.ProjectId)
+                .HasMany(x => x.Projects)
+                .WithOne(x => x.Customer)
+                .HasForeignKey(p => p.CustomerId)
                 .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
 
         }

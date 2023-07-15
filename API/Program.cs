@@ -1,8 +1,11 @@
-
+using BLL.MediatR.Authors;
 using DAL.Context;
 using DAL.GenericRepository;
 using DAL.GenericRepository.Interface;
+using DAL.WrapperRepository;
+using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -35,9 +38,13 @@ namespace API
                     options => options.MigrationsAssembly("MIG"));
             });
 
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped(typeof(IWrapperRepository), typeof(WrapperRepository));
 
+            var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
+            builder.Services.AddAutoMapper(currentAssemblies);
+
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetAllAuthorsQuery>());
 
             var app = builder.Build();
 
