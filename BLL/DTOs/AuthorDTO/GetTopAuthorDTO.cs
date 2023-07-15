@@ -8,8 +8,8 @@ namespace BLL.DTOs.AuthorDTO
 {
     public class GetTopAuthorDTO
     {
-        public string Name { get; set; } = string.Empty;
-        public string Employment { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty; 
+        public string Employment { get; set; } = string.Empty; 
         public string Avatar { get; set; } = string.Empty; 
     }
 }
