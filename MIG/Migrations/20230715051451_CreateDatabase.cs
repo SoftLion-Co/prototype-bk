@@ -6,59 +6,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MIG.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateNewDataBase : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_blog_author_AuthorId",
-                table: "blog");
-
-            migrationBuilder.DropTable(
-                name: "description");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_blog",
-                table: "blog");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_author",
-                table: "author");
-
-            migrationBuilder.RenameTable(
-                name: "blog",
-                newName: "Blogs");
-
-            migrationBuilder.RenameTable(
-                name: "author",
-                newName: "Authors");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_blog_AuthorId",
-                table: "Blogs",
-                newName: "IX_Blogs_AuthorId");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "AuthorId",
-                table: "Blogs",
-                type: "uniqueidentifier",
-                nullable: true,
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Blogs",
-                table: "Blogs",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Authors",
-                table: "Authors",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "Author",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Employment = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Avatar = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Author", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "Country",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -68,11 +39,11 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
+                    table.PrimaryKey("PK_Country", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "Customer",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -88,11 +59,11 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Customer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderBlogs",
+                name: "OrderBlog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -105,11 +76,11 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderBlogs", x => x.Id);
+                    table.PrimaryKey("PK_OrderBlog", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderProjects",
+                name: "OrderProject",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -122,32 +93,33 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderProjects", x => x.Id);
+                    table.PrimaryKey("PK_OrderProject", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SVGs",
+                name: "Blog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Viewers = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SVGs", x => x.Id);
+                    table.PrimaryKey("PK_Blog", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SVGs_Blogs_BlogId",
-                        column: x => x.BlogId,
-                        principalTable: "Blogs",
+                        name: "FK_Blog_Author_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Author",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "Project",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -168,23 +140,44 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_Project", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_Countries_CountryId",
+                        name: "FK_Project_Country_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Countries",
+                        principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Projects_Customers_CustomerId",
+                        name: "FK_Project_Customer_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Paragraphs",
+                name: "SVG",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SVG", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SVG_Blog_BlogId",
+                        column: x => x.BlogId,
+                        principalTable: "Blog",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Paragraph",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -197,23 +190,23 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Paragraphs", x => x.Id);
+                    table.PrimaryKey("PK_Paragraph", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Paragraphs_Blogs_BlogId",
+                        name: "FK_Paragraph_Blog_BlogId",
                         column: x => x.BlogId,
-                        principalTable: "Blogs",
+                        principalTable: "Blog",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Paragraphs_Projects_ProjectId",
+                        name: "FK_Paragraph_Project_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Projects",
+                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pictures",
+                name: "Picture",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -225,23 +218,23 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pictures", x => x.Id);
+                    table.PrimaryKey("PK_Picture", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pictures_Blogs_BlogId",
+                        name: "FK_Picture_Blog_BlogId",
                         column: x => x.BlogId,
-                        principalTable: "Blogs",
+                        principalTable: "Blog",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Pictures_Projects_ProjectId",
+                        name: "FK_Picture_Project_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Projects",
+                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ratings",
+                name: "Rating",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -252,160 +245,96 @@ namespace MIG.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ratings", x => x.Id);
+                    table.PrimaryKey("PK_Rating", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ratings_Projects_ProjectId",
+                        name: "FK_Rating_Project_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Projects",
+                        principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Paragraphs_BlogId",
-                table: "Paragraphs",
+                name: "IX_Blog_AuthorId",
+                table: "Blog",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Paragraph_BlogId",
+                table: "Paragraph",
                 column: "BlogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Paragraphs_ProjectId",
-                table: "Paragraphs",
+                name: "IX_Paragraph_ProjectId",
+                table: "Paragraph",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pictures_BlogId",
-                table: "Pictures",
+                name: "IX_Picture_BlogId",
+                table: "Picture",
                 column: "BlogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pictures_ProjectId",
-                table: "Pictures",
+                name: "IX_Picture_ProjectId",
+                table: "Picture",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_CountryId",
-                table: "Projects",
+                name: "IX_Project_CountryId",
+                table: "Project",
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_CustomerId",
-                table: "Projects",
+                name: "IX_Project_CustomerId",
+                table: "Project",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_ProjectId",
-                table: "Ratings",
+                name: "IX_Rating_ProjectId",
+                table: "Rating",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SVGs_BlogId",
-                table: "SVGs",
+                name: "IX_SVG_BlogId",
+                table: "SVG",
                 column: "BlogId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Blogs_Authors_AuthorId",
-                table: "Blogs",
-                column: "AuthorId",
-                principalTable: "Authors",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Blogs_Authors_AuthorId",
-                table: "Blogs");
+            migrationBuilder.DropTable(
+                name: "OrderBlog");
 
             migrationBuilder.DropTable(
-                name: "OrderBlogs");
+                name: "OrderProject");
 
             migrationBuilder.DropTable(
-                name: "OrderProjects");
+                name: "Paragraph");
 
             migrationBuilder.DropTable(
-                name: "Paragraphs");
+                name: "Picture");
 
             migrationBuilder.DropTable(
-                name: "Pictures");
+                name: "Rating");
 
             migrationBuilder.DropTable(
-                name: "Ratings");
+                name: "SVG");
 
             migrationBuilder.DropTable(
-                name: "SVGs");
+                name: "Project");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "Blog");
 
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "Country");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Customer");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Blogs",
-                table: "Blogs");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Authors",
-                table: "Authors");
-
-            migrationBuilder.RenameTable(
-                name: "Blogs",
-                newName: "blog");
-
-            migrationBuilder.RenameTable(
-                name: "Authors",
-                newName: "author");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Blogs_AuthorId",
-                table: "blog",
-                newName: "IX_blog_AuthorId");
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "AuthorId",
-                table: "blog",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
-                oldClrType: typeof(Guid),
-                oldType: "uniqueidentifier",
-                oldNullable: true);
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_blog",
-                table: "blog",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_author",
-                table: "author",
-                column: "Id");
-
-            migrationBuilder.CreateTable(
-                name: "description",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_description", x => x.Id);
-                });
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_blog_author_AuthorId",
-                table: "blog",
-                column: "AuthorId",
-                principalTable: "author",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.DropTable(
+                name: "Author");
         }
     }
 }

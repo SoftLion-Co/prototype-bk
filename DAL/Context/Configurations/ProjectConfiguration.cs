@@ -9,6 +9,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<Project> builder)
         {
+            builder.ToTable("Project");
             builder.Property(e => e.Title).HasMaxLength(30);
             builder.Property(e => e.Period).HasMaxLength(20);
 

@@ -19,6 +19,7 @@ namespace DAL.WrapperRepository
         private IBlogRepository _blogRepository;
         private IOrderProjectRepository _orderProjectRepository;
         private IOrderBlogRepository _orderBlogRepository;
+        private ITechnologyRepository _technologyRepository;
 
         public WrapperRepository(DataContext context)
         {
@@ -140,6 +141,18 @@ namespace DAL.WrapperRepository
                     _orderProjectRepository = new OrderProjectRepository(_context);
                 }
                 return _orderProjectRepository;
+            }
+        }
+
+        public ITechnologyRepository TechnologyRepository
+        {
+            get
+            {
+                if (_technologyRepository == null)
+                {
+                    _technologyRepository = new TechnologyRepository(_context);
+                }
+                return _technologyRepository;
             }
         }
 

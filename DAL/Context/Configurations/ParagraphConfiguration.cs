@@ -9,6 +9,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<Paragraph> builder)
         {
+            builder.ToTable("Paragraph");
             builder.Property(e => e.Title).HasMaxLength(100);
 
             builder

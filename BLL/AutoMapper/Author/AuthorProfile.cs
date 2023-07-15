@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BLL.DTOs.RequestDTOs;
+using BLL.DTOs.AuthorDTO;
 using DAL.Entities;
 using DAL.Entities.ResponseEntity;
 
@@ -9,7 +9,9 @@ namespace BLL.AutoMapper.Blog
     {
         public AuthorProfile()
         {
-            CreateMap<Author, AuthorDTO>().ReverseMap();
+            CreateMap<Author, GetAuthorDTO>().ReverseMap();
+            CreateMap<Author, GetTopAuthorDTO>().ReverseMap();
+
         }
     }
 }

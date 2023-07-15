@@ -14,7 +14,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<Rating> builder)
         {
-
+            builder.ToTable("Rating");
             builder.Property(e => e.Mark).HasColumnType("decimal(2,1)");
 
             builder

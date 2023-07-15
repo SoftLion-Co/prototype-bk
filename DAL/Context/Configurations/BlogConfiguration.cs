@@ -9,7 +9,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<Blog> builder)
         {
-
+            builder.ToTable("Blog");
             builder.Property(e => e.Title).HasMaxLength(30);
 
             builder

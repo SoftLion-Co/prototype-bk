@@ -9,7 +9,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<Author> builder)
         {
-
+            builder.ToTable("Author");
             builder.Property(e => e.FullName).HasMaxLength(60);
             builder.Property(e => e.Employment).HasMaxLength(50);
 
