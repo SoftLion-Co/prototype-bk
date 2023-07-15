@@ -54,7 +54,7 @@ namespace MIG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Author", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Blog", b =>
@@ -84,7 +84,7 @@ namespace MIG.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blog", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Country", b =>
@@ -106,7 +106,7 @@ namespace MIG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Country", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Customer", b =>
@@ -151,7 +151,7 @@ namespace MIG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.OrderBlog", b =>
@@ -185,7 +185,7 @@ namespace MIG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderBlogs");
+                    b.ToTable("OrderBlog", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.OrderProject", b =>
@@ -219,7 +219,7 @@ namespace MIG.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderProjects");
+                    b.ToTable("OrderProject", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Paragraph", b =>
@@ -255,7 +255,7 @@ namespace MIG.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Paragraphs");
+                    b.ToTable("Paragraph", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Picture", b =>
@@ -286,7 +286,7 @@ namespace MIG.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Pictures");
+                    b.ToTable("Picture", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Project", b =>
@@ -340,6 +340,9 @@ namespace MIG.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("TechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -354,7 +357,7 @@ namespace MIG.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Project", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Rating", b =>
@@ -379,7 +382,7 @@ namespace MIG.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Rating", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.SVG", b =>
@@ -405,7 +408,29 @@ namespace MIG.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("SVGs");
+                    b.ToTable("SVG", (string)null);
+                });
+
+            modelBuilder.Entity("DAL.Entities.Technology", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Technology", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Blog", b =>
@@ -459,6 +484,11 @@ namespace MIG.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("DAL.Entities.Technology", "Technology")
+                        .WithMany("Projects")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("DAL.Entities.Customer", "Customer")
                         .WithMany("Projects")
                         .HasForeignKey("CustomerId")
@@ -467,6 +497,8 @@ namespace MIG.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Technology");
                 });
 
             modelBuilder.Entity("DAL.Entities.Rating", b =>
@@ -520,6 +552,11 @@ namespace MIG.Migrations
                     b.Navigation("Pictures");
 
                     b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Technology", b =>
+                {
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

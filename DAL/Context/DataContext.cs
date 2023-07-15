@@ -20,6 +20,7 @@ namespace DAL.Context
         public DbSet<SVG> SVGs { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Technology> technologies { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BLL.DTOs.RequestDTOs;
+using BLL.DTOs;
 using DAL.Entities.Base;
 
 namespace BLL.AutoMapper

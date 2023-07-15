@@ -1,4 +1,5 @@
-using BLL.MediatR.Authors;
+using BLL.MediatR.Author;
+using BLL.Services.Author;
 using DAL.Context;
 using DAL.GenericRepository;
 using DAL.GenericRepository.Interface;
@@ -38,7 +39,8 @@ namespace API
                     options => options.MigrationsAssembly("MIG"));
             });
 
-            builder.Services.AddScoped(typeof(IWrapperRepository), typeof(WrapperRepository));
+            builder.Services.AddScoped<IWrapperRepository, WrapperRepository>();
+            builder.Services.AddScoped<IAuthorService, AuthorService>();
 
             var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 

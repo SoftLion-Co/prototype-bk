@@ -14,7 +14,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<Customer> builder)
         {
-
+            builder.ToTable("Customer");
             builder.Property(e => e.Email).HasMaxLength(30);
 
             builder

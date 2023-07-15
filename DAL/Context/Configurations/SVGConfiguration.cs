@@ -9,7 +9,7 @@ namespace DAL.Context.Configurations
     {
         public override void Configure(EntityTypeBuilder<SVG> builder)
         {
-
+            builder.ToTable("SVG");
             builder.Property(e => e.Content).HasColumnType("varbinary(max)");
 
             builder

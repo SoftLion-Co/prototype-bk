@@ -10,6 +10,8 @@ namespace DAL.Entities
         public int DateYear { get; set; }
         public Guid? CountryId { get; set; }
         public Country? Country { get; set; }
+        public Guid? TechnologyId { get; set; }
+        public Technology? Technology { get; set; }
         public string RequestDescription { get; set; } = string.Empty;
         public string RequestList { get; set; } = string.Empty;
         public string SolutionDescription { get; set; } = string.Empty;
