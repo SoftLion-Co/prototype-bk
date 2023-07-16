@@ -34,8 +34,6 @@ namespace DAL.GenericRepository
             response.Result = await _context.Set<TEntity>().AsNoTracking().ToListAsync();
             response.Message = $"Remove information from {typeof(GenericRepository<TEntity>).FullName}";
 
-            await _context.SaveChangesAsync();
-
             return response;
         }
 
@@ -63,15 +61,11 @@ namespace DAL.GenericRepository
         public async Task<ResponseEntity<TEntity>> InsertEntityAsync(TEntity entity)
         {
             var response = new ResponseEntity<TEntity>();
-            entity.CreatedDateTime = DateTime.Now;
 
             await _context.Set<TEntity>().AddAsync(entity);
 
             response.Result = entity;
             response.Message = $"Inserted all information from {typeof(GenericRepository<TEntity>).FullName}";
-
-            await _context.SaveChangesAsync();
-
 
             return response;
         }
@@ -80,8 +74,6 @@ namespace DAL.GenericRepository
         {
             var response = new ResponseEntity<TEntity>();
             
-            entity.UpdatedDateTime = DateTime.Now;
-
             var result = await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
 
             if(result == null)
@@ -93,9 +85,6 @@ namespace DAL.GenericRepository
 
             response.Result = entity;
             response.Message = $"Updated all information from {typeof(GenericRepository<TEntity>).FullName}";
-
-            await _context.SaveChangesAsync();
-
 
             return response;
         }

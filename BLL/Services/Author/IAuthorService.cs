@@ -1,15 +1,14 @@
 ﻿using BLL.DTOs.AuthorDTO;
 using DAL.Entities.ResponseEntity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services.Author
 {
     public interface IAuthorService
     {
         Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> GetAllAuthorsAsync();
+        Task<ResponseEntity<GetAuthorDTO>> GetAuthorByIdAsync(Guid id);
+        Task<ResponseEntity<GetAuthorDTO>> InsertAuthorAsync(InsertAuthorDTO authorDTO);
+        Task<ResponseEntity<GetAuthorDTO>> UpdateAuthorAsync(UpdateAuthorDTO updateAuthorDTO);
+        Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> DeleteAuthorByIdAsync(Guid id);
     }
 }

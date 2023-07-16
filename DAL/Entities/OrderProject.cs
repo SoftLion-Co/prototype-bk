@@ -10,9 +10,9 @@ namespace DAL.Entities
 {
     public class OrderProject : BaseEntity
     {
-        public string NumberPhone { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string ShortDescription { get; set; } = string.Empty;
+        public string NumberPhone { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string ShortDescription { get; set; } = null!;
         public OrderTypeEnum OrderType { get; set; }
     }
 }

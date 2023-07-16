@@ -21,7 +21,39 @@ namespace BLL.Services.Author
             var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync();
 
             return _mapper.Map<ResponseEntity<IEnumerable<DAL.Entities.Author>>, ResponseEntity<IEnumerable<GetAuthorDTO>>>(authors);
+        }
 
+        public async Task<ResponseEntity<GetAuthorDTO>> GetAuthorByIdAsync(Guid id)
+        {
+            var author = await _wrapperRepository.AuthorRepository.GetEntityByIdAsync(id);
+
+            return _mapper.Map<ResponseEntity<GetAuthorDTO>>(author);
+        }
+
+        public async Task<ResponseEntity<GetAuthorDTO>> InsertAuthorAsync(InsertAuthorDTO authorDTO)
+        {
+            var author = _mapper.Map<InsertAuthorDTO, DAL.Entities.Author>(authorDTO);
+            var response = await _wrapperRepository.AuthorRepository.InsertEntityAsync(author);
+            //TODO Implement exception handling if something goes wrong with Logger
+            await _wrapperRepository.Save();
+            return _mapper.Map<ResponseEntity<GetAuthorDTO>>(response);
+        }
+
+        public async Task<ResponseEntity<GetAuthorDTO>> UpdateAuthorAsync(UpdateAuthorDTO updateAuthorDTO)
+        {
+            var author = _mapper.Map<UpdateAuthorDTO, DAL.Entities.Author>(updateAuthorDTO);
+            var response = await _wrapperRepository.AuthorRepository.UploadEntityAsync(author);
+            //TODO Implement exception handling if something goes wrong with Logger
+            await _wrapperRepository.Save();
+            return _mapper.Map<ResponseEntity<GetAuthorDTO>>(response);
+        }
+
+        public async Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> DeleteAuthorByIdAsync(Guid id)
+        {
+            var authors = await _wrapperRepository.AuthorRepository.DeleteEntityByIdAsync(id);
+            //TODO Implement exception handling if something goes wrong with Logger
+            await _wrapperRepository.Save();
+            return _mapper.Map<ResponseEntity<IEnumerable<GetAuthorDTO>>>(authors);
         }
     }
 }

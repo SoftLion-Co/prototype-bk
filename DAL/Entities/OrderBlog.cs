@@ -5,9 +5,9 @@ namespace DAL.Entities
 {
     public class OrderBlog : BaseEntity
     {
-        public string Username { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string ShortDescription { get; set; } = string.Empty;
+        public string Username { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string ShortDescription { get; set; } = null!;
         public OrderTypeEnum OrderType { get; set; }
     }
 }

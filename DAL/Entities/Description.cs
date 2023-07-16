@@ -9,6 +9,6 @@ namespace DAL.Entities
 {
     public class Description : BaseEntity
     {
-        public string Text { get; set; } = String.Empty;
+        public string Text { get; set; } = null!;
     }
 }

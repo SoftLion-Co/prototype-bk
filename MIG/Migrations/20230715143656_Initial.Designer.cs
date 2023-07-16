@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MIG.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230715051451_CreateDatabase")]
-    partial class CreateDatabase
+    [Migration("20230715143656_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,10 +47,15 @@ namespace MIG.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
@@ -343,6 +348,9 @@ namespace MIG.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("TechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -411,12 +419,34 @@ namespace MIG.Migrations
                     b.ToTable("SVG", (string)null);
                 });
 
+            modelBuilder.Entity("DAL.Entities.Technology", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Technology", (string)null);
+                });
+
             modelBuilder.Entity("DAL.Entities.Blog", b =>
                 {
                     b.HasOne("DAL.Entities.Author", "Author")
                         .WithMany("Blogs")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Author");
                 });
@@ -426,12 +456,12 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Blog", "Blog")
                         .WithMany("Paragraphs")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Entities.Project", "Project")
                         .WithMany("Paragraphs")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Blog");
 
@@ -443,12 +473,12 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Blog", "Blog")
                         .WithMany("Pictures")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Entities.Project", "Project")
                         .WithMany("Pictures")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Blog");
 
@@ -462,6 +492,11 @@ namespace MIG.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("DAL.Entities.Technology", "Technology")
+                        .WithMany("Projects")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("DAL.Entities.Customer", "Customer")
                         .WithMany("Projects")
                         .HasForeignKey("CustomerId")
@@ -470,6 +505,8 @@ namespace MIG.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Technology");
                 });
 
             modelBuilder.Entity("DAL.Entities.Rating", b =>
@@ -477,7 +514,7 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Project", "Project")
                         .WithMany("Ratings")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Project");
                 });
@@ -487,7 +524,7 @@ namespace MIG.Migrations
                     b.HasOne("DAL.Entities.Blog", "Blog")
                         .WithMany("SVGs")
                         .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Blog");
                 });
@@ -523,6 +560,11 @@ namespace MIG.Migrations
                     b.Navigation("Pictures");
 
                     b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Technology", b =>
+                {
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }
