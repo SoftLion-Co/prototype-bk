@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
-using BLL.DTOs.AuthorDTO;
 using BLL.DTOs.BlogDTO;
-using BLL.Services.Blog;
 using DAL.Entities.ResponseEntity;
 using DAL.WrapperRepository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services.Blog
 {
@@ -42,7 +35,6 @@ namespace BLL.Services.Blog
         public async Task<ResponseEntity<GetBlogDTO>> InsertBlogAsync(InsertBlogDTO blogDTO)
         {
             var blog = _mapper.Map<InsertBlogDTO, DAL.Entities.Blog>(blogDTO);
-            blog.Id = Guid.NewGuid();
             foreach (var paragraph in blog.Paragraphs)
             {
                 paragraph.BlogId = blog.Id;
