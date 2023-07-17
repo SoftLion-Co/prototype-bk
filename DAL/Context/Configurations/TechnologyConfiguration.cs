@@ -13,10 +13,10 @@ namespace DAL.Context.Configurations
             builder.Property(x => x.Name).HasMaxLength(30);
 
             builder
-                .HasMany(x => x.Projects)
+                .HasMany(x => x.ProjectTechnologies)
                 .WithOne(x => x.Technology)
-                .HasForeignKey(x=>x.CountryId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .HasForeignKey(x=>x.TechnologyId)
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
         }
     }
 }

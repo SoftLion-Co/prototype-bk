@@ -26,10 +26,10 @@ namespace DAL.Context.Configurations
                 .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
 
             builder
-               .HasOne(x => x.Technology)
-               .WithMany(x => x.Projects)
-               .HasForeignKey(x => x.TechnologyId)
-               .OnDelete(deleteBehavior: DeleteBehavior.SetNull);
+               .HasMany(x => x.ProjectTechnologies)
+               .WithOne(x => x.Project)
+               .HasForeignKey(x => x.ProjectId)
+               .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
 
             builder
                 .HasMany(x => x.Paragraphs)
