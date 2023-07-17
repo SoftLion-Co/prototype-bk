@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using BLL.MediatR.Author.GetAllAuthors;
+using BLL.Services.Blog;
 
 namespace API
 {
@@ -38,7 +39,7 @@ namespace API
 
             builder.Services.AddScoped<IWrapperRepository, WrapperRepository>();
             builder.Services.AddScoped<IAuthorService, AuthorService>();
-
+            builder.Services.AddScoped<IBlogService, BlogService>();
             var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
             builder.Services.AddAutoMapper(currentAssemblies);
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetAllAuthorsQuery>());
