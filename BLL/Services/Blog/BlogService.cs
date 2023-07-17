@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.DTOs.AuthorDTO;
 using BLL.DTOs.BlogDTO;
 using BLL.Services.Blog;
 using DAL.Entities.ResponseEntity;
@@ -38,9 +39,18 @@ namespace BLL.Services.Blog
             throw new NotImplementedException();
         }
 
-        public Task<ResponseEntity<GetBlogDTO>> InsertBlogAsync(InsertBlogDTO blogDTO)
+        public async Task<ResponseEntity<GetBlogDTO>> InsertBlogAsync(InsertBlogDTO blogDTO)
         {
-            throw new NotImplementedException();
+            var blog = _mapper.Map<InsertBlogDTO, DAL.Entities.Blog>(blogDTO);
+            blog.Id = Guid.NewGuid();
+            foreach (var paragraph in blog.Paragraphs)
+            {
+                paragraph.BlogId = blog.Id;
+                await _wrapperRepository.ParagraphRepository.InsertEntityAsync(paragraph);
+            }
+            var response = await _wrapperRepository.BlogRepository.InsertEntityAsync(blog);
+            await _wrapperRepository.Save();
+            return _mapper.Map<ResponseEntity<GetBlogDTO>>(response);
         }
 
         public Task<ResponseEntity<GetBlogDTO>> UpdateBlogAsync(UpdateBlogDTO updateBlogDTO)
