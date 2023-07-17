@@ -1,4 +1,6 @@
-﻿namespace BLL.DTOs.AuthorDTO
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BLL.DTOs.AuthorDTO
 {
     public class GetAuthorDTO
     {

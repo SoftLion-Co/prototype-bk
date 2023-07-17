@@ -8,7 +8,7 @@ namespace DAL.Entities
         public Guid? BlogId { get; set; }
         public Blog? Blog { get; set; } 
         public Guid? ProjectId { get; set; }
-        public Project? Project  { get; set; } 
+        public Project? Project { get; set; } 
 
     }
 }

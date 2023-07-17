@@ -22,6 +22,9 @@ namespace DAL.Context
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Technology> technologies { get; set; }
 
+        //migrations : dotnet ef migrations add AddTableToDataBase --project ../MIG
+        //database : dotnet ef database update
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         { 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 

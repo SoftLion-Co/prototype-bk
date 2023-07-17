@@ -10,28 +10,26 @@ namespace BLL.AutoMapper.Blog
     {
         public AuthorProfile()
         {
-            CreateMap<Author, GetAuthorDTO>().ReverseMap();
-            CreateMap<Author, GetTopAuthorDTO>().ReverseMap();
-            CreateMap<InsertAuthorDTO, Author>()
-                .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => ConvertAvatar(src.Avatar)));
-            CreateMap<Author, UpdateAuthorDTO>().ReverseMap()
-                .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => ConvertAvatar(src.Avatar)));
-        }
-        private static byte[] ConvertAvatar(string base64String)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(base64String))
-                {
-                    return Encoding.ASCII.GetBytes(base64String);
-                }
-            }
-            catch (FormatException ex)
-            {
-                throw ex;
-            }
+            CreateMap<Author, GetAuthorDTO>()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.ToBase64String(src.Avatar)))
+            .ReverseMap()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.FromBase64String(src.Avatar)));
 
-            return null;
+            CreateMap<Author, GetTopAuthorDTO>()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.ToBase64String(src.Avatar)))
+            .ReverseMap()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.FromBase64String(src.Avatar)));
+
+            CreateMap<InsertAuthorDTO, Author>()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.FromBase64String(src.Avatar)))
+            .ReverseMap()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.ToBase64String(src.Avatar)));
+
+            CreateMap<UpdateAuthorDTO, Author>()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.FromBase64String(src.Avatar)))
+            .ReverseMap()
+            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Convert.ToBase64String(src.Avatar)));
+
         }
     }
 }
