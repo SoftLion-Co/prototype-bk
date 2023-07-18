@@ -1,18 +1,17 @@
 ﻿using BLL.DTOs.AuthorDTO;
+using BLL.DTOs.Base;
 using BLL.DTOs.ParagraphDTO;
 using BLL.DTOs.PictureDTO;
+using BLL.DTOs.SVG;
 
 namespace BLL.DTOs.BlogDTO
 {
-    public class UpdateBlogDTO
+    public class UpdateBlogDTO : UpdateBaseDTO
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public DateTime? UpdatedDateTime { get; set; } = DateTime.Now;
-        public string SVG { get; set; }
-        public List<GetPictureDTO> Pictures { get; set; }
-        public List<GetParagraphDTO> Paragraphs { get; set; }
-        public GetAuthorDTO AuthorDTO { get; set; }
+        public GetSVGDTO SVG { get; set; } = null!;
+        public List<GetPictureDTO> Pictures { get; set; } = null!;
+        public List<GetParagraphDTO> Paragraphs { get; set; } = null!;
+        public GetAuthorDTO AuthorDTO { get; set; } = null!;
         public double? ReadingTime { get; set; }
     }
 }

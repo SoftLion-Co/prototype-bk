@@ -38,12 +38,7 @@
     <Folder Include="AutoMapper\OrderProject\" />
     <Folder Include="AutoMapper\Project\" />
     <Folder Include="AutoMapper\Technology\" />
-    <Folder Include="DTOs\CountryDTO\" />
     <Folder Include="DTOs\CustomerDTO\" />
-    <Folder Include="DTOs\TechnologyDTO\" />
-    <Folder Include="DTOs\OrderBlogDTO\" />
-    <Folder Include="DTOs\OrderProjectDTO\" />
-    <Folder Include="DTOs\ProjectDTO\" />
   </ItemGroup>
 
 </Project>

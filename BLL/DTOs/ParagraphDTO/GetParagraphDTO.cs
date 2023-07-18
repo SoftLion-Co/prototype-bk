@@ -1,10 +1,9 @@
-﻿namespace BLL.DTOs.ParagraphDTO
+﻿using BLL.DTOs.Base;
+
+namespace BLL.DTOs.ParagraphDTO
 {
-    public class GetParagraphDTO
+    public class GetParagraphDTO : GetBaseDTO
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public DateTime UpdatedDateTime { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public Guid? BlogId { get; set; }
