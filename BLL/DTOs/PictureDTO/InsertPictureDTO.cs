@@ -1,6 +1,6 @@
 ﻿namespace BLL.DTOs.PictureDTO
 {
-    internal class InsertPictureDTO
+    public class InsertPictureDTO
     {
         public byte[] Content { get; set; } = null!;
         public Guid? BlogId { get; set; }

@@ -2,6 +2,7 @@
 using BLL.DTOs.BlogDTO;
 using DAL.Entities.ResponseEntity;
 using DAL.WrapperRepository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services.Blog
 {
@@ -23,8 +24,10 @@ namespace BLL.Services.Blog
 
         public async Task<ResponseEntity<IEnumerable<GetBlogDTO>>> GetAllBlogsAsync()
         {
-            var blogs = await _wrapperRepository.BlogRepository.GetAllInformationAsync();
-            return _mapper.Map<ResponseEntity<IEnumerable<DAL.Entities.Blog>>, ResponseEntity<IEnumerable<GetBlogDTO>>>(blogs);
+            var blogs = await _wrapperRepository.BlogRepository.GetAllInformationAsync(include: (blog) => blog.Include(author => author.Author));
+            
+            var blogsDto = _mapper.Map<ResponseEntity<IEnumerable<DAL.Entities.Blog>>, ResponseEntity<IEnumerable<GetBlogDTO>>>(blogs);
+            return blogsDto;
         }
 
         public Task<ResponseEntity<GetBlogDTO>> GetBlogByIdAsync(Guid id)

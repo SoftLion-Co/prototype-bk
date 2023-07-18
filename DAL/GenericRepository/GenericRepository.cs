@@ -3,7 +3,8 @@ using DAL.Entities.Base;
 using DAL.Entities.ResponseEntity;
 using DAL.GenericRepository.Interface;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace DAL.GenericRepository
 {
@@ -37,11 +38,39 @@ namespace DAL.GenericRepository
             return response;
         }
 
-        public async Task<ResponseEntity<IEnumerable<TEntity>>> GetAllInformationAsync()
+        private IQueryable<TEntity> GetQueryable(
+        Expression<Func<TEntity, bool>>? predicate = default,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Expression<Func<TEntity, TEntity>>? selector = default)
+        {
+            var query = _context.Set<TEntity>().AsNoTracking();
+
+            if (include is not null)
+            {
+                query = include(query);
+            }
+
+            if (predicate is not null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (selector is not null)
+            {
+                query = query.Select(selector);
+            }
+
+            return query.AsNoTracking();
+        }
+
+        public async Task<ResponseEntity<IEnumerable<TEntity>>> GetAllInformationAsync(
+            Expression<Func<TEntity, TEntity>>? selector = default,
+            Expression<Func<TEntity, bool>>? predicate = default,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
         {
             var response = new ResponseEntity<IEnumerable<TEntity>>();
 
-            response.Result = await _context.Set<TEntity>().AsNoTracking().ToListAsync();
+            response.Result = await GetQueryable(predicate, include, selector).ToListAsync();
             response.Message = $"Returned all information from {typeof(GenericRepository<TEntity>).FullName}";
 
             return response;

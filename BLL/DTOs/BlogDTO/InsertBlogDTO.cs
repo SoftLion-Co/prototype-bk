@@ -9,7 +9,7 @@ namespace BLL.DTOs.BlogDTO
     {
         public InsertSVGDTO InsertSVGDTO { get; set; } = null!;
         public List<InsertParagraphDTO> ParagraphDTOs { get; set; } = null!;
-        public List<GetPictureDTO> Pictures { get; set; } = null!;
+        public List<InsertPictureDTO> Pictures { get; set; } = null!;
         public GetAuthorDTO AuthorDTO { get; set; } = null!;
         public double? ReadingTime { get; set; }
     }
