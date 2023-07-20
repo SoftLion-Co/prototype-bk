@@ -28,9 +28,9 @@ namespace MIG.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Avatar")
+                    b.Property<string>("Avatar")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
@@ -424,7 +424,8 @@ namespace MIG.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BlogId");
+                    b.HasIndex("BlogId")
+                        .IsUnique();
 
                     b.ToTable("SVG", (string)null);
                 });
@@ -546,8 +547,8 @@ namespace MIG.Migrations
             modelBuilder.Entity("DAL.Entities.SVG", b =>
                 {
                     b.HasOne("DAL.Entities.Blog", "Blog")
-                        .WithMany("SVGs")
-                        .HasForeignKey("BlogId")
+                        .WithOne("SVG")
+                        .HasForeignKey("DAL.Entities.SVG", "BlogId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -565,7 +566,8 @@ namespace MIG.Migrations
 
                     b.Navigation("Pictures");
 
-                    b.Navigation("SVGs");
+                    b.Navigation("SVG")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Entities.Country", b =>

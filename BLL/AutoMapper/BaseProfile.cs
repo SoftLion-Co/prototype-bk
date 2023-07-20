@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BLL.DTOs;
+using BLL.DTOs.Base;
 using DAL.Entities.Base;
 
 namespace BLL.AutoMapper
@@ -8,7 +8,7 @@ namespace BLL.AutoMapper
     {
         public BaseProfile()
         {
-            CreateMap<BaseEntity, BaseDTO>().ReverseMap();
+            CreateMap<BaseEntity, GetBaseDTO>().ReverseMap();
         }
     }
 }

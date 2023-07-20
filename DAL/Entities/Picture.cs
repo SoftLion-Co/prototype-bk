@@ -4,7 +4,7 @@ namespace DAL.Entities
 {
     public class Picture : BaseEntity
     {
-        public byte[] Content { get; set; } = null!;
+        public string Content { get; set; } = null!;
         public Guid? BlogId { get; set; }
         public Blog? Blog { get; set; } 
         public Guid? ProjectId { get; set; }

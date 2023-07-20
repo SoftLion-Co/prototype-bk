@@ -14,8 +14,7 @@ namespace DAL.Context.Configurations
 
             builder
                 .HasOne(x => x.Blog)
-                .WithMany(x => x.SVGs)
-                .HasForeignKey(p => p.BlogId)
+                .WithOne(x => x.SVG)
                 .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
         }

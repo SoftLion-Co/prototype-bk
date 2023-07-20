@@ -11,7 +11,7 @@ namespace DAL.Entities
         public Author Author { get; set; } = null!;
         public ICollection<Paragraph> Paragraphs { get; set; } = null!;
         public ICollection<Picture> Pictures { get; set; } = null!;
-        public ICollection<SVG> SVGs { get; set; } = null!;
+        public SVG SVG { get; set; } = null!;
 
     }
 }
