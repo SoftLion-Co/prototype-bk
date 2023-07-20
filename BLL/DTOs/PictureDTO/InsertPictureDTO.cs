@@ -2,8 +2,8 @@
 {
     public class InsertPictureDTO
     {
-        public byte[] Content { get; set; } = null!;
-        public Guid? BlogId { get; set; }
-        public Guid? ProjectId { get; set; }
+        public string Content { get; set; } = null!;
+        //public Guid? BlogId { get; set; }
+        //public Guid? ProjectId { get; set; }
     }
 }

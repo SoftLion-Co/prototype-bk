@@ -19,6 +19,11 @@ namespace DAL.GenericRepository
             _context = context;
         }
 
+        public async Task<TEntity> FindByIdAsync(Guid id)
+        {
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<ResponseEntity<IEnumerable<TEntity>>> DeleteEntityByIdAsync(Guid ID)
         {
             var response = new ResponseEntity<IEnumerable<TEntity>>();
@@ -76,11 +81,12 @@ namespace DAL.GenericRepository
             return response;
         }
 
-        public async Task<ResponseEntity<TEntity>> GetEntityByIdAsync(Guid ID)
+        public async Task<ResponseEntity<TEntity>> GetEntityByIdAsync(Guid ID,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
         {
             var response = new ResponseEntity<TEntity>();
 
-            response.Result = await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x=>x.Id == ID);
+            response.Result = await GetQueryable(include: include).FirstOrDefaultAsync(x=>x.Id == ID);
             response.Message = $"Returned all information from {typeof(GenericRepository<TEntity>).FullName}";
 
             return response;
@@ -116,6 +122,13 @@ namespace DAL.GenericRepository
             response.Message = $"Updated all information from {typeof(GenericRepository<TEntity>).FullName}";
 
             return response;
+        }
+
+        public async Task Attach(TEntity entity) 
+        {
+            var result = await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
+
+            await Task.Run(() => _context.Set<TEntity>().Entry(result).CurrentValues.SetValues(entity));
         }
     }
 }
