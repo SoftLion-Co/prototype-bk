@@ -3,7 +3,7 @@ using BLL.DTOs.BlogDTO;
 using DAL.Entities.ResponseEntity;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
-
+using AutoMapper.QueryableExtensions;
 namespace BLL.Services.Blog
 {
     public class BlogService : IBlogService
@@ -47,6 +47,16 @@ namespace BLL.Services.Blog
                 .Include(b => b.Paragraphs)
                 .Include(b => b.SVG)));
             return _mapper.Map<ResponseEntity<GetBlogDTO>>(blog);
+        }
+
+        public async Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs()
+        {
+            var blogs = await _wrapperRepository.BlogRepository
+                .GetAllInformationQueryableAsync(
+                selector: blog => new DAL.Entities.Blog{ Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
+                include: blog => blog.Include(b => b.SVG));
+            var response = await blogs.Result.ProjectTo<GetTopBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return new ResponseEntity<IEnumerable<GetTopBlogDTO>> { Result = response };
         }
 
         public async Task<ResponseEntity<GetBlogDTO>> InsertBlogAsync(InsertBlogDTO blogDTO)

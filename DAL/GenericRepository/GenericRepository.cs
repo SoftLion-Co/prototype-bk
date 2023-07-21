@@ -81,6 +81,19 @@ namespace DAL.GenericRepository
             return response;
         }
 
+        public async Task<ResponseEntity<IQueryable<TEntity>>> GetAllInformationQueryableAsync(
+            Expression<Func<TEntity, TEntity>>? selector = default,
+            Expression<Func<TEntity, bool>>? predicate = default,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
+        {
+            var response = new ResponseEntity<IQueryable<TEntity>>();
+
+            response.Result = await Task.Run(() => GetQueryable(predicate, include, selector));
+            response.Message = $"Returned all information from {typeof(GenericRepository<TEntity>).FullName}";
+
+            return response;
+        }
+
         public async Task<ResponseEntity<TEntity>> GetEntityByIdAsync(Guid ID,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
         {

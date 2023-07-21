@@ -10,5 +10,6 @@ namespace BLL.Services.Author
         Task<ResponseEntity<GetAuthorDTO>> InsertAuthorAsync(InsertAuthorDTO authorDTO);
         Task<ResponseEntity<GetAuthorDTO>> UpdateAuthorAsync(UpdateAuthorDTO updateAuthorDTO);
         Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> DeleteAuthorByIdAsync(Guid id);
+        Task<ResponseEntity<IEnumerable<GetTopAuthorDTO>>> GetAllTopAuthorsAsync();
     }
 }

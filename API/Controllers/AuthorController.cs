@@ -1,8 +1,8 @@
 ﻿using BLL.DTOs.AuthorDTO;
-using BLL.MediatR.Author;
 using BLL.MediatR.Author.CreateAuthor;
 using BLL.MediatR.Author.DeleteAuthor;
 using BLL.MediatR.Author.GetAllAuthors;
+using BLL.MediatR.Author.GetAllTopAuthors;
 using BLL.MediatR.Author.GetAuthorById;
 using BLL.MediatR.Author.UpdateAuthor;
 using DAL.Entities.ResponseEntity;
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/author")]
+    [Route("api/[controller]")]
     public class AuthorController : BaseApiController
     {
         /// <summary>
@@ -22,6 +22,15 @@ namespace API.Controllers
         public async Task<ActionResult<ResponseEntity<IEnumerable<GetAuthorDTO>>>> GetAllAuthorsAsync()
         {
             return Ok(await Mediator.Send(new GetAllAuthorsQuery()));
+        }
+        /// <summary>
+        /// Short information about all authors 
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetTopAuthorDTO</returns>
+        [HttpGet("top")]
+        public async Task<ActionResult<ResponseEntity<IEnumerable<GetTopAuthorDTO>>>> GetAllTopAuthorsAsync()
+        {
+            return Ok(await Mediator.Send(new GetAllTopAuthorsQuery()));
         }
         /// <summary>
         /// Information about a specific author

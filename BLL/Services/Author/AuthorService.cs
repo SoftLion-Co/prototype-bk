@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BLL.DTOs.AuthorDTO;
 using DAL.Entities.ResponseEntity;
 using DAL.WrapperRepository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services.Author
 {
@@ -54,6 +56,13 @@ namespace BLL.Services.Author
             //TODO Implement exception handling if something goes wrong with Logger
             await _wrapperRepository.Save();
             return _mapper.Map<ResponseEntity<IEnumerable<GetAuthorDTO>>>(authors);
+        }
+
+        public async Task<ResponseEntity<IEnumerable<GetTopAuthorDTO>>> GetAllTopAuthorsAsync()
+        {
+            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationQueryableAsync(selector: author => new DAL.Entities.Author { Name = author.Name, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
+            var response = await authors.Result.ProjectTo<GetTopAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return new ResponseEntity<IEnumerable<GetTopAuthorDTO>> { Result = response };
         }
     }
 }

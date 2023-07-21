@@ -10,6 +10,7 @@ namespace BLL.AutoMapper.Blog
         public BlogProfile()
         {
             CreateMap<DAL.Entities.Blog, GetBlogDTO>().ReverseMap();
+            CreateMap<DAL.Entities.Blog, GetTopBlogDTO>().ReverseMap();
             CreateMap<DAL.Entities.Blog, InsertBlogDTO>().ReverseMap();
             CreateMap<DAL.Entities.Blog, UpdateBlogDTO>().ReverseMap();
         }

@@ -3,6 +3,7 @@ using BLL.MediatR.Blog.CreateBlog;
 using BLL.MediatR.Blog.DeleteBlog;
 using BLL.MediatR.Blog.GetAllBlogs;
 using BLL.MediatR.Blog.GetBlogById;
+using BLL.MediatR.Blog.GetTopBlogs;
 using BLL.MediatR.Blog.UpdateBlog;
 using DAL.Entities.ResponseEntity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/blog")]
+    [Route("api/[controller]")]
     public class BlogController : BaseApiController
     {
         /// <summary>
@@ -21,6 +22,15 @@ namespace API.Controllers
         public async Task<ActionResult<ResponseEntity<IEnumerable<GetBlogDTO>>>> GetAllBlogs()
         {
             return Ok(await Mediator.Send(new GetAllBlogsQuery()));
+        }
+        /// <summary>
+        /// Short information about all blogs
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Title Description and SVG</returns>
+        [HttpGet("top")]
+        public async Task<ActionResult<ResponseEntity<IEnumerable<GetTopBlogDTO>>>> GetAllTopBlogs()
+        {
+            return Ok(await Mediator.Send(new GetAllTopBlogsQuery()));
         }
         /// <summary>
         /// Information about a specific blog
