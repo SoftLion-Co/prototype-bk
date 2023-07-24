@@ -32,13 +32,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AutoMapper\Country\" />
     <Folder Include="AutoMapper\Customer\" />
     <Folder Include="AutoMapper\OrderBlog\" />
     <Folder Include="AutoMapper\OrderProject\" />
-    <Folder Include="AutoMapper\Project\" />
     <Folder Include="AutoMapper\Technology\" />
     <Folder Include="DTOs\CustomerDTO\" />
+    <Folder Include="MediatR\Project\DeleteProject\" />
+    <Folder Include="MediatR\Project\GetAllProjects\" />
+    <Folder Include="MediatR\Project\GetAllTopProjects\" />
+    <Folder Include="MediatR\Project\GetProjectById\" />
+    <Folder Include="MediatR\Project\GetProjectsWithPagination\" />
+    <Folder Include="MediatR\Project\UpdateProject\" />
   </ItemGroup>
 
 </Project>

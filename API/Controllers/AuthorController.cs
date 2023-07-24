@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/author")]
+    [Route("api/authors")]
     public class AuthorController : BaseApiController
     {
         /// <summary>

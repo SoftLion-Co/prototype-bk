@@ -5,7 +5,7 @@ using MediatR;
 
 namespace BLL.MediatR.Author.DeleteAuthor
 {
-    internal class DeleteAuthorHandler : IRequestHandler<DeleteAuthorCommand, ResponseEntity<IEnumerable<GetAuthorDTO>>>
+    public class DeleteAuthorHandler : IRequestHandler<DeleteAuthorCommand, ResponseEntity<IEnumerable<GetAuthorDTO>>>
     {
         private readonly IAuthorService _authorService;
 

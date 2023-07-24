@@ -9,10 +9,9 @@ namespace BLL.AutoMapper.Blog
     {
         public BlogProfile()
         {
-            CreateMap<DAL.Entities.Blog, GetBlogDTO>()
-            .ForMember(dest => dest.AuthorDTO.Avatar, opt => opt.MapFrom(src => Convert.ToBase64String(src.Author.Avatar)))
-            .ReverseMap()
-            .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => Encoding.ASCII.GetBytes(src.Avatar)));
+            CreateMap<DAL.Entities.Blog, GetBlogDTO>().ReverseMap();
+            CreateMap<DAL.Entities.Blog, InsertBlogDTO>().ReverseMap();
+            CreateMap<DAL.Entities.Blog, UpdateBlogDTO>().ReverseMap();
         }
     }
 }
