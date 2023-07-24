@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/blog")]
+    [Route("api/blogs")]
+
     public class BlogController : BaseApiController
     {
         /// <summary>

@@ -23,6 +23,6 @@ namespace DAL.WrapperRepository.Interface
         IOrderProjectRepository OrderProjectRepository { get; }
         ITechnologyRepository TechnologyRepository { get; }
 
-
+        IProjectTechnologyRepository ProjectTechnologyRepository { get;  }
     }
 }

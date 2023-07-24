@@ -20,7 +20,8 @@ namespace DAL.Context
         public DbSet<SVG> SVGs { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<Technology> technologies { get; set; }
+        public DbSet<Technology> Technologies { get; set; }
+        public DbSet<ProjectTechnology> ProjectTechnologies { get; set; }
 
         //migrations : dotnet ef migrations add AddTableToDataBase --project ../MIG
         //database : dotnet ef database update
