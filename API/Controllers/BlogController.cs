@@ -11,6 +11,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/blogs")]
+
     public class BlogController : BaseApiController
     {
         /// <summary>
