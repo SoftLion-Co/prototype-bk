@@ -1,10 +1,5 @@
 ﻿using BLL.DTOs.CountryDTO;
-using DAL.Entities.ResponseEntity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BLL.DTOs.Response.ResponseEntity;
 
 namespace BLL.Services.Country
 {
@@ -14,6 +9,6 @@ namespace BLL.Services.Country
         Task<ResponseEntity<GetCountryDTO>> GetCountryByIdAsync(Guid id);
         Task<ResponseEntity<GetCountryDTO>> InsertCountryAsync(InsertCountryDTO blogDTO);
         Task<ResponseEntity<GetCountryDTO>> UpdateCountryAsync(UpdateCountryDTO updateCountryDTO);
-        Task<ResponseEntity<IEnumerable<GetCountryDTO>>> DeleteCountryByIdAsync(Guid id);
+        Task<ResponseEntity> DeleteCountryByIdAsync(Guid id);
     }
 }

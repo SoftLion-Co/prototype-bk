@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.ProjectDTO;
-using DAL.Entities.ResponseEntity;
+using BLL.DTOs.Response.ResponseEntity;
 
 namespace BLL.Services.Project
 {

@@ -4,7 +4,6 @@ using BLL.MediatR.Blog.DeleteBlog;
 using BLL.MediatR.Blog.GetAllBlogs;
 using BLL.MediatR.Blog.GetBlogById;
 using BLL.MediatR.Blog.UpdateBlog;
-using DAL.Entities.ResponseEntity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -19,7 +18,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpGet]
-        public async Task<ActionResult<ResponseEntity<IEnumerable<GetBlogDTO>>>> GetAllBlogs()
+        public async Task<IActionResult> GetAllBlogs()
         {
             return Ok(await Mediator.Send(new GetAllBlogsQuery()));
         }
@@ -28,7 +27,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<ResponseEntity<GetBlogDTO>>> GetBlogByIdAsync(Guid id)
+        public async Task<IActionResult> GetBlogByIdAsync(Guid id)
         {
             return Ok(await Mediator.Send(new GetBlogByIdQuery(id)));
         }
@@ -37,7 +36,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpPost]
-        public async Task<ActionResult<ResponseEntity<GetBlogDTO>>> CreateBlog(InsertBlogDTO insertBlogDTO)
+        public async Task<IActionResult> CreateBlog([FromBody] InsertBlogDTO insertBlogDTO)
         {
             return Ok(await Mediator.Send(new CreateBlogCommand(insertBlogDTO)));
         }
@@ -46,7 +45,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpPut]
-        public async Task<ActionResult<ResponseEntity<GetBlogDTO>>> UpdateBlog(UpdateBlogDTO updateBlogDTO)
+        public async Task<IActionResult> UpdateBlog([FromBody] UpdateBlogDTO updateBlogDTO)
         {
             return Ok(await Mediator.Send(new UpdateBlogCommand(updateBlogDTO)));
         }
@@ -55,7 +54,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ResponseEntity<IEnumerable<GetBlogDTO>>>> DeleteBlog(Guid id)
+        public async Task<IActionResult> DeleteBlog(Guid id)
         {
             return Ok(await Mediator.Send(new DeleteBlogCommand(id)));
         }

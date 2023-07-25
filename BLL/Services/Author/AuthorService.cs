@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BLL.DTOs.AuthorDTO;
-using DAL.Entities.ResponseEntity;
+using BLL.DTOs.Response.ResponseEntity;
 using DAL.WrapperRepository.Interface;
+using Microsoft.EntityFrameworkCore;
+using BLL.DTOs.Exceptions;
+using System.Net;
+using DAL.Entities;
 
 namespace BLL.Services.Author
 {
@@ -19,15 +24,18 @@ namespace BLL.Services.Author
         public async Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> GetAllAuthorsAsync()
         {
             var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync();
-
-            return _mapper.Map<ResponseEntity<IEnumerable<DAL.Entities.Author>>, ResponseEntity<IEnumerable<GetAuthorDTO>>>(authors);
+            var authorDTOs = await authors.ProjectTo<GetAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return new ResponseEntity<IEnumerable<GetAuthorDTO>>(HttpStatusCode.OK, null, authorDTOs);
         }
 
         public async Task<ResponseEntity<GetAuthorDTO>> GetAuthorByIdAsync(Guid id)
         {
             var author = await _wrapperRepository.AuthorRepository.GetEntityByIdAsync(id);
-
-            return _mapper.Map<ResponseEntity<GetAuthorDTO>>(author);
+            if (author is null)
+            {
+                throw NotFoundException.Default<DAL.Entities.Author>();
+            }
+            return new ResponseEntity<GetAuthorDTO>(HttpStatusCode.OK, null, _mapper.Map<GetAuthorDTO>(author));
         }
 
         public async Task<ResponseEntity<GetAuthorDTO>> InsertAuthorAsync(InsertAuthorDTO authorDTO)
@@ -36,7 +44,7 @@ namespace BLL.Services.Author
             var response = await _wrapperRepository.AuthorRepository.InsertEntityAsync(author);
             //TODO Implement exception handling if something goes wrong with Logger
             await _wrapperRepository.Save();
-            return _mapper.Map<ResponseEntity<GetAuthorDTO>>(response);
+            return new ResponseEntity<GetAuthorDTO>(HttpStatusCode.Created, null, _mapper.Map<GetAuthorDTO>(response));
         }
 
         public async Task<ResponseEntity<GetAuthorDTO>> UpdateAuthorAsync(UpdateAuthorDTO updateAuthorDTO)
@@ -45,15 +53,14 @@ namespace BLL.Services.Author
             var response = await _wrapperRepository.AuthorRepository.UploadEntityAsync(author);
             //TODO Implement exception handling if something goes wrong with Logger
             await _wrapperRepository.Save();
-            return _mapper.Map<ResponseEntity<GetAuthorDTO>>(response);
+            return new ResponseEntity<GetAuthorDTO>(HttpStatusCode.OK, null, _mapper.Map<GetAuthorDTO>(response));
         }
 
-        public async Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> DeleteAuthorByIdAsync(Guid id)
+        public async Task<ResponseEntity> DeleteAuthorByIdAsync(Guid id)
         {
-            var authors = await _wrapperRepository.AuthorRepository.DeleteEntityByIdAsync(id);
-            //TODO Implement exception handling if something goes wrong with Logger
+            await _wrapperRepository.AuthorRepository.DeleteEntityByIdAsync(id);
             await _wrapperRepository.Save();
-            return _mapper.Map<ResponseEntity<IEnumerable<GetAuthorDTO>>>(authors);
+            return new ResponseEntity(HttpStatusCode.NoContent, null);
         }
     }
 }

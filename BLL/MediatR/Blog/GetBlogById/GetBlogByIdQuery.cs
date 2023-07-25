@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.BlogDTO;
-using DAL.Entities.ResponseEntity;
+using BLL.DTOs.Response.ResponseEntity;
 using MediatR;
 
 namespace BLL.MediatR.Blog.GetBlogById

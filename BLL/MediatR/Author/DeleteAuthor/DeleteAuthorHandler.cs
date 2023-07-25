@@ -1,11 +1,11 @@
 ﻿using BLL.DTOs.AuthorDTO;
+using BLL.DTOs.Response.ResponseEntity;
 using BLL.Services.Author;
-using DAL.Entities.ResponseEntity;
 using MediatR;
 
 namespace BLL.MediatR.Author.DeleteAuthor
 {
-    public class DeleteAuthorHandler : IRequestHandler<DeleteAuthorCommand, ResponseEntity<IEnumerable<GetAuthorDTO>>>
+    public class DeleteAuthorHandler : IRequestHandler<DeleteAuthorCommand, ResponseEntity>
     {
         private readonly IAuthorService _authorService;
 
@@ -14,7 +14,7 @@ namespace BLL.MediatR.Author.DeleteAuthor
             _authorService = authorService;
         }
 
-        public Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
+        public Task<ResponseEntity> Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
         {
             return _authorService.DeleteAuthorByIdAsync(request.Id);
         }

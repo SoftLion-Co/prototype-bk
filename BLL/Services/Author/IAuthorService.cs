@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.AuthorDTO;
-using DAL.Entities.ResponseEntity;
+using BLL.DTOs.Response.ResponseEntity;
 
 namespace BLL.Services.Author
 {
@@ -9,6 +9,6 @@ namespace BLL.Services.Author
         Task<ResponseEntity<GetAuthorDTO>> GetAuthorByIdAsync(Guid id);
         Task<ResponseEntity<GetAuthorDTO>> InsertAuthorAsync(InsertAuthorDTO authorDTO);
         Task<ResponseEntity<GetAuthorDTO>> UpdateAuthorAsync(UpdateAuthorDTO updateAuthorDTO);
-        Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> DeleteAuthorByIdAsync(Guid id);
+        Task<ResponseEntity> DeleteAuthorByIdAsync(Guid id);
     }
 }

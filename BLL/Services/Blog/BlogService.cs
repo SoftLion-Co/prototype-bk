@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using BLL.DTOs.BlogDTO;
-using DAL.Entities.ResponseEntity;
+using BLL.DTOs.Exceptions;
+using BLL.DTOs.Response.ResponseEntity;
+using DAL.Entities;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace BLL.Services.Blog
 {
@@ -17,13 +20,12 @@ namespace BLL.Services.Blog
             _wrapperRepository = repository;
         }
 
-        public async Task<ResponseEntity<IEnumerable<GetBlogDTO>>> DeleteBlogByIdAsync(Guid id)
+        public async Task<ResponseEntity> DeleteBlogByIdAsync(Guid id)
         {
-            var blog = await _wrapperRepository.BlogRepository.DeleteEntityByIdAsync(id);
-            var blogDTOs = _mapper.Map<ResponseEntity<IEnumerable<GetBlogDTO>>>(blog);
+            await _wrapperRepository.BlogRepository.DeleteEntityByIdAsync(id);
             await _wrapperRepository.Save();
 
-            return blogDTOs;
+            return new ResponseEntity(HttpStatusCode.NoContent, null);
         }
 
         public async Task<ResponseEntity<IEnumerable<GetBlogDTO>>> GetAllBlogsAsync()
@@ -35,9 +37,8 @@ namespace BLL.Services.Blog
                 Include(paragraphs => paragraphs.Paragraphs).
                 Include(svg => svg.SVG).
                 Include(pictures => pictures.Pictures));
-            
-            var blogsDto = _mapper.Map<ResponseEntity<IEnumerable<DAL.Entities.Blog>>, ResponseEntity<IEnumerable<GetBlogDTO>>>(blogs);
-            return blogsDto;
+
+            return new ResponseEntity<IEnumerable<GetBlogDTO>>(HttpStatusCode.OK, null, _mapper.Map<IEnumerable<GetBlogDTO>>(await blogs.ToListAsync()));
         }
 
         public async Task<ResponseEntity<GetBlogDTO>> GetBlogByIdAsync(Guid id)
@@ -57,7 +58,9 @@ namespace BLL.Services.Blog
             var author = await _wrapperRepository.AuthorRepository.FindByIdAsync(blog.AuthorId);
 
             if (author is null)
-                throw new ArgumentNullException("There is no existing author in the database");
+            {
+                throw NotFoundException.Default<GetBlogDTO>();
+            }
             blog.Author = author;
 
             foreach (var paragraph in blog.Paragraphs)
@@ -77,7 +80,7 @@ namespace BLL.Services.Blog
             var response = await _wrapperRepository.BlogRepository.InsertEntityAsync(blog);
             await _wrapperRepository.Save();
 
-            return _mapper.Map<ResponseEntity<GetBlogDTO>>(response);
+            return new ResponseEntity<GetBlogDTO>(HttpStatusCode.Created, null, _mapper.Map<GetBlogDTO>(response));
         }
 
         public async Task<ResponseEntity<GetBlogDTO>> UpdateBlogAsync(UpdateBlogDTO updateBlogDTO)
@@ -86,7 +89,9 @@ namespace BLL.Services.Blog
             var author = await _wrapperRepository.AuthorRepository.FindByIdAsync(blog.AuthorId);
 
             if (author is null)
-                throw new ArgumentNullException("There is no existing author in the database");
+            {
+                throw NotFoundException.Default<GetBlogDTO>();
+            }
             blog.Author = author;
 
             foreach (var paragraph in blog.Paragraphs)
@@ -103,7 +108,7 @@ namespace BLL.Services.Blog
             var response = await _wrapperRepository.BlogRepository.UploadEntityAsync(blog);
             await _wrapperRepository.Save();
 
-            return _mapper.Map<ResponseEntity<GetBlogDTO>>(response);
+            return new ResponseEntity<GetBlogDTO>(HttpStatusCode.OK, null, _mapper.Map<GetBlogDTO>(response));
         }
     }
 }
