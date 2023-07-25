@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.BlogDTO;
-using DAL.Entities.ResponseEntity;
+using BLL.DTOs.Response.ResponseEntity;
 
 namespace BLL.Services.Blog
 {
@@ -9,6 +9,6 @@ namespace BLL.Services.Blog
         Task<ResponseEntity<GetBlogDTO>> GetBlogByIdAsync(Guid id);
         Task<ResponseEntity<GetBlogDTO>> InsertBlogAsync(InsertBlogDTO blogDTO);
         Task<ResponseEntity<GetBlogDTO>> UpdateBlogAsync(UpdateBlogDTO updateBlogDTO);
-        Task<ResponseEntity<IEnumerable<GetBlogDTO>>> DeleteBlogByIdAsync(Guid id);
+        Task<ResponseEntity> DeleteBlogByIdAsync(Guid id);
     }
 }

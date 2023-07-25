@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.AuthorDTO;
-using DAL.Entities.ResponseEntity;
+using BLL.DTOs.Response.ResponseEntity;
 using MediatR;
 
 namespace BLL.MediatR.Author.UpdateAuthor

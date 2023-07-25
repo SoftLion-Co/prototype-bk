@@ -1,7 +1,6 @@
 ﻿using BLL.DTOs.CountryDTO;
-using BLL.MediatR.Country.DeleteCountry;
+using BLL.DTOs.Response.ResponseEntity;
 using BLL.Services.Country;
-using DAL.Entities.ResponseEntity;
 using MediatR;
 
 namespace BLL.MediatR.Country.GetAllCountries

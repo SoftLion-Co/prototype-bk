@@ -1,8 +1,6 @@
 ﻿using DAL.Context;
 using DAL.Entities.Base;
-using DAL.Entities.ResponseEntity;
 using DAL.GenericRepository.Interface;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
@@ -12,36 +10,30 @@ namespace DAL.GenericRepository
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         where TEntity : BaseEntity
     {
-
+        protected readonly DbSet<TEntity> _dbSet;
         private readonly DataContext _context;
 
         public GenericRepository(DataContext context)
         {
             _context = context;
+            _dbSet = context.Set<TEntity>();
         }
 
         public async Task<TEntity> FindByIdAsync(Guid id)
         {
-            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<ResponseEntity<IEnumerable<TEntity>>> DeleteEntityByIdAsync(Guid ID)
+        public async Task DeleteEntityByIdAsync(Guid id)
         {
-            var response = new ResponseEntity<IEnumerable<TEntity>>();
-
-            var result = await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id ==ID);
+            var result = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
             if (result == null)
             {
-                throw new NullReferenceException($"Entity with this id {ID} not found");
+                throw new NullReferenceException($"Entity with this id {id} not found");
             }
 
-            _context.Set<TEntity>().Remove(result);
-
-            response.Result = await _context.Set<TEntity>().AsNoTracking().ToListAsync();
-            response.Message = $"Remove information from {typeof(GenericRepository<TEntity>).FullName}";
-
-            return response;
+            _dbSet.Remove(result);
         }
 
         private IQueryable<TEntity> GetQueryable(
@@ -49,7 +41,7 @@ namespace DAL.GenericRepository
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
         Expression<Func<TEntity, TEntity>>? selector = default)
         {
-            var query = _context.Set<TEntity>().AsNoTracking();
+            var query = _dbSet.AsNoTracking();
 
             if (include is not null)
             {
@@ -69,60 +61,46 @@ namespace DAL.GenericRepository
             return query.AsNoTracking();
         }
 
-        public async Task<ResponseEntity<IEnumerable<TEntity>>> GetAllInformationAsync(
+        public async Task<IQueryable<TEntity>> GetAllInformationAsync(
             Expression<Func<TEntity, TEntity>>? selector = default,
             Expression<Func<TEntity, bool>>? predicate = default,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
         {
-            var response = new ResponseEntity<IEnumerable<TEntity>>();
-
-            response.Result = await GetQueryable(predicate, include, selector).ToListAsync();
-            response.Message = $"Returned all information from {typeof(GenericRepository<TEntity>).FullName}";
-
-            return response;
+            return GetQueryable(predicate, include, selector);
         }
 
-        public async Task<ResponseEntity<TEntity>> GetEntityByIdAsync(Guid ID,
+        public async Task<TEntity> GetEntityByIdAsync(
+            Guid id,
+            Expression<Func<TEntity, TEntity>>? selector = default,
+            Expression<Func<TEntity, bool>>? predicate = default,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
         {
-            var response = new ResponseEntity<TEntity>();
 
-            response.Result = await GetQueryable(include: include).FirstOrDefaultAsync(x=>x.Id == ID);
-            response.Message = $"Returned all information from {typeof(GenericRepository<TEntity>).FullName}";
-
-            return response;
+            return await GetQueryable(predicate, include, selector).FirstOrDefaultAsync(x => x.Id == id);
         }
     
-
-        public async Task<ResponseEntity<TEntity>> InsertEntityAsync(TEntity entity)
+        public async Task<TEntity> InsertEntityAsync(TEntity entity)
         {
-            var response = new ResponseEntity<TEntity>();
-
-            await _context.Set<TEntity>().AddAsync(entity);
-
-            response.Result = entity;
-            response.Message = $"Inserted all information from {typeof(GenericRepository<TEntity>).FullName}";
-
-            return response;
+            await _dbSet.AddAsync(entity);
+            return entity;
         }
 
-        public async Task<ResponseEntity<TEntity>> UploadEntityAsync(TEntity entity)
+        public async Task<TEntity> UploadEntityAsync(TEntity entity)
         {
-            var response = new ResponseEntity<TEntity>();
-            
-            var result = await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
 
-            if(result == null)
-            {
-                throw new NullReferenceException($"{entity.Id} not found");
-            }
+            //var result = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
 
-            _context.Set<TEntity>().Update(entity);
+            //if(result == null)
+            //{
+            //    throw new NullReferenceException($"{entity.Id} not found");
+            //}
+            var a = _dbSet.Update(entity);
+            return a.Entity;
 
-            response.Result = entity;
-            response.Message = $"Updated all information from {typeof(GenericRepository<TEntity>).FullName}";
+            //response.Result = entity;
+            //response.Message = $"Updated all information from {typeof(GenericRepository<TEntity>).FullName}";
 
-            return response;
+            //return response;
         }
 
         public async Task Attach(TEntity entity) 
