@@ -7,6 +7,8 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using BLL.Services.Blog;
 using BLL.Services.Country;
+using API.Extensions;
+using Microsoft.Extensions.Configuration;
 
 namespace API
 {
@@ -31,16 +33,18 @@ namespace API
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
-            builder.Services.AddDbContext<DataContext>(configurations =>
+            builder.Services.AddDb(() => new BLL.DTOs.Response.DatabaseSettings
             {
-                configurations.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-                    options => options.MigrationsAssembly("MIG"));
+                Server = builder.Configuration.GetValue<string>("DatabaseSettings:Server"),
+                Database = builder.Configuration.GetValue<string>("DatabaseSettings:Database"),
+                UserId = builder.Configuration.GetValue<string>("DatabaseSettings:UserId"),
+                Password = builder.Configuration.GetValue<string>("DatabaseSettings:Password"),
             });
 
-            builder.Services.AddScoped<IWrapperRepository, WrapperRepository>();
-            builder.Services.AddScoped<IAuthorService, AuthorService>();
-            builder.Services.AddScoped<IBlogService, BlogService>();
-            builder.Services.AddScoped<ICountryService, CountryService>();
+            builder.Services.AddRepositories();
+            builder.Services.AddServices();
+            builder.Services.AddMapper();
+
 
             var app = builder.Build();
 
