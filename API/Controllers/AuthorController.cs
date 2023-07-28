@@ -1,17 +1,20 @@
 ﻿using BLL.DTOs.AuthorDTO;
-using BLL.MediatR.Author.CreateAuthor;
-using BLL.MediatR.Author.DeleteAuthor;
-using BLL.MediatR.Author.GetAllAuthors;
-using BLL.MediatR.Author.GetAuthorById;
-using BLL.MediatR.Author.UpdateAuthor;
+using BLL.Services.Author;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/authors")]
-    public class AuthorController : BaseApiController
+    [Route("api/author")]
+    public class AuthorController : ControllerBase
     {
+        private readonly IAuthorService _authorService;
+
+        public AuthorController(IAuthorService authorService)
+        {
+            _authorService = authorService;
+        }
+
         /// <summary>
         ///  All informations about authors 
         /// </summary>
@@ -19,7 +22,18 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAuthorsAsync()
         {
-            return Ok(await Mediator.Send(new GetAllAuthorsQuery()));
+            var response = await _authorService.GetAllAuthorsAsync();
+            return Ok(response);
+        }
+        /// <summary>
+        ///  All shart informations about authors 
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetTopAuthorDTO</returns>
+        [HttpGet("get-short-all")]
+        public async Task<IActionResult> GetAllTopAuthorsAsync()
+        {
+            var response = await _authorService.GetAllTopAuthorsAsync();
+            return Ok(response);
         }
         /// <summary>
         /// Information about a specific author
@@ -28,7 +42,8 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAuthorByIdAsync(Guid id)
         {
-            return Ok(await Mediator.Send(new GetAuthorByIdQuery(id)));
+            var response = await _authorService.GetAuthorByIdAsync(id);
+            return Ok(response);
         }
         /// <summary>
         /// To create an author
@@ -37,7 +52,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAuthorAsync([FromBody] InsertAuthorDTO authorDTO)
         {
-            return Ok(await Mediator.Send(new CreateAuthorCommand(authorDTO)));
+            var response = await _authorService.InsertAuthorAsync(authorDTO);
+            return Ok(response);
         }
         /// <summary>
         /// To update an author by its Guid
@@ -46,12 +62,14 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAuthorAsync([FromBody] UpdateAuthorDTO authorDTO)
         {
-            return Ok(await Mediator.Send(new UpdateAuthorCommand(authorDTO)));
+            var response = await _authorService.UpdateAuthorAsync(authorDTO);
+            return Ok(response);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthorById(Guid id)
         {
-            return Ok(await Mediator.Send(new DeleteAuthorCommand(id)));
+            var response = await _authorService.DeleteAuthorByIdAsync(id);
+            return Ok(response);
         }
     }
 }

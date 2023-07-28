@@ -2,7 +2,7 @@
 using BLL.DTOs.BlogDTO;
 using BLL.DTOs.Exceptions;
 using BLL.DTOs.Response.ResponseEntity;
-using DAL.Entities;
+using AutoMapper.QueryableExtensions;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -83,6 +83,17 @@ namespace BLL.Services.Blog
             return new ResponseEntity<GetBlogDTO>(HttpStatusCode.Created, null, _mapper.Map<GetBlogDTO>(response));
         }
 
+        public async Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs()
+        {
+            var blogs = await _wrapperRepository.BlogRepository
+                .GetAllInformationQueryableAsync(
+                selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
+                include: blog => blog.Include(b => b.SVG));
+            var response = await blogs.ProjectTo<GetTopBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created, null, response);
+        }
+
+
         public async Task<ResponseEntity<GetBlogDTO>> UpdateBlogAsync(UpdateBlogDTO updateBlogDTO)
         {
             var blog = _mapper.Map<UpdateBlogDTO, DAL.Entities.Blog>(updateBlogDTO);
@@ -96,15 +107,15 @@ namespace BLL.Services.Blog
 
             foreach (var paragraph in blog.Paragraphs)
             {
-                await _wrapperRepository.ParagraphRepository.Attach(paragraph);
+                await _wrapperRepository.ParagraphRepository.UploadEntityAsync(paragraph);
             }
 
             foreach (var picture in blog.Pictures)
             {
-                await _wrapperRepository.PictureRepository.Attach(picture);
+                await _wrapperRepository.PictureRepository.UploadEntityAsync(picture);
             }
 
-            await _wrapperRepository.SVGRepository.Attach(blog.SVG);
+            await _wrapperRepository.SVGRepository.UploadEntityAsync(blog.SVG);
             var response = await _wrapperRepository.BlogRepository.UploadEntityAsync(blog);
             await _wrapperRepository.Save();
 

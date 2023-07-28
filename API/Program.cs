@@ -5,7 +5,6 @@ using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using BLL.MediatR.Author.GetAllAuthors;
 using BLL.Services.Blog;
 using BLL.Services.Country;
 using API.Extensions;
@@ -44,8 +43,8 @@ namespace API
 
             builder.Services.AddRepositories();
             builder.Services.AddServices();
-            builder.Services.AddMediatr();
             builder.Services.AddMapper();
+
 
             var app = builder.Build();
 

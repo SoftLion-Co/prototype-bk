@@ -11,6 +11,10 @@ namespace DAL.GenericRepository.Interface
             Expression<Func<TEntity, TEntity>>? selector = default,
             Expression<Func<TEntity, bool>>? predicate = default,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default);
+        Task<IQueryable<TEntity>> GetAllInformationQueryableAsync(
+            Expression<Func<TEntity, TEntity>>? selector = default,
+            Expression<Func<TEntity, bool>>? predicate = default,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default);
         Task<TEntity> GetEntityByIdAsync(
             Guid id,
             Expression<Func<TEntity, TEntity>>? selector = default,
@@ -21,6 +25,5 @@ namespace DAL.GenericRepository.Interface
         Task DeleteEntityByIdAsync(Guid id);
         Task<TEntity> FindByIdAsync(Guid id);
 
-        Task Attach(TEntity entity);
     }
 }
