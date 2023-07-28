@@ -6,7 +6,6 @@ using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using BLL.DTOs.Exceptions;
 using System.Net;
-using DAL.Entities;
 
 namespace BLL.Services.Author
 {
@@ -26,6 +25,14 @@ namespace BLL.Services.Author
             var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync();
             var authorDTOs = await authors.ProjectTo<GetAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetAuthorDTO>>(HttpStatusCode.OK, null, authorDTOs);
+        }
+
+
+        public async Task<ResponseEntity<IEnumerable<GetTopAuthorDTO>>> GetAllTopAuthorsAsync()
+        {
+            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationQueryableAsync(selector: author => new DAL.Entities.Author { Name = author.Name, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
+            var response = await authors.ProjectTo<GetTopAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            return new ResponseEntity<IEnumerable<GetTopAuthorDTO>>(HttpStatusCode.OK, null, response);
         }
 
         public async Task<ResponseEntity<GetAuthorDTO>> GetAuthorByIdAsync(Guid id)

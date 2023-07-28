@@ -1,26 +1,30 @@
 ﻿using BLL.DTOs.BlogDTO;
-using BLL.MediatR.Blog.CreateBlog;
-using BLL.MediatR.Blog.DeleteBlog;
-using BLL.MediatR.Blog.GetAllBlogs;
-using BLL.MediatR.Blog.GetBlogById;
-using BLL.MediatR.Blog.UpdateBlog;
+using BLL.Services.Blog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/blogs")]
+    [Route("api/blog")]
 
-    public class BlogController : BaseApiController
+    public class BlogController : ControllerBase
     {
+        private readonly IBlogService _blogService;
+
+        public BlogController(IBlogService blogService)
+        {
+            _blogService = blogService;
+        }
+
         /// <summary>
         /// Information about all blogs
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAllBlogs()
+        public async Task<IActionResult> GetAllBlogsAsync()
         {
-            return Ok(await Mediator.Send(new GetAllBlogsQuery()));
+            var response = await _blogService.GetAllBlogsAsync();
+            return Ok(response);
         }
         /// <summary>
         /// Information about a specific blog
@@ -29,34 +33,38 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBlogByIdAsync(Guid id)
         {
-            return Ok(await Mediator.Send(new GetBlogByIdQuery(id)));
+            var response = await _blogService.GetBlogByIdAsync(id);
+            return Ok(response);
         }
         /// <summary>
         /// To create a blog
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpPost]
-        public async Task<IActionResult> CreateBlog([FromBody] InsertBlogDTO insertBlogDTO)
+        public async Task<IActionResult> CreateBlogAsync([FromBody] InsertBlogDTO insertBlogDTO)
         {
-            return Ok(await Mediator.Send(new CreateBlogCommand(insertBlogDTO)));
+            var response = await _blogService.InsertBlogAsync(insertBlogDTO);
+            return Ok(response);
         }
         /// <summary>
         /// To update already existing blog
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpPut]
-        public async Task<IActionResult> UpdateBlog([FromBody] UpdateBlogDTO updateBlogDTO)
+        public async Task<IActionResult> UpdateBlogAsync([FromBody] UpdateBlogDTO updateBlogDTO)
         {
-            return Ok(await Mediator.Send(new UpdateBlogCommand(updateBlogDTO)));
+            var response = await _blogService.UpdateBlogAsync(updateBlogDTO);
+            return Ok(response);
         }
         /// <summary>
         /// To delete a blog  by id
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBlog(Guid id)
+        public async Task<IActionResult> DeleteBlogAsync(Guid id)
         {
-            return Ok(await Mediator.Send(new DeleteBlogCommand(id)));
+            var response = await _blogService.DeleteBlogByIdAsync(id);
+            return Ok(response);
         }
     }
 }
