@@ -32,7 +32,7 @@ namespace API
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-
+            builder.Services.AddIdentity();
             builder.Services.AddDb(() => new BLL.DTOs.Response.DatabaseSettings
             {
                 Server = builder.Configuration.GetValue<string>("DatabaseSettings:Server"),
@@ -40,12 +40,10 @@ namespace API
                 UserId = builder.Configuration.GetValue<string>("DatabaseSettings:UserId"),
                 Password = builder.Configuration.GetValue<string>("DatabaseSettings:Password"),
             });
-
             builder.Services.AddRepositories();
             builder.Services.AddServices();
             builder.Services.AddMapper();
-
-
+            
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

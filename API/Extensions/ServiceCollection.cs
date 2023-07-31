@@ -4,10 +4,12 @@ using BLL.Services.Blog;
 using BLL.Services.Country;
 using BLL.Services.Rating;
 using DAL.Context;
+using DAL.Entities;
 using DAL.GenericRepository;
 using DAL.GenericRepository.Interface;
 using DAL.WrapperRepository;
 using DAL.WrapperRepository.Interface;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -17,19 +19,22 @@ namespace API.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IWrapperRepository, WrapperRepository>();
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         
             return services;
         }
 
-        public static IServiceCollection AddDb(this IServiceCollection services, Func<DatabaseSettings> connectionConfiguration)
+        public static IServiceCollection AddDb(this IServiceCollection services,
+            Func<DatabaseSettings> connectionConfiguration)
         {
             var conf = connectionConfiguration();
             if (conf is null)
             {
                 throw new NullReferenceException(nameof(conf));
             }
-            var connectionString = $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";
+
+            var connectionString =
+                $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";
 
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -37,18 +42,33 @@ namespace API.Extensions
             return services;
         }
 
-        public static IServiceCollection AddMediatr(this IServiceCollection services)
-        {
-            var name = AppDomain.CurrentDomain.GetAssemblies()
-                .SingleOrDefault(assembly => assembly.GetName().Name == "BLL");
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(name!));
-            return services;
-        }
-
         public static IServiceCollection AddMapper(this IServiceCollection services)
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             services.AddAutoMapper(assemblies);
+            return services;
+        }
+
+        public static IServiceCollection AddIdentity(this IServiceCollection services)
+        {
+            services.AddIdentityCore<IdentityUser<Guid>>(x =>
+                {
+                    x.User.RequireUniqueEmail = true;
+                })
+                .AddRoles<IdentityRole<Guid>>()
+                .AddSignInManager<SignInManager<IdentityUser<Guid>>>()
+                .AddUserManager<UserManager<IdentityUser<Guid>>>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+            
+            services.AddIdentityCore<Customer>(x =>
+                {
+                    x.User.RequireUniqueEmail = true;
+                })
+                .AddRoles<IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+
             return services;
         }
 

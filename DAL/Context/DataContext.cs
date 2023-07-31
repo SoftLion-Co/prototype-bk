@@ -1,10 +1,12 @@
 ﻿using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DAL.Context
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -28,7 +30,8 @@ namespace DAL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         { 
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
