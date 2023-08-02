@@ -2,7 +2,7 @@
 
 namespace BLL.DTOs.RatingDTO
 {
-    public class GetRatingDTO : GetBaseDTO
+    public class GetRatingDTO : GetBaseDto
     {
         public double Mark { get; set; }
         public Guid ProjectId { get; set; }

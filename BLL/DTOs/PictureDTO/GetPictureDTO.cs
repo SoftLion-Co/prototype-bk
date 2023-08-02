@@ -2,7 +2,7 @@
 
 namespace BLL.DTOs.PictureDTO
 {
-    public class GetPictureDTO : GetBaseDTO
+    public class GetPictureDTO : GetBaseDto
     {
         public string Content { get; set; } = null!;
         public Guid? BlogId { get; set; }

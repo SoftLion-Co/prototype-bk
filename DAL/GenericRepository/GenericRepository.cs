@@ -110,7 +110,7 @@ namespace DAL.GenericRepository
                 throw new NullReferenceException($"{entity.Id} not found");
             }
 
-             _dbSet.Entry(result).CurrentValues.SetValues(entity);
+            _dbSet.Entry(result).CurrentValues.SetValues(entity);
 
             return entity;
         }

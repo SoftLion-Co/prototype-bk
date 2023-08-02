@@ -1,7 +1,9 @@
 ﻿using BLL.DTOs.Response;
 using BLL.Services.Author;
+using BLL.Services.AuthService;
 using BLL.Services.Blog;
 using BLL.Services.Country;
+using BLL.Services.Customer;
 using BLL.Services.Rating;
 using DAL.Context;
 using DAL.Entities;
@@ -65,6 +67,8 @@ namespace API.Extensions
                 {
                     x.User.RequireUniqueEmail = true;
                 })
+                .AddSignInManager<SignInManager<Customer>>()
+                .AddUserManager<UserManager<Customer>>()
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
@@ -78,6 +82,8 @@ namespace API.Extensions
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IRatingService, RatingService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICustomerService, CustomerService>();
             return services;
         }
     }

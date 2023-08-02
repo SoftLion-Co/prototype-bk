@@ -24,8 +24,6 @@
   <ItemGroup>
 
     <Folder Include="AutoMapper\Country\" />
-    <Folder Include="AutoMapper\Customer\" />
-    <Folder Include="DTOs\CustomerDTO\" />
     <Folder Include="Services\Rating\" />
 
   </ItemGroup>

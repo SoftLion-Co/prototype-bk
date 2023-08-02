@@ -2,7 +2,7 @@
 
 namespace BLL.DTOs.ParagraphDTO
 {
-    public class GetParagraphDTO : GetBaseDTO
+    public class GetParagraphDTO : GetBaseDto
     {
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;

@@ -6,7 +6,7 @@ using System;
 namespace BLL.DTOs.OrderBlogDTO
 {
 
-    public class GetOrderBlogDTO : GetBaseDTO
+    public class GetOrderBlogDTO : GetBaseDto
     {
         public string Username { get; set; } = null!;
         public string Email { get; set; } = null!;

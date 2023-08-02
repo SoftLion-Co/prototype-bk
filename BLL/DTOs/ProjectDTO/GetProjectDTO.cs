@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTOs.ProjectDTO
 {
-    public class GetProjectDTO : GetBaseDTO
+    public class GetProjectDTO : GetBaseDto
     {
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;

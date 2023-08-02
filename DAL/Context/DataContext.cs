@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DAL.Context
 {
-    public class DataContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
+    public class DataContext : IdentityDbContext<Customer, IdentityRole<Guid>, Guid>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -15,7 +15,7 @@ namespace DAL.Context
         public DbSet<Author> Authors { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        // public DbSet<Customer> Customers { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<OrderBlog> OrderBlogs { get; set; }
         public DbSet<OrderProject> OrderProjects { get; set; }

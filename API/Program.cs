@@ -1,14 +1,6 @@
-using BLL.Services.Author;
-using DAL.Context;
-using DAL.WrapperRepository;
-using DAL.WrapperRepository.Interface;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using BLL.Services.Blog;
-using BLL.Services.Country;
 using API.Extensions;
-using Microsoft.Extensions.Configuration;
 
 namespace API
 {
@@ -32,7 +24,6 @@ namespace API
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-            builder.Services.AddIdentity();
             builder.Services.AddDb(() => new BLL.DTOs.Response.DatabaseSettings
             {
                 Server = builder.Configuration.GetValue<string>("DatabaseSettings:Server"),
@@ -41,9 +32,10 @@ namespace API
                 Password = builder.Configuration.GetValue<string>("DatabaseSettings:Password"),
             });
             builder.Services.AddRepositories();
+            builder.Services.AddIdentity();
             builder.Services.AddServices();
             builder.Services.AddMapper();
-            
+            builder.Services.AddAuthentication();
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

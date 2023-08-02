@@ -8,15 +8,21 @@ namespace BLL.DTOs.Response.ResponseEntity
         { 
             Result = result;
         }
+        public ResponseEntity(HttpStatusCode httpStatusCode, TResult result)
+        {
+            StatusCode = (int)httpStatusCode;
+            Result = result;
+        }
         public TResult? Result { get; set; }
     }
     public class ResponseEntity
     {
-        public ResponseEntity()
-        {
-            
-        }
+        public ResponseEntity() { }
 
+        public ResponseEntity(HttpStatusCode httpStatusCode)
+        {
+            StatusCode = (int)httpStatusCode;
+        }
         public ResponseEntity(HttpStatusCode httpStatusCode, IEnumerable<Error> errors)
         {
             StatusCode = (int)httpStatusCode;

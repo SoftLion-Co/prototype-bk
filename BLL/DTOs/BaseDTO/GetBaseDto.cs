@@ -1,6 +1,6 @@
 ﻿namespace BLL.DTOs.Base
 {
-    public class GetBaseDTO
+    public class GetBaseDto
     {
         public Guid Id { get; set; }
         public DateTime CreatedDateTime { get; set; }
