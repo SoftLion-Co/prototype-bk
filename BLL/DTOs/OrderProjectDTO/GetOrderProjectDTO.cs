@@ -6,7 +6,7 @@ using System;
 namespace BLL.DTOs.OrderProjectDTO
 {
 
-    public class GetOrderProjectDTO : GetBaseDTO
+    public class GetOrderProjectDTO : GetBaseDto
     {
         public string NumberPhone { get; set; } = null!;
         public string Email { get; set; } = null!;

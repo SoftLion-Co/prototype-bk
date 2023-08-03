@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTOs.CountryDTO
 {
-    public class GetCountryDTO : GetBaseDTO
+    public class GetCountryDTO : GetBaseDto
     {
         public string Name { get; set; } = null!;
 

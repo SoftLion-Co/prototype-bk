@@ -36,6 +36,21 @@ namespace DAL.GenericRepository
             _dbSet.Remove(result);
         }
 
+        public async Task<IQueryable<TEntity>> GetAllInformationQueryableAsync(
+           Expression<Func<TEntity, TEntity>>? selector = default,
+           Expression<Func<TEntity, bool>>? predicate = default,
+           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
+        {
+            var entities = await Task.Run(() => GetQueryable(predicate, include, selector));
+
+            if (entities == null)
+            {
+                throw new NullReferenceException("not found");
+            }
+
+            return entities;
+        }
+
         private IQueryable<TEntity> GetQueryable(
         Expression<Func<TEntity, bool>>? predicate = default,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
@@ -88,26 +103,16 @@ namespace DAL.GenericRepository
         public async Task<TEntity> UploadEntityAsync(TEntity entity)
         {
 
-            //var result = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
+            var result = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
 
-            //if(result == null)
-            //{
-            //    throw new NullReferenceException($"{entity.Id} not found");
-            //}
-            var a = _dbSet.Update(entity);
-            return a.Entity;
+            if(result == null)
+            {
+                throw new NullReferenceException($"{entity.Id} not found");
+            }
 
-            //response.Result = entity;
-            //response.Message = $"Updated all information from {typeof(GenericRepository<TEntity>).FullName}";
+            _dbSet.Entry(result).CurrentValues.SetValues(entity);
 
-            //return response;
-        }
-
-        public async Task Attach(TEntity entity) 
-        {
-            var result = await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
-
-            await Task.Run(() => _context.Set<TEntity>().Entry(result).CurrentValues.SetValues(entity));
+            return entity;
         }
     }
 }

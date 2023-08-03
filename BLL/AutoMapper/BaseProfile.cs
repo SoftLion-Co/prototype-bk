@@ -8,7 +8,10 @@ namespace BLL.AutoMapper
     {
         public BaseProfile()
         {
-            CreateMap<BaseEntity, GetBaseDTO>().ReverseMap();
+            CreateMap<BaseEntity, GetBaseDto>().ReverseMap();
+            CreateMap<BaseEntity, GetTopBaseDTO>().ReverseMap();
+            CreateMap<BaseEntity, UpdateBaseDTO>().ReverseMap();
+
         }
     }
 }

@@ -6,7 +6,7 @@ using BLL.DTOs.SVG;
 
 namespace BLL.DTOs.BlogDTO
 {
-    public class GetBlogDTO : GetBaseDTO
+    public class GetBlogDTO : GetBaseDto
     {
         public GetSVGDTO SVG { get; set; } = null!;
         public List<GetPictureDTO> Pictures { get; set; } = null!;

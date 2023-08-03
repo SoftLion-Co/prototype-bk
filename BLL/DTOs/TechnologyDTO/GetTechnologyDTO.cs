@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.DTOs.TechnologyDTO
 {
-    public class GetTechnologyDTO : GetBaseDTO
+    public class GetTechnologyDTO : GetBaseDto
     {
         public string Name { get; set; } = null!;
 

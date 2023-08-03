@@ -10,5 +10,6 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IOrderProjectRepository : IGenericRepository<OrderProject>
     {
+        public Task<OrderProject> ChangeTypeOrderAsync(Guid id, int typeNumber);
     }
 }

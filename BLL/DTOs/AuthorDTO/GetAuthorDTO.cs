@@ -2,7 +2,7 @@
 
 namespace BLL.DTOs.AuthorDTO
 {
-    public class GetAuthorDTO : GetBaseDTO
+    public class GetAuthorDTO : GetBaseDto
     {
         public string Name { get; set; } = null!;
         public string Surname { get; set; } = null!;

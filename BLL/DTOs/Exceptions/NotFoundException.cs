@@ -2,18 +2,20 @@
 
 namespace BLL.DTOs.Exceptions
 {
-    public class NotFoundException : Exception, IAppException
+    public class NotFoundException : BaseException
     {
-        public NotFoundException(IEnumerable<Error> errors)
-        {
-            Errors = errors;
-        }
-        public int StatusCode => 404;
-
-        public IEnumerable<Error> Errors { get; private set; }
+        public override int StatusCode => 404;
         public static NotFoundException Default<TEntity>()
         {
-            return new NotFoundException(new List<Error>() { new Error($"{typeof(TEntity)} not found") });
+            return new NotFoundException($"{typeof(TEntity)} not found");
+        }
+
+        public NotFoundException(string error) : base(error)
+        {
+        }
+        
+        public NotFoundException(IEnumerable<string> error) : base(error)
+        {
         }
     }
 }

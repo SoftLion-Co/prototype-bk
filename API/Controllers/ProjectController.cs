@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/projects")]
+    [Route("api/project")]
     public class ProjectController : ControllerBase
     {
     }

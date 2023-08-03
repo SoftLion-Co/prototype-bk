@@ -1,13 +1,6 @@
-using BLL.Services.Author;
-using DAL.Context;
-using DAL.WrapperRepository;
-using DAL.WrapperRepository.Interface;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using BLL.MediatR.Author.GetAllAuthors;
-using BLL.Services.Blog;
-using BLL.Services.Country;
+using API.Extensions;
 
 namespace API
 {
@@ -31,21 +24,18 @@ namespace API
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-
-            builder.Services.AddDbContext<DataContext>(configurations =>
+            builder.Services.AddDb(() => new BLL.DTOs.Response.DatabaseSettings
             {
-                configurations.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-                    options => options.MigrationsAssembly("MIG"));
+                Server = builder.Configuration.GetValue<string>("DatabaseSettings:Server"),
+                Database = builder.Configuration.GetValue<string>("DatabaseSettings:Database"),
+                UserId = builder.Configuration.GetValue<string>("DatabaseSettings:UserId"),
+                Password = builder.Configuration.GetValue<string>("DatabaseSettings:Password"),
             });
-
-            builder.Services.AddScoped<IWrapperRepository, WrapperRepository>();
-            builder.Services.AddScoped<IAuthorService, AuthorService>();
-            builder.Services.AddScoped<IBlogService, BlogService>();
-            builder.Services.AddScoped<ICountryService, CountryService>();
-            var currentAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            builder.Services.AddAutoMapper(currentAssemblies);
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetAllAuthorsQuery>());
-
+            builder.Services.AddRepositories();
+            builder.Services.AddIdentity();
+            builder.Services.AddServices();
+            builder.Services.AddMapper();
+            builder.Services.AddAuthentication();
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

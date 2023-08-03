@@ -10,5 +10,6 @@ namespace BLL.Services.Blog
         Task<ResponseEntity<GetBlogDTO>> InsertBlogAsync(InsertBlogDTO blogDTO);
         Task<ResponseEntity<GetBlogDTO>> UpdateBlogAsync(UpdateBlogDTO updateBlogDTO);
         Task<ResponseEntity> DeleteBlogByIdAsync(Guid id);
+        Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs();
     }
 }
