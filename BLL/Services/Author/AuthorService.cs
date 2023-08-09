@@ -6,6 +6,7 @@ using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using BLL.DTOs.Exceptions;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BLL.Services.Author
 {

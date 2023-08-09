@@ -1,10 +1,12 @@
 ﻿using BLL.DTOs.AuthorDTO;
 using BLL.Services.Author;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class AuthorController : ControllerBase
     {
