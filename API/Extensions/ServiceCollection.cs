@@ -1,3 +1,4 @@
+
 ﻿using BLL.Services.Author;
 using BLL.Services.AuthService;
 using BLL.Services.Blog;
@@ -27,6 +28,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using BLL.Models;
 
+
 namespace API.Extensions
 {
     public static class ServiceCollection
@@ -50,7 +52,20 @@ namespace API.Extensions
             return services;
         }
 
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
+        public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
+            services.AddSingleton(opt =>
+            {
+                var service = opt.GetRequiredService<IOptions<JwtOptions>>().Value;
+                return service;
+            });
+
+            return services;
+        }
+        
+        public static IServiceCollection AddDb(this IServiceCollection services,
+            Func<DatabaseSettings> connectionConfiguration)
         {
             var provider = services.BuildServiceProvider();
             var settings = provider.GetRequiredService<JwtOptions>();
@@ -193,6 +208,75 @@ namespace API.Extensions
                     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
+        {
+            var provider = services.BuildServiceProvider();
+            var settings = provider.GetRequiredService<JwtOptions>();
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidAudience = settings.ValidAudience,
+                        ValidIssuer = settings.ValidIssuer,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey)),
+                        ClockSkew = TimeSpan.FromMinutes(30)
+                    };
+                });
+            return services;
+        }
+
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Title = "The Back part of SoftLion project",
+                    Description = "Something",
+                    Version = "v1"
+                });
+
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme.",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
+                });
+
+                // Define the security requirement for JWT
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+            });
             return services;
         }
     }

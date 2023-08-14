@@ -8,6 +8,7 @@ namespace API.Controllers
     [ApiController]
     [Authorize]
     [Route("api/author")]
+
     public class AuthorController : ControllerBase
     {
         private readonly IAuthorService _authorService;
