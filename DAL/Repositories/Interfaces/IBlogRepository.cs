@@ -5,5 +5,6 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IBlogRepository : IGenericRepository<Blog>
     {
+        
     }
 }

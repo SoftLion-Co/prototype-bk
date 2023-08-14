@@ -56,6 +56,10 @@ namespace API.Controllers
             var response = await _technologyService.UpdateTechnologyAsync(technologyDTO);
             return Ok(response);
         }
+        /// <summary>
+        /// To delete an technology by its Guid
+        /// </summary>
+        /// <returns>An ActionResult</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTechnologyById(Guid id)
         {

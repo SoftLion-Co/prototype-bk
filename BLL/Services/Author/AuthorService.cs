@@ -23,7 +23,7 @@ namespace BLL.Services.Author
 
         public async Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> GetAllAuthorsAsync()
         {
-            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync();
+            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationQueryableAsync();
             var authorDTOs = await authors.ProjectTo<GetAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetAuthorDTO>>(HttpStatusCode.OK, null, authorDTOs);
         }

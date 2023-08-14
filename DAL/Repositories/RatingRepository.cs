@@ -12,10 +12,8 @@ namespace DAL.Repositories
 {
     public class RatingRepository : GenericRepository<Rating>, IRatingRepository
     {
-        private readonly DataContext _context;
         public RatingRepository(DataContext context) : base(context)
         {
-            _context = context;
         }
 
     }

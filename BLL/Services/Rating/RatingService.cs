@@ -26,14 +26,14 @@ namespace BLL.Services.Rating
 
         public async Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsAsync()
         {
-            var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync();
+            var ratings = await _wrapperRepository.RatingRepository.GetAllInformationQueryableAsync();
             var response = await ratings.ProjectTo<GetRatingDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetRatingDTO>>(System.Net.HttpStatusCode.OK, null, response);
         }
 
         public async Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsByProjectIdAsync(Guid projectId)
         {
-            var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync(predicate: rating => rating.ProjectId == projectId);
+            var ratings = await _wrapperRepository.RatingRepository.GetAllInformationQueryableAsync(predicate: rating => rating.ProjectId == projectId);
             var response = await ratings.ProjectTo<GetRatingDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetRatingDTO>>(System.Net.HttpStatusCode.OK, null, response);
         }

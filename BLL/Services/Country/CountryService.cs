@@ -27,7 +27,7 @@ namespace BLL.Services.Country
 
         public async Task<ResponseEntity<IEnumerable<GetCountryDTO>>> GetAllCountriesAsync()
         {
-            var countries = await _wrapperRepository.CountryRepository.GetAllInformationAsync();
+            var countries = await _wrapperRepository.CountryRepository.GetAllInformationQueryableAsync();
             var countriesDTO = await countries.ProjectTo<GetCountryDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetCountryDTO>>(System.Net.HttpStatusCode.OK, null, countriesDTO);
         }

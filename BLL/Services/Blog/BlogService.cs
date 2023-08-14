@@ -30,7 +30,7 @@ namespace BLL.Services.Blog
 
         public async Task<ResponseEntity<IEnumerable<GetBlogDTO>>> GetAllBlogsAsync()
         {
-            var blogs = await _wrapperRepository.BlogRepository.GetAllInformationAsync(
+            var blogs = await _wrapperRepository.BlogRepository.GetAllInformationQueryableAsync(
                 include: 
                 (blog) => 
                 blog.Include(author => author.Author).

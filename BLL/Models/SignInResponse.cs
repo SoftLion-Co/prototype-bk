@@ -1,7 +1,9 @@
-﻿namespace BLL.Models;
 
-public class SignInResponse
+namespace BLL.Models
 {
-    public string AccessToken { get; set; } = null!;
-    public string RefreshToken { get; set; } = null!;
+    public class SignInResponse
+    {
+        public string AccessToken { get; set; } = null!;
+        public string RefreshToken { get; set; } = null!;
+    }
 }
