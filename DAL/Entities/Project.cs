@@ -8,8 +8,8 @@ namespace DAL.Entities
         public string Description { get; set; } = null!;
         public string Period { get; set; } = null!;
         public int DateYear { get; set; }
-        public Guid? CountryId { get; set; }
-        public Country? Country { get; set; }
+        public Guid CountryId { get; set; }
+        public Country Country { get; set; } = null!;
         public string RequestDescription { get; set; } = null!;
         public string RequestList { get; set; } = null!;
         public string SolutionDescription { get; set; } = null!;

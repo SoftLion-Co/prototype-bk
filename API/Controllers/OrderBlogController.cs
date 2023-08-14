@@ -66,6 +66,10 @@ namespace API.Controllers
             var response = await _orderBlogService.UpdateOrderBlogAsync(orderBlogDTO);
             return Ok(response);
         }
+        /// <summary>
+        /// To delete an orderBlog by its Guid
+        /// </summary>
+        /// <returns>An ActionResult</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrderBlogById(Guid id)
         {

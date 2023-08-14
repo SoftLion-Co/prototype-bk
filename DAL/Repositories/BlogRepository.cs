@@ -2,6 +2,7 @@
 using DAL.Entities;
 using DAL.GenericRepository;
 using DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -9,7 +10,9 @@ namespace DAL.Repositories
     {
         public BlogRepository(DataContext context) : base(context)
         {
-            
         }
+
+       
     }
+    
 }

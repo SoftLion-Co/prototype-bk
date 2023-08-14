@@ -6,6 +6,6 @@ namespace BLL.Services.AuthService;
 
 public interface IAuthService
 {
-    Task<ResponseEntity<GetCustomerDto>> SignInAsync(SignInModel model);
-    Task<ResponseEntity> SignUpAsync(SignUpModel model);
+    Task<ResponseEntity<SignInResponse>> SignInAsync(SignInModel model);
+    Task<ResponseEntity<SignInResponse>> SignUpAsync(SignUpModel model);
 }

@@ -56,6 +56,10 @@ namespace API.Controllers
             var response = await _countryService.UpdateCountryAsync(countryDTO);
             return Ok(response);
         }
+        /// <summary>
+        /// To delete an country by its Guid
+        /// </summary>
+        /// <returns>An ActionResult</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountryById(Guid id)
         {

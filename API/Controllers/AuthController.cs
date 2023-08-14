@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -17,7 +17,7 @@ namespace API.Controllers
             _authService = authService;
         }
         [HttpPost("sign-in")]
-        public async Task<ResponseEntity<GetCustomerDto>> SignInAsync(SignInModel model)
+        public async Task<ResponseEntity> SignInAsync(SignInModel model)
         {
             return await _authService.SignInAsync(model);
         }

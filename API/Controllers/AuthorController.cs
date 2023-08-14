@@ -1,11 +1,13 @@
 ﻿using BLL.DTOs.AuthorDTO;
 using BLL.Services.Author;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/author")]
     public class AuthorController : ControllerBase
     {
         private readonly IAuthorService _authorService;
@@ -65,6 +67,10 @@ namespace API.Controllers
             var response = await _authorService.UpdateAuthorAsync(authorDTO);
             return Ok(response);
         }
+        /// <summary>
+        /// To delete an author by its Guid
+        /// </summary>
+        /// <returns>An ActionResult</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthorById(Guid id)
         {

@@ -11,11 +11,9 @@ namespace DAL.GenericRepository
         where TEntity : BaseEntity
     {
         protected readonly DbSet<TEntity> _dbSet;
-        private readonly DataContext _context;
 
         public GenericRepository(DataContext context)
         {
-            _context = context;
             _dbSet = context.Set<TEntity>();
         }
 
@@ -74,14 +72,6 @@ namespace DAL.GenericRepository
             }
 
             return query.AsNoTracking();
-        }
-
-        public async Task<IQueryable<TEntity>> GetAllInformationAsync(
-            Expression<Func<TEntity, TEntity>>? selector = default,
-            Expression<Func<TEntity, bool>>? predicate = default,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
-        {
-            return GetQueryable(predicate, include, selector);
         }
 
         public async Task<TEntity> GetEntityByIdAsync(

@@ -66,6 +66,10 @@ namespace API.Controllers
             var response = await _orderProjectService.UpdateOrderProjectAsync(orderProjectDTO);
             return Ok(response);
         }
+        /// <summary>
+        /// To delete an orderProject by its Guid
+        /// </summary>
+        /// <returns>An ActionResult</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrderProjectById(Guid id)
         {
