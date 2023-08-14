@@ -68,12 +68,12 @@ namespace API.Controllers
             var response = await _blogService.DeleteBlogByIdAsync(id);
             return Ok(response);
         }
-        [HttpGet("pagination")]
+        /*[HttpGet("pagination")]
         public async Task<IActionResult> Get([FromQuery] ItemParameters productParameters)
         {
             var products = await _blogService.GetBlogsPaginationAsync(productParameters);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.MetaData));
             return Ok(products);
-        }
+        }*/
     }
 }

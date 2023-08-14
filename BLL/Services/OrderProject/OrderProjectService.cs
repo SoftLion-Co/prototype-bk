@@ -36,7 +36,7 @@ namespace BLL.Services.OrderProject
 
         public async Task<ResponseEntity<IEnumerable<GetOrderProjectDTO>>> GetAllOrderProjectsAsync()
         {
-            var orderProjects = await _wrapperRepository.OrderProjectRepository.GetAllInformationAsync();
+            var orderProjects = await _wrapperRepository.OrderProjectRepository.GetAllInformationQueryableAsync();
             var orderProjectsDTO = await orderProjects.ProjectTo<GetOrderProjectDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetOrderProjectDTO>>(System.Net.HttpStatusCode.OK, null, orderProjectsDTO);
         }

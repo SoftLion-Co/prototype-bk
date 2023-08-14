@@ -36,7 +36,7 @@ namespace BLL.Services.OrderBlog
 
         public async Task<ResponseEntity<IEnumerable<GetOrderBlogDTO>>> GetAllOrderBlogsAsync()
         {
-            var orderBlogs = await _wrapperRepository.OrderBlogRepository.GetAllInformationAsync();
+            var orderBlogs = await _wrapperRepository.OrderBlogRepository.GetAllInformationQueryableAsync();
             var orderBlogsDTO = await orderBlogs.ProjectTo<GetOrderBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetOrderBlogDTO>>(System.Net.HttpStatusCode.OK, null, orderBlogsDTO);
         }

@@ -27,7 +27,7 @@ namespace BLL.Services.Technology
 
         public async Task<ResponseEntity<IEnumerable<GetTechnologyDTO>>> GetAllTechnologiesAsync()
         {
-            var technologies = await _wrapperRepository.TechnologyRepository.GetAllInformationAsync();
+            var technologies = await _wrapperRepository.TechnologyRepository.GetAllInformationQueryableAsync();
             var technologiesDTO = await technologies.ProjectTo<GetTechnologyDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetTechnologyDTO>>(System.Net.HttpStatusCode.OK, null, technologiesDTO);
         }
