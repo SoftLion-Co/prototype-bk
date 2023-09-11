@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.BlogDTO;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 
 namespace BLL.Services.Blog
 {

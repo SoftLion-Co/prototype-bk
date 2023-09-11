@@ -2,7 +2,7 @@
 
 namespace BLL.DTOs.Exceptions
 {
-    internal interface IAppException
+    public interface IAppException
     {
         int StatusCode { get; }
         IEnumerable<Error> Errors { get; }

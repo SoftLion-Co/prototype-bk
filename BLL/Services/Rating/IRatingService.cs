@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.RatingDTO;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 
 namespace BLL.Services.Rating
 {

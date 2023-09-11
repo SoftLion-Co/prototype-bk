@@ -1,5 +1,5 @@
-﻿using BLL.DTOs.TechnologyDTO;
-using BLL.DTOs.Response.ResponseEntity;
+﻿using BLL.DTOs.Response;
+using BLL.DTOs.TechnologyDTO;
 
 namespace BLL.Services.Technology
 {

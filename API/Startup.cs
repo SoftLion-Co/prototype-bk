@@ -28,7 +28,7 @@ namespace API
             services
                 .AddMetrics()
                 .AddSwaggerServices()
-                .AddOptions()
+                .AddSettings(Configuration)
                 .AddValidation()
                 .AddMapper()
                 .AddDb(Configuration)

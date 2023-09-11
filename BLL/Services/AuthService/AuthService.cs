@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using AutoMapper;
 using BLL.DTOs.Exceptions;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 using BLL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
