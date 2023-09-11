@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs.RatingDTO;
 using BLL.Services.Rating;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -18,8 +19,9 @@ namespace API.Controllers
         /// Return all ratings about blog 
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetRatingDTO</returns>
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<IActionResult> GetAllRatingsByProjectIdAsync(Guid id)
+        public async Task<IActionResult> GetAllRatingsByProjectIdAsync([FromQuery]Guid id)
         {
             var response = await _ratingService.GetAllRatingsByProjectIdAsync(id);
             return Ok(response);

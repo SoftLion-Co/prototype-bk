@@ -23,7 +23,7 @@ namespace BLL.Services.Author
 
         public async Task<ResponseEntity<IEnumerable<GetAuthorDTO>>> GetAllAuthorsAsync()
         {
-            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationQueryableAsync();
+            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync();
             var authorDTOs = await authors.ProjectTo<GetAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetAuthorDTO>>(HttpStatusCode.OK, null, authorDTOs);
         }
@@ -31,7 +31,7 @@ namespace BLL.Services.Author
 
         public async Task<ResponseEntity<IEnumerable<GetTopAuthorDTO>>> GetAllTopAuthorsAsync()
         {
-            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationQueryableAsync(selector: author => new DAL.Entities.Author { Name = author.Name, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
+            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync(selector: author => new DAL.Entities.Author { Name = author.Name, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
             var response = await authors.ProjectTo<GetTopAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetTopAuthorDTO>>(HttpStatusCode.OK, null, response);
         }

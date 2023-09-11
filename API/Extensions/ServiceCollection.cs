@@ -1,4 +1,4 @@
-
+﻿
 ﻿using BLL.Services.Author;
 using BLL.Services.AuthService;
 using BLL.Services.Blog;
@@ -27,7 +27,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Options;
 using BLL.Models;
-
+using BLL.DTOs.Response;
 
 namespace API.Extensions
 {
@@ -52,18 +52,6 @@ namespace API.Extensions
             return services;
         }
 
-        public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
-            services.AddSingleton(opt =>
-            {
-                var service = opt.GetRequiredService<IOptions<JwtOptions>>().Value;
-                return service;
-            });
-
-            return services;
-        }
-        
         public static IServiceCollection AddDb(this IServiceCollection services,
             Func<DatabaseSettings> connectionConfiguration)
         {
@@ -96,9 +84,9 @@ namespace API.Extensions
         public static IServiceCollection AddDb(this IServiceCollection services, IConfiguration Configuration)
         {
             var connect = Configuration.GetSection("DatabaseSettings").GetConnectionString;
-                
-           /* var connectionString =
-                $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";*/
+
+            /* var connectionString =
+                 $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";*/
 
             /*services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(connectionString));*/
@@ -130,9 +118,9 @@ namespace API.Extensions
         public static IServiceCollection AddIdentity(this IServiceCollection services)
         {
             services.AddIdentityCore<IdentityUser<Guid>>(x =>
-                {
-                    x.User.RequireUniqueEmail = true;
-                })
+            {
+                x.User.RequireUniqueEmail = true;
+            })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddSignInManager<SignInManager<IdentityUser<Guid>>>()
                 .AddUserManager<UserManager<IdentityUser<Guid>>>()
@@ -140,9 +128,9 @@ namespace API.Extensions
                 .AddDefaultTokenProviders();
 
             services.AddIdentityCore<Customer>(x =>
-                {
-                    x.User.RequireUniqueEmail = true;
-                })
+            {
+                x.User.RequireUniqueEmail = true;
+            })
                 .AddSignInManager<SignInManager<Customer>>()
                 .AddUserManager<UserManager<Customer>>()
                 .AddRoles<IdentityRole<Guid>>()
@@ -205,7 +193,7 @@ namespace API.Extensions
                 });
 
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             return services;
@@ -217,10 +205,10 @@ namespace API.Extensions
             var settings = provider.GetRequiredService<JwtOptions>();
 
             services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
@@ -238,6 +226,20 @@ namespace API.Extensions
                 });
             return services;
         }
+        public static IServiceCollection AddCORS(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
+            return services;
+        }
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
@@ -252,7 +254,7 @@ namespace API.Extensions
 
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-                
+
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme.",
@@ -261,7 +263,6 @@ namespace API.Extensions
                     BearerFormat = "JWT"
                 });
 
-                // Define the security requirement for JWT
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {

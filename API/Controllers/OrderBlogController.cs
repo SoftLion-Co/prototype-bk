@@ -31,7 +31,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetOrderBlogDTO</returns>
         [HttpPut("change-type")]
-        public async Task<IActionResult> ChangeTypeOrderAsync([FromBody]Guid id, int typeNumber)
+        public async Task<IActionResult> ChangeTypeOrderAsync([FromQuery]Guid id, int typeNumber)
         {
             var response = await _orderBlogService.ChangeTypeOrderAsync(id, typeNumber);
             return Ok(response);
@@ -66,10 +66,6 @@ namespace API.Controllers
             var response = await _orderBlogService.UpdateOrderBlogAsync(orderBlogDTO);
             return Ok(response);
         }
-        /// <summary>
-        /// To delete an orderBlog by its Guid
-        /// </summary>
-        /// <returns>An ActionResult</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrderBlogById(Guid id)
         {

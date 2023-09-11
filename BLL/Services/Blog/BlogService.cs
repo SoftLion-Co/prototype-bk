@@ -6,6 +6,7 @@ using AutoMapper.QueryableExtensions;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using BLL.Helpers;
 
 namespace BLL.Services.Blog
 {
@@ -30,7 +31,7 @@ namespace BLL.Services.Blog
 
         public async Task<ResponseEntity<IEnumerable<GetBlogDTO>>> GetAllBlogsAsync()
         {
-            var blogs = await _wrapperRepository.BlogRepository.GetAllInformationQueryableAsync(
+            var blogs = await _wrapperRepository.BlogRepository.GetAllInformationAsync(
                 include: 
                 (blog) => 
                 blog.Include(author => author.Author).
@@ -86,9 +87,10 @@ namespace BLL.Services.Blog
         public async Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs()
         {
             var blogs = await _wrapperRepository.BlogRepository
-                .GetAllInformationQueryableAsync(
+                .GetAllInformationAsync(
                 selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
                 include: blog => blog.Include(b => b.SVG));
+
             var response = await blogs.ProjectTo<GetTopBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created, null, response);
         }
@@ -121,5 +123,18 @@ namespace BLL.Services.Blog
 
             return new ResponseEntity<GetBlogDTO>(HttpStatusCode.OK, null, _mapper.Map<GetBlogDTO>(response));
         }
+
+        public async Task<PagedList<GetTopBlogDTO>> GetBlogsPaginationAsync(ItemParameters itemParameters)
+        {
+            var blogs = await _wrapperRepository.BlogRepository
+                .GetAllInformationAsync(
+                selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
+                include: blog => blog.Include(b => b.SVG));
+
+            var response = await blogs.ProjectTo<GetTopBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return PagedList<GetTopBlogDTO>.ToPagedList(response, itemParameters.PageNumber, itemParameters.PageSize);
+        }
+
     }
 }

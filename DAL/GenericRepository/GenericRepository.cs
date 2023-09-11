@@ -34,7 +34,7 @@ namespace DAL.GenericRepository
             _dbSet.Remove(result);
         }
 
-        public async Task<IQueryable<TEntity>> GetAllInformationQueryableAsync(
+        public async Task<IQueryable<TEntity>> GetAllInformationAsync(
            Expression<Func<TEntity, TEntity>>? selector = default,
            Expression<Func<TEntity, bool>>? predicate = default,
            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)

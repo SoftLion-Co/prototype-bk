@@ -28,16 +28,18 @@ namespace API.Controllers
             var response = await _blogService.GetAllBlogsAsync();
             return Ok(response);
         }
+
         /// <summary>
         /// Information about a specific blog
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBlogByIdAsync(Guid id)
+        public async Task<IActionResult> GetBlogByIdAsync([FromQuery] Guid id)
         {
             var response = await _blogService.GetBlogByIdAsync(id);
             return Ok(response);
         }
+
         /// <summary>
         /// To create a blog
         /// </summary>
@@ -48,6 +50,7 @@ namespace API.Controllers
             var response = await _blogService.InsertBlogAsync(insertBlogDTO);
             return Ok(response);
         }
+
         /// <summary>
         /// To update already existing blog
         /// </summary>
@@ -58,6 +61,7 @@ namespace API.Controllers
             var response = await _blogService.UpdateBlogAsync(updateBlogDTO);
             return Ok(response);
         }
+
         /// <summary>
         /// To delete a blog  by id
         /// </summary>
@@ -68,12 +72,17 @@ namespace API.Controllers
             var response = await _blogService.DeleteBlogByIdAsync(id);
             return Ok(response);
         }
-        /*[HttpGet("pagination")]
-        public async Task<IActionResult> Get([FromQuery] ItemParameters productParameters)
+
+        /// <summary>
+        /// To get blogs with pagination
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
+        [HttpGet("pagination")]
+        public async Task<IActionResult> GetBlogsWithPagination([FromQuery] ItemParameters productParameters)
         {
             var products = await _blogService.GetBlogsPaginationAsync(productParameters);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.MetaData));
             return Ok(products);
-        }*/
+        }
     }
 }

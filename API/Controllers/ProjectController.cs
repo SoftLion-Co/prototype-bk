@@ -26,6 +26,16 @@ namespace API.Controllers
             return Ok(response);
         }
         /// <summary>
+        /// Short information about all projects
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetTopProjectsAsync()
+        {
+            var response = await _projectService.GetTopProjectsAsync();
+            return Ok(response);
+        }
+        /// <summary>
         /// Information about a specific project
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>

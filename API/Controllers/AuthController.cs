@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/auth")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -25,6 +25,16 @@ namespace API.Controllers
         public async Task<ResponseEntity> SignUpAsync(SignUpModel model)
         {
             return await _authService.SignUpAsync(model);
+        }
+        [HttpGet("send-code")]
+        public async Task<ResponseEntity> SendCodeAsync(string email)
+        {
+            return await _authService.SendCodeAsync(email);
+        }
+        [HttpPut("change-password")]
+        public async Task<ResponseEntity> ChangePasswordAsync(SignInModel model)
+        {
+            return await _authService.ChangePassword(model);
         }
     }
 }

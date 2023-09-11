@@ -28,14 +28,15 @@ namespace API
             services
                 .AddMetrics()
                 .AddSwaggerServices()
-                .AddOptions()
+                .AddOptions(Configuration)
                 .AddValidation()
                 .AddMapper()
                 .AddDb(Configuration)
                 .AddRepositories()
                 .AddIdentity()
                 .AddServices()
-                .AddJwtAuthentication();
+                .AddJwtAuthentication()
+                .AddCORS();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +47,7 @@ namespace API
                 app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger"); });
             }
 
+            app.UseCors();
             app.UseRouting();
             app.ConfigureCustomExceptionMiddleware();
             app.UseAuthentication();

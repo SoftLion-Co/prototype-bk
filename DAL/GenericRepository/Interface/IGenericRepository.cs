@@ -7,11 +7,7 @@ namespace DAL.GenericRepository.Interface
     public interface IGenericRepository<TEntity>
         where TEntity : BaseEntity
     {
-      /*  Task<IQueryable<TEntity>> GetAllInformationAsync(
-            Expression<Func<TEntity, TEntity>>? selector = default,
-            Expression<Func<TEntity, bool>>? predicate = default,
-            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default);*/
-        Task<IQueryable<TEntity>> GetAllInformationQueryableAsync(
+        Task<IQueryable<TEntity>> GetAllInformationAsync(
             Expression<Func<TEntity, TEntity>>? selector = default,
             Expression<Func<TEntity, bool>>? predicate = default,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default);
