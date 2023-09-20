@@ -31,7 +31,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertRatingAsync([FromBody] InsertRatingDTO insertRating)
         {
-            var response = await _ratingService.InsertRatingAsync(insertRating);
+            var response = await _ratingService.CreateRatingAsync(insertRating);
             return Ok(response);
         }
     }

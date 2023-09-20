@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using BLL.DTOs.BlogDTO;
 using BLL.DTOs.Exceptions;
-using BLL.DTOs.Response.ResponseEntity;
 using AutoMapper.QueryableExtensions;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using BLL.DTOs.Response;
 
 namespace BLL.Services.Blog
 {
@@ -22,15 +22,16 @@ namespace BLL.Services.Blog
 
         public async Task<ResponseEntity> DeleteBlogByIdAsync(Guid id)
         {
-            await _wrapperRepository.BlogRepository.DeleteEntityByIdAsync(id);
+            var entity = await _wrapperRepository.BlogRepository.FindByIdAsync(id) ?? throw NotFoundException.Default<DAL.Entities.Blog>();
+            await _wrapperRepository.BlogRepository.DeleteEntityByIdAsync(entity);
             await _wrapperRepository.Save();
 
-            return new ResponseEntity(HttpStatusCode.NoContent, null);
+            return new ResponseEntity(HttpStatusCode.NoContent);
         }
 
         public async Task<ResponseEntity<IEnumerable<GetBlogDTO>>> GetAllBlogsAsync()
         {
-            var blogs = await _wrapperRepository.BlogRepository.GetAllInformationQueryableAsync(
+            var blogs = await _wrapperRepository.BlogRepository.GetAllAsync(
                 include: 
                 (blog) => 
                 blog.Include(author => author.Author).
@@ -38,7 +39,7 @@ namespace BLL.Services.Blog
                 Include(svg => svg.SVG).
                 Include(pictures => pictures.Pictures));
 
-            return new ResponseEntity<IEnumerable<GetBlogDTO>>(HttpStatusCode.OK, null, _mapper.Map<IEnumerable<GetBlogDTO>>(await blogs.ToListAsync()));
+            return new ResponseEntity<IEnumerable<GetBlogDTO>>(HttpStatusCode.OK,  _mapper.Map<IEnumerable<GetBlogDTO>>(blogs));
         }
 
         public async Task<ResponseEntity<GetBlogDTO>> GetBlogByIdAsync(Guid id)
@@ -48,7 +49,12 @@ namespace BLL.Services.Blog
                 blog.Include(b => b.Pictures)
                 .Include(b => b.Paragraphs)
                 .Include(b => b.SVG)));
-
+            
+            if (blog is null)
+            {
+                throw NotFoundException.Default<DAL.Entities.Blog>();
+            }
+            
             return _mapper.Map<ResponseEntity<GetBlogDTO>>(blog);
         }
 
@@ -61,6 +67,7 @@ namespace BLL.Services.Blog
             {
                 throw NotFoundException.Default<GetBlogDTO>();
             }
+            
             blog.Author = author;
 
             foreach (var paragraph in blog.Paragraphs)
@@ -80,17 +87,19 @@ namespace BLL.Services.Blog
             var response = await _wrapperRepository.BlogRepository.InsertEntityAsync(blog);
             await _wrapperRepository.Save();
 
-            return new ResponseEntity<GetBlogDTO>(HttpStatusCode.Created, null, _mapper.Map<GetBlogDTO>(response));
+            return new ResponseEntity<GetBlogDTO>(HttpStatusCode.Created,  _mapper.Map<GetBlogDTO>(response));
         }
 
         public async Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs()
         {
             var blogs = await _wrapperRepository.BlogRepository
-                .GetAllInformationQueryableAsync(
+                .GetAllAsync(
                 selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
                 include: blog => blog.Include(b => b.SVG));
-            var response = await blogs.ProjectTo<GetTopBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
-            return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created, null, response);
+
+            var result = _mapper.Map<IEnumerable<GetTopBlogDTO>>(blogs);
+            
+            return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created,  result);
         }
 
 
@@ -119,7 +128,7 @@ namespace BLL.Services.Blog
             var response = await _wrapperRepository.BlogRepository.UploadEntityAsync(blog);
             await _wrapperRepository.Save();
 
-            return new ResponseEntity<GetBlogDTO>(HttpStatusCode.OK, null, _mapper.Map<GetBlogDTO>(response));
+            return new ResponseEntity<GetBlogDTO>(HttpStatusCode.OK,  _mapper.Map<GetBlogDTO>(response));
         }
     }
 }

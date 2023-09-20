@@ -1,5 +1,6 @@
 
-﻿using BLL.Services.Author;
+﻿using System.Net;
+ using BLL.Services.Author;
 using BLL.Services.AuthService;
 using BLL.Services.Blog;
 using BLL.Services.Country;
@@ -25,7 +26,8 @@ using OpenTelemetry.Metrics;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Options;
+ using BLL.DTOs.Response;
+ using Microsoft.Extensions.Options;
 using BLL.Models;
 
 
@@ -40,19 +42,8 @@ namespace API.Extensions
 
             return services;
         }
-        public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
-            services.AddSingleton(opt =>
-            {
-                var service = opt.GetRequiredService<IOptions<JwtOptions>>().Value;
-                return service;
-            });
 
-            return services;
-        }
-
-        public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
             services.AddSingleton(opt =>
@@ -64,8 +55,7 @@ namespace API.Extensions
             return services;
         }
         
-        public static IServiceCollection AddDb(this IServiceCollection services,
-            Func<DatabaseSettings> connectionConfiguration)
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
         {
             var provider = services.BuildServiceProvider();
             var settings = provider.GetRequiredService<JwtOptions>();
@@ -89,13 +79,25 @@ namespace API.Extensions
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey)),
                         ClockSkew = TimeSpan.FromMinutes(30)
                     };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnChallenge = async (context) =>
+                        {
+                            if (context.AuthenticateFailure != null)
+                            {
+                                context.Response.StatusCode = 401;
+                                await context.Response.WriteAsJsonAsync(new ResponseEntity(HttpStatusCode.Unauthorized, new [] {new Error("Token validation has failed")}));
+                            }
+                        }
+                    };
                 });
+            
             return services;
         }
 
-        public static IServiceCollection AddDb(this IServiceCollection services, IConfiguration Configuration)
+        public static IServiceCollection AddDb(this IServiceCollection services, IConfiguration configuration)
         {
-            var connect = Configuration.GetSection("DatabaseSettings").GetConnectionString;
+            var connect = configuration.GetSection("DatabaseSettings").GetConnectionString;
                 
            /* var connectionString =
                 $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";*/
@@ -103,7 +105,7 @@ namespace API.Extensions
             /*services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(connectionString));*/
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             return services;
         }
@@ -164,7 +166,8 @@ namespace API.Extensions
             services.AddScoped<IOrderProjectService, OrderProjectService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
-
+            services.AddExceptionHandlers(AppDomain.CurrentDomain.GetAssemblies());
+            
             return services;
         }
 
@@ -208,34 +211,6 @@ namespace API.Extensions
                     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
-            return services;
-        }
-
-        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
-        {
-            var provider = services.BuildServiceProvider();
-            var settings = provider.GetRequiredService<JwtOptions>();
-
-            services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidAudience = settings.ValidAudience,
-                        ValidIssuer = settings.ValidIssuer,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey)),
-                        ClockSkew = TimeSpan.FromMinutes(30)
-                    };
-                });
             return services;
         }
 

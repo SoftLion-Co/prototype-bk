@@ -1,6 +1,4 @@
-﻿using BLL.DTOs.Response;
-
-namespace BLL.DTOs.Exceptions
+﻿namespace BLL.DTOs.Exceptions
 {
     public class NotFoundException : BaseException
     {

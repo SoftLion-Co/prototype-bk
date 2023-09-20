@@ -2,7 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using BLL.DTOs.OrderBlogDTO;
 using BLL.DTOs.Exceptions;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,22 +23,23 @@ namespace BLL.Services.OrderBlog
         {
             var orderBlog = await _wrapperRepository.OrderBlogRepository.ChangeTypeOrderAsync(id, typeNumber);
             await _wrapperRepository.Save();
-            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK,null, _mapper.Map<GetOrderBlogDTO>(orderBlog)) ;
+            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderBlogDTO>(orderBlog)) ;
 
         }
 
         public async Task<ResponseEntity> DeleteOrderBlogByIdAsync(Guid id)
         {
-            await _wrapperRepository.OrderBlogRepository.DeleteEntityByIdAsync(id);
-
-            return new ResponseEntity(System.Net.HttpStatusCode.NoContent, null);
+            var entity = await _wrapperRepository.OrderBlogRepository.FindByIdAsync(id) ?? throw NotFoundException.Default<DAL.Entities.OrderBlog>();
+            await _wrapperRepository.OrderBlogRepository.DeleteEntityByIdAsync(entity);
+            await _wrapperRepository.Save();
+            return new ResponseEntity(System.Net.HttpStatusCode.NoContent);
         }
 
         public async Task<ResponseEntity<IEnumerable<GetOrderBlogDTO>>> GetAllOrderBlogsAsync()
         {
-            var orderBlogs = await _wrapperRepository.OrderBlogRepository.GetAllInformationQueryableAsync();
-            var orderBlogsDTO = await orderBlogs.ProjectTo<GetOrderBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
-            return new ResponseEntity<IEnumerable<GetOrderBlogDTO>>(System.Net.HttpStatusCode.OK, null, orderBlogsDTO);
+            var orderBlogs = await _wrapperRepository.OrderBlogRepository.GetAllAsync();
+            var result = _mapper.Map<IEnumerable<GetOrderBlogDTO>>(orderBlogs);
+            return new ResponseEntity<IEnumerable<GetOrderBlogDTO>>(System.Net.HttpStatusCode.OK, result);
         }
 
         public async Task<ResponseEntity<GetOrderBlogDTO>> GetOrderBlogByIdAsync(Guid id)
@@ -46,21 +47,21 @@ namespace BLL.Services.OrderBlog
             var orderBlog = await _wrapperRepository.OrderBlogRepository.FindByIdAsync(id);
             return orderBlog is null
                 ? throw NotFoundException.Default<DAL.Entities.OrderBlog>()
-                : new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, null, _mapper.Map<GetOrderBlogDTO>(orderBlog));
+                : new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderBlogDTO>(orderBlog));
         }
 
         public async Task<ResponseEntity<GetOrderBlogDTO>> InsertOrderBlogAsync(InsertOrderBlogDTO insertOrderBlogDTO)
         {
             var orderBlog = await _wrapperRepository.OrderBlogRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.OrderBlog>(insertOrderBlogDTO));
 
-            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.Created, null, _mapper.Map<GetOrderBlogDTO>(orderBlog));
+            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderBlogDTO>(orderBlog));
         }
 
         public async Task<ResponseEntity<GetOrderBlogDTO>> UpdateOrderBlogAsync(UpdateOrderBlogDTO updateOrderBlogDTO)
         {
             var orderBlog = await _wrapperRepository.OrderBlogRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.OrderBlog>(updateOrderBlogDTO));
 
-            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, null, _mapper.Map<GetOrderBlogDTO>(orderBlog));
+            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderBlogDTO>(orderBlog));
         }
     }
 }

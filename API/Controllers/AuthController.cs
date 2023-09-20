@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.CustomerDTO;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 using BLL.Models;
 using BLL.Services.AuthService;
 using Microsoft.AspNetCore.Mvc;
