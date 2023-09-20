@@ -15,7 +15,7 @@ namespace DAL.Context.Configurations
         public override void Configure(EntityTypeBuilder<Picture> builder)
         {
             builder.ToTable("Picture");
-            builder.Property(e => e.Content).HasColumnType("varbinary(max)");
+            builder.Property(e => e.Url).HasColumnType("varbinary(max)");
 
             builder
                 .HasOne(x => x.Blog)

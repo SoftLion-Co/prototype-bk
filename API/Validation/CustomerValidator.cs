@@ -12,9 +12,7 @@ namespace API.Validation
             RuleFor(dto => dto.PhoneNumber).NotEmpty();
             RuleFor(dto => dto.FirstName).MaximumLength(50);
             RuleFor(dto => dto.LastName).MaximumLength(50);
-            RuleFor(dto => dto.Facebook).MaximumLength(100).When(dto => !string.IsNullOrEmpty(dto.Facebook));
-            RuleFor(dto => dto.Google).MaximumLength(100).When(dto => !string.IsNullOrEmpty(dto.Google));
-            RuleFor(dto => dto.Linkedin).MaximumLength(100).When(dto => !string.IsNullOrEmpty(dto.Linkedin));
+           
         }
     }
 }

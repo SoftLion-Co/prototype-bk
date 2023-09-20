@@ -31,7 +31,7 @@ namespace BLL.Services.Author
 
         public async Task<ResponseEntity<IEnumerable<GetTopAuthorDTO>>> GetAllTopAuthorsAsync()
         {
-            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync(selector: author => new DAL.Entities.Author { Name = author.Name, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
+            var authors = await _wrapperRepository.AuthorRepository.GetAllInformationAsync(selector: author => new DAL.Entities.Author { Fullname = author.Fullname, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
             var response = await authors.ProjectTo<GetTopAuthorDTO>(_mapper.ConfigurationProvider).ToListAsync();
             return new ResponseEntity<IEnumerable<GetTopAuthorDTO>>(HttpStatusCode.OK, null, response);
         }

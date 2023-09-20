@@ -17,7 +17,7 @@ namespace DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -44,15 +44,14 @@ namespace DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Fullname")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Surname")
+                    b.Property<string>("LinkedIn")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
@@ -141,21 +140,12 @@ namespace DAL.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Facebook")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Google")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkedIn")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -211,17 +201,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "77fe5b40-3f1d-4bb6-abe2-088fa9db2036",
-                            CreatedDateTime = new DateTime(2023, 8, 3, 9, 40, 9, 298, DateTimeKind.Local).AddTicks(5784),
+                            ConcurrencyStamp = "b5447b6b-21ac-4c87-b5a1-6ba2f12ac215",
+                            CreatedDateTime = new DateTime(2023, 9, 15, 17, 55, 12, 505, DateTimeKind.Local).AddTicks(443),
                             Email = "customer@gmail.com",
                             EmailConfirmed = true,
-                            Facebook = "facebook",
                             FirstName = "Danyil",
-                            Google = "google",
                             LastName = "Terentiev",
-                            LinkedIn = "Linkedin",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGw1jiO2f9THvAcTwuCAgzSE1/G0Cp9uS61AYQh4Q4qrM1kEtq0gU284029B15N9ig==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKWK6n5/V45cyxCtANti8KAOGDs2MdfkYthuOYLuuhcRQRAY9D6yV/aez+QFubyk6A==",
                             PhoneNumber = "0505874855",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -231,17 +218,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f4359bf5-f909-48e6-9dbf-fa95a4ddd0a4",
-                            CreatedDateTime = new DateTime(2023, 8, 3, 9, 40, 9, 443, DateTimeKind.Local).AddTicks(1443),
+                            ConcurrencyStamp = "f6999da4-a58b-42b5-8e44-778a7952af18",
+                            CreatedDateTime = new DateTime(2023, 9, 15, 17, 55, 12, 662, DateTimeKind.Local).AddTicks(1968),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
-                            Facebook = "facebook",
                             FirstName = "Danya",
-                            Google = "google",
                             LastName = "Terentiev",
-                            LinkedIn = "Linkedin",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKVlXLW8zz9g0spdjtpag3DASks9F+59yRHwdU7qsygScV+6V77QHyT9sA+IyVumJA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGzvFH0jvCiRnkKWb4hl9Vg1EuzgvPKg+XwLBqWtZU5xA1lWSg8b7P1y9Zg8wKrjYA==",
                             PhoneNumber = "777",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -362,10 +346,6 @@ namespace DAL.Migrations
                     b.Property<Guid?>("BlogId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Content")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
@@ -374,6 +354,10 @@ namespace DAL.Migrations
 
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Url")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
@@ -390,7 +374,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CountryId")
+                    b.Property<Guid>("CountryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDateTime")
@@ -501,15 +485,15 @@ namespace DAL.Migrations
                     b.Property<Guid>("BlogId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Content")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Url")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
@@ -572,14 +556,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = new Guid("8379b56f-7881-48ae-bf99-a29f53059332"),
-                            ConcurrencyStamp = "a5ae16df-e935-4f6e-a2cd-dc81fa18b3f5",
+                            ConcurrencyStamp = "b76f9e7e-caad-4ce5-87c6-96bd75d2c84e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"),
-                            ConcurrencyStamp = "12d1fb8e-7ecc-4aec-b423-038ec79cef63",
+                            ConcurrencyStamp = "239344ff-ea8c-45cf-b8bf-14c8dd258ba5",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -750,7 +734,8 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Country", "Country")
                         .WithMany("Projects")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("DAL.Entities.Customer", "Customer")
                         .WithMany("Projects")

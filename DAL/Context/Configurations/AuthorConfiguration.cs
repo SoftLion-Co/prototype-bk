@@ -11,8 +11,7 @@ namespace DAL.Context.Configurations
         public override void Configure(EntityTypeBuilder<Author> builder)
         {
             builder.ToTable("Author");
-            builder.Property(e => e.Name).HasMaxLength(25);
-            builder.Property(e => e.Surname).HasMaxLength(25);
+            builder.Property(e => e.Fullname).HasMaxLength(50);
             builder.Property(e => e.Employment).HasMaxLength(50);
 
             builder

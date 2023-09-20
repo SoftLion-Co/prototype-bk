@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDatabase : Migration
+    public partial class Database : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,9 +34,6 @@ namespace DAL.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LinkedIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Facebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Google = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -64,10 +61,10 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Fullname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Employment = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LinkedIn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -277,7 +274,7 @@ namespace DAL.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Period = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     DateYear = table.Column<int>(type: "int", nullable: false),
-                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CountryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RequestDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RequestList = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SolutionDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -310,7 +307,7 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Url = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -360,7 +357,7 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Url = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -433,17 +430,17 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"), "12d1fb8e-7ecc-4aec-b423-038ec79cef63", "Customer", "CUSTOMER" },
-                    { new Guid("8379b56f-7881-48ae-bf99-a29f53059332"), "a5ae16df-e935-4f6e-a2cd-dc81fa18b3f5", "Admin", "ADMIN" }
+                    { new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"), "239344ff-ea8c-45cf-b8bf-14c8dd258ba5", "Customer", "CUSTOMER" },
+                    { new Guid("8379b56f-7881-48ae-bf99-a29f53059332"), "b76f9e7e-caad-4ce5-87c6-96bd75d2c84e", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedDateTime", "Email", "EmailConfirmed", "Facebook", "FirstName", "Google", "LastName", "LinkedIn", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedDateTime", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedDateTime", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedDateTime", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"), 0, "77fe5b40-3f1d-4bb6-abe2-088fa9db2036", new DateTime(2023, 8, 3, 9, 40, 9, 298, DateTimeKind.Local).AddTicks(5784), "customer@gmail.com", true, "facebook", "Danyil", "google", "Terentiev", "Linkedin", false, null, null, null, "AQAAAAIAAYagAAAAEGw1jiO2f9THvAcTwuCAgzSE1/G0Cp9uS61AYQh4Q4qrM1kEtq0gU284029B15N9ig==", "0505874855", false, null, false, null, "DaniTer" },
-                    { new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"), 0, "f4359bf5-f909-48e6-9dbf-fa95a4ddd0a4", new DateTime(2023, 8, 3, 9, 40, 9, 443, DateTimeKind.Local).AddTicks(1443), "admin@gmail.com", true, "facebook", "Danya", "google", "Terentiev", "Linkedin", false, null, null, null, "AQAAAAIAAYagAAAAEKVlXLW8zz9g0spdjtpag3DASks9F+59yRHwdU7qsygScV+6V77QHyT9sA+IyVumJA==", "777", false, null, false, null, "Admin" }
+                    { new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"), 0, "b5447b6b-21ac-4c87-b5a1-6ba2f12ac215", new DateTime(2023, 9, 15, 17, 55, 12, 505, DateTimeKind.Local).AddTicks(443), "customer@gmail.com", true, "Danyil", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEKWK6n5/V45cyxCtANti8KAOGDs2MdfkYthuOYLuuhcRQRAY9D6yV/aez+QFubyk6A==", "0505874855", false, null, false, null, "DaniTer" },
+                    { new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"), 0, "f6999da4-a58b-42b5-8e44-778a7952af18", new DateTime(2023, 9, 15, 17, 55, 12, 662, DateTimeKind.Local).AddTicks(1968), "admin@gmail.com", true, "Danya", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEGzvFH0jvCiRnkKWb4hl9Vg1EuzgvPKg+XwLBqWtZU5xA1lWSg8b7P1y9Zg8wKrjYA==", "777", false, null, false, null, "Admin" }
                 });
 
             migrationBuilder.InsertData(
