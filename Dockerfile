@@ -1,15 +1,12 @@
-#Build Stage
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /source
+WORKDIR /src
+COPY ["API/API.csproj", "./"]
+RUN dotnet restore "API.csproj"
 COPY . .
-RUN dotnet restore "./API/API.csproj" --disable-parallel
-RUN dotnrt publish "./API/API.csproj" -c release -o /app --no-restore
+WORKDIR "/src/API"
+RUN dotnet build "API.csproj" -c Release -o /app/build
 
-#Serve Stage
-FROM mcr.microsoft.com/dotnet/sdk:7.0-focal
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
-COPY --from=build /app ./
-
-expose 8880
-
+COPY --from=build /app/build .
 ENTRYPOINT ["dotnet", "API.dll"]
