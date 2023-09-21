@@ -4,7 +4,6 @@ using AutoMapper.QueryableExtensions;
 using BLL.DTOs.CustomerDTO;
 using BLL.DTOs.Exceptions;
 using BLL.DTOs.Response;
-using BLL.DTOs.Response.ResponseEntity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using InvalidOperationException = BLL.DTOs.Exceptions.InvalidOperationException;

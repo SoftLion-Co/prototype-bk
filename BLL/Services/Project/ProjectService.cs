@@ -7,7 +7,6 @@ using BLL.DTOs.TechnologyDTO;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
-using BLL.DTOs.BlogDTO;
 
 namespace BLL.Services.Project
 {
@@ -24,9 +23,11 @@ namespace BLL.Services.Project
 
         public async Task<ResponseEntity> DeleteProjectByIdAsync(Guid id)
         {
-            await _wrapperRepository.ProjectRepository.DeleteEntityByIdAsync(id);
+            var entity = await _wrapperRepository.ProjectRepository.FindByIdAsync(id) ?? throw NotFoundException.Default<DAL.Entities.Project>();
+            await _wrapperRepository.ProjectRepository.DeleteEntityByIdAsync(entity);
             await _wrapperRepository.Save();
-            return new ResponseEntity(HttpStatusCode.NoContent, null);
+            
+            return new ResponseEntity(HttpStatusCode.NoContent);
         }
 
         public async Task<ResponseEntity<GetProjectDTO>> InsertProjectAsync(InsertProjectDTO projectDTO)

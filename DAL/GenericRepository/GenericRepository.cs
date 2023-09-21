@@ -31,10 +31,7 @@ namespace DAL.GenericRepository
                 throw new NullReferenceException($"Entity with this id {id} not found");
             }
 
-            _dbSet.Remove(result);
-        }
-
-        public async Task<IQueryable<TEntity>> GetAllInformationAsync(
+        public async Task<IEnumerable<TEntity>> GetAllAsync(
            Expression<Func<TEntity, TEntity>>? selector = default,
            Expression<Func<TEntity, bool>>? predicate = default,
            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
@@ -46,7 +43,7 @@ namespace DAL.GenericRepository
                 throw new NullReferenceException("not found");
             }
 
-            return entities;
+            return await entities.ToListAsync();
         }
 
         private IQueryable<TEntity> GetQueryable(

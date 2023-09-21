@@ -1,33 +1,23 @@
-﻿
-﻿using BLL.Services.Author;
+using System.Reflection;
+using System.Text;
+using BLL.DTOs.Response;
+using BLL.Models;
+using BLL.Services.Author;
 using BLL.Services.AuthService;
 using BLL.Services.Blog;
-using BLL.Services.Country;
-using BLL.Services.Customer;
-using BLL.Services.OrderBlog;
 using BLL.Services.OrderProject;
-using BLL.Services.Project;
 using BLL.Services.Rating;
 using BLL.Services.Technology;
 using DAL.Context;
 using DAL.Entities;
 using DAL.GenericRepository;
 using DAL.GenericRepository.Interface;
-using DAL.WrapperRepository;
-using DAL.WrapperRepository.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
-using OpenTelemetry.Metrics;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.Extensions.Options;
-using BLL.Models;
-using BLL.DTOs.Response;
+ using Microsoft.Extensions.Options;
+
 
 namespace API.Extensions
 {
@@ -35,11 +25,12 @@ namespace API.Extensions
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IWrapperRepository, WrapperRepository>();
+        
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;
         }
+
         public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
@@ -51,60 +42,22 @@ namespace API.Extensions
 
             return services;
         }
-
+        
         public static IServiceCollection AddDb(this IServiceCollection services,
             Func<DatabaseSettings> connectionConfiguration)
         {
-            var provider = services.BuildServiceProvider();
-            var settings = provider.GetRequiredService<JwtOptions>();
-
-            services.AddAuthentication(options =>
+            var conf = connectionConfiguration();
+            if (conf is null)
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidAudience = settings.ValidAudience,
-                        ValidIssuer = settings.ValidIssuer,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey)),
-                        ClockSkew = TimeSpan.FromMinutes(30)
-                    };
-                });
-            return services;
-        }
+                throw new NullReferenceException(nameof(conf));
+            }
 
-        public static IServiceCollection AddDb(this IServiceCollection services, IConfiguration Configuration)
-        {
-            var connect = Configuration.GetSection("DatabaseSettings").GetConnectionString;
+            var connectionString =
+                $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";
 
-            /* var connectionString =
-                 $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";*/
-
-            /*services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(connectionString));*/
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString));
 
-            return services;
-        }
-        public static IServiceCollection AddMetrics(this IServiceCollection services)
-        {
-            services.AddOpenTelemetry().WithMetrics(builder => builder.AddConsoleExporter().AddAspNetCoreInstrumentation());
-            return services;
-        }
-
-        public static IServiceCollection AddValidation(this IServiceCollection services)
-        {
-            services.AddFluentValidationAutoValidation();
-            services.AddValidatorsFromAssemblyContaining<Program>();
             return services;
         }
 
@@ -126,7 +79,7 @@ namespace API.Extensions
                 .AddUserManager<UserManager<IdentityUser<Guid>>>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.AddIdentityCore<Customer>(x =>
             {
                 x.User.RequireUniqueEmail = true;
@@ -146,8 +99,6 @@ namespace API.Extensions
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IRatingService, RatingService>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderBlogService, OrderBlogService>();
             services.AddScoped<IOrderProjectService, OrderProjectService>();
             services.AddScoped<IProjectService, ProjectService>();
@@ -194,6 +145,8 @@ namespace API.Extensions
 
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
+
             });
 
             return services;

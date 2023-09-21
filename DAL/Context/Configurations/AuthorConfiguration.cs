@@ -1,12 +1,10 @@
-
-﻿using DAL.Context.Configurations.Base;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations
 {
-    internal class AuthorConfiguration : BaseConfiguration<Author>
+    public class AuthorConfiguration : BaseConfiguration<Author>
     {
         public override void Configure(EntityTypeBuilder<Author> builder)
         {

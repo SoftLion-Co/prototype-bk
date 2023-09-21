@@ -1,5 +1,5 @@
 ﻿using BLL.DTOs.CustomerDTO;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 using BLL.Models;
 using BLL.Services.AuthService;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
