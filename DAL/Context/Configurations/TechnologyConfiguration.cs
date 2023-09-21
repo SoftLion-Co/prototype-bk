@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations
 {
-    internal class TechnologyConfiguration : BaseConfiguration<Technology>
+    public class TechnologyConfiguration : BaseConfiguration<Technology>
     {
         public override void Configure(EntityTypeBuilder<Technology> builder)
         {

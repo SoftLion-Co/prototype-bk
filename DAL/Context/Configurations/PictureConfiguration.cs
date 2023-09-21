@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Context.Configurations
 {
-    internal class PictureConfiguration : BaseConfiguration<Picture>
+    public class PictureConfiguration : BaseConfiguration<Picture>
     {
         public override void Configure(EntityTypeBuilder<Picture> builder)
         {

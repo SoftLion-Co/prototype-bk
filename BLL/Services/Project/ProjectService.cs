@@ -1,12 +1,13 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BLL.DTOs.ProjectDTO;
 using BLL.DTOs.Exceptions;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 using BLL.DTOs.TechnologyDTO;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using BLL.DTOs.BlogDTO;
 
 namespace BLL.Services.Project
 {
@@ -149,7 +150,7 @@ namespace BLL.Services.Project
 
             var projectDto = _mapper.Map<GetProjectDTO>(project);
 
-            /*var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync(predicate: rating => rating.ProjectId == projectDto.Id);*/
+            *//*var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync(predicate: rating => rating.ProjectId == projectDto.Id);*//*
 
             projectDto.TechnologyDTOs = await technologies.ProjectTo<GetTechnologyDTO>(_mapper.ConfigurationProvider).ToListAsync();
 
@@ -171,3 +172,4 @@ namespace BLL.Services.Project
        
     }
 }
+*/

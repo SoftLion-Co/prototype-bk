@@ -1,5 +1,4 @@
 ﻿using BLL.DTOs.BlogDTO;
-using BLL.Helpers;
 using BLL.Services.Blog;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -71,18 +70,6 @@ namespace API.Controllers
         {
             var response = await _blogService.DeleteBlogByIdAsync(id);
             return Ok(response);
-        }
-
-        /// <summary>
-        /// To get blogs with pagination
-        /// </summary>
-        /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
-        [HttpGet("pagination")]
-        public async Task<IActionResult> GetBlogsWithPagination([FromQuery] ItemParameters productParameters)
-        {
-            var products = await _blogService.GetBlogsPaginationAsync(productParameters);
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(products.MetaData));
-            return Ok(products);
         }
     }
 }

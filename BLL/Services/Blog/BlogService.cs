@@ -93,13 +93,11 @@ namespace BLL.Services.Blog
         public async Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs()
         {
             var blogs = await _wrapperRepository.BlogRepository
-                .GetAllInformationAsync(
-                selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
-                include: blog => blog.Include(b => b.SVG));
-
+                .GetAllAsync(
+                 selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
+                 include: blog => blog.Include(b => b.SVG));
             var result = _mapper.Map<IEnumerable<GetTopBlogDTO>>(blogs);
-            
-            return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created,  result);
+            return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created, result);
         }
 
 
@@ -130,18 +128,5 @@ namespace BLL.Services.Blog
 
             return new ResponseEntity<GetBlogDTO>(HttpStatusCode.OK,  _mapper.Map<GetBlogDTO>(response));
         }
-
-        public async Task<PagedList<GetTopBlogDTO>> GetBlogsPaginationAsync(ItemParameters itemParameters)
-        {
-            var blogs = await _wrapperRepository.BlogRepository
-                .GetAllInformationAsync(
-                selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
-                include: blog => blog.Include(b => b.SVG));
-
-            var response = await blogs.ProjectTo<GetTopBlogDTO>(_mapper.ConfigurationProvider).ToListAsync();
-
-            return PagedList<GetTopBlogDTO>.ToPagedList(response, itemParameters.PageNumber, itemParameters.PageSize);
-        }
-
     }
 }

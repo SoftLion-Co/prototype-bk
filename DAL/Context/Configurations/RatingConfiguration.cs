@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Context.Configurations
 {
-    internal class RatingConfiguration : BaseConfiguration<Rating>
+    public class RatingConfiguration : BaseConfiguration<Rating>
     {
         public override void Configure(EntityTypeBuilder<Rating> builder)
         {

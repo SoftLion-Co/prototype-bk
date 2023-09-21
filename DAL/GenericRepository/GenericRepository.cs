@@ -22,14 +22,10 @@ namespace DAL.GenericRepository
             return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task DeleteEntityByIdAsync(Guid id)
+        public async Task DeleteEntityByIdAsync(TEntity entity)
         {
-            var result = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-
-            if (result == null)
-            {
-                throw new NullReferenceException($"Entity with this id {id} not found");
-            }
+            _dbSet.Remove(entity);
+        }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(
            Expression<Func<TEntity, TEntity>>? selector = default,

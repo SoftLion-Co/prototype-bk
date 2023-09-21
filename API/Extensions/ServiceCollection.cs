@@ -3,7 +3,6 @@ using System.Text;
 using BLL.DTOs.Response;
 using BLL.Models;
 using BLL.Services.Author;
-using BLL.Services.AuthService;
 using BLL.Services.Blog;
 using BLL.Services.OrderProject;
 using BLL.Services.Rating;
@@ -13,11 +12,17 @@ using DAL.Entities;
 using DAL.GenericRepository;
 using DAL.GenericRepository.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
  using Microsoft.Extensions.Options;
-
+using Microsoft.EntityFrameworkCore;
+using BLL.Services.Country;
+using BLL.Services.OrderBlog;
+using BLL.Services.Project;
+using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Metrics;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 namespace API.Extensions
 {
@@ -31,7 +36,7 @@ namespace API.Extensions
             return services;
         }
 
-        public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
             services.AddSingleton(opt =>
@@ -42,7 +47,20 @@ namespace API.Extensions
 
             return services;
         }
-        
+        public static IServiceCollection AddDb(this IServiceCollection services, IConfiguration Configuration)
+        {
+            var connect = Configuration.GetSection("DatabaseSettings").GetConnectionString;
+
+            /* var connectionString =
+                 $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";*/
+
+            /*services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(connectionString));*/
+            services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            return services;
+        }
         public static IServiceCollection AddDb(this IServiceCollection services,
             Func<DatabaseSettings> connectionConfiguration)
         {
@@ -58,6 +76,17 @@ namespace API.Extensions
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            return services;
+        }
+        public static IServiceCollection AddMetrics(this IServiceCollection services)
+        {
+            services.AddOpenTelemetry().WithMetrics(builder => builder.AddConsoleExporter().AddAspNetCoreInstrumentation());
+            return services;
+        }
+        public static IServiceCollection AddValidation(this IServiceCollection services)
+        {
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<Program>();
             return services;
         }
 
@@ -101,8 +130,10 @@ namespace API.Extensions
             services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<IOrderBlogService, OrderBlogService>();
             services.AddScoped<IOrderProjectService, OrderProjectService>();
-            services.AddScoped<IProjectService, ProjectService>();
+            /*services.AddScoped<IProjectService, ProjectService>();*/
             services.AddScoped<ITechnologyService, TechnologyService>();
+
+            services.AddExceptionHandlers(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }
@@ -145,8 +176,6 @@ namespace API.Extensions
 
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-            });
-
             });
 
             return services;

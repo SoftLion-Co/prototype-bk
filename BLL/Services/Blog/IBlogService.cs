@@ -1,6 +1,5 @@
 ﻿using BLL.DTOs.BlogDTO;
-using BLL.DTOs.Response.ResponseEntity;
-using BLL.Helpers;
+using BLL.DTOs.Response;
 
 namespace BLL.Services.Blog
 {
@@ -12,6 +11,5 @@ namespace BLL.Services.Blog
         Task<ResponseEntity<GetBlogDTO>> UpdateBlogAsync(UpdateBlogDTO updateBlogDTO);
         Task<ResponseEntity> DeleteBlogByIdAsync(Guid id);
         Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs();
-        Task<PagedList<GetTopBlogDTO>> GetBlogsPaginationAsync(ItemParameters itemParameters);
     }
 }

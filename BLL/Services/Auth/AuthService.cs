@@ -1,14 +1,11 @@
-
-﻿using System;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
-using Azure.Core;
 using BLL.DTOs.Exceptions;
-using BLL.DTOs.Response.ResponseEntity;
+using BLL.DTOs.Response;
 using BLL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations
 {
-    internal class ProjectConfiguration : BaseConfiguration<Project>
+    public class ProjectConfiguration : BaseConfiguration<Project>
     {
         public override void Configure(EntityTypeBuilder<Project> builder)
         {

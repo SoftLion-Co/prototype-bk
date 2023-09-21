@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations
 {
-    internal class SVGConfiguration : BaseConfiguration<SVG>
+    public class SVGConfiguration : BaseConfiguration<SVG>
     {
         public override void Configure(EntityTypeBuilder<SVG> builder)
         {

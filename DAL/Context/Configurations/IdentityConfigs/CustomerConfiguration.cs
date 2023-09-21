@@ -5,13 +5,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations.IdentityConfigs
 {
-    internal class CustomerConfiguration : IEntityTypeConfiguration<Customer>
+    public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
             var password = new PasswordHasher<Customer>();
             builder.Property(e => e.CreatedDateTime).IsRequired();
             builder.Property(e => e.UpdatedDateTime);
+            // builder
+            //     .HasMany(x => x.Projects)
+            //     .WithOne(x => x.Customer)
+            //     .HasForeignKey(p => p.CustomerId)
+            //     .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
             builder.HasData(new Customer()
             {
                 Id = Guid.Parse("1d7f4741-2cb1-4baf-a1f9-65dd95208333"),
