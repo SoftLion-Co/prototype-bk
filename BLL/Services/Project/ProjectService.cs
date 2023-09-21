@@ -1,9 +1,13 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BLL.DTOs.ProjectDTO;
-using DAL.WrapperRepository.Interface;
-using System.Net;
 using BLL.DTOs.Exceptions;
 using BLL.DTOs.Response;
+using BLL.DTOs.TechnologyDTO;
+using DAL.WrapperRepository.Interface;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using BLL.DTOs.BlogDTO;
 
 namespace BLL.Services.Project
 {
@@ -27,57 +31,112 @@ namespace BLL.Services.Project
             return new ResponseEntity(HttpStatusCode.NoContent);
         }
 
+        public async Task<ResponseEntity<GetProjectDTO>> InsertProjectAsync(InsertProjectDTO projectDTO)
+        {
+            var project = _mapper.Map<InsertProjectDTO, DAL.Entities.Project>(projectDTO);
+            var country = await _wrapperRepository.CountryRepository.FindByIdAsync(project.CountryId);
+
+            if (country is null)
+            {
+                throw NotFoundException.Default<GetBlogDTO>();
+            }
+            project.Country = country;
+
+            foreach (var paragraph in project.Paragraphs)
+            {
+                paragraph.ProjectId = project.Id;
+                await _wrapperRepository.ParagraphRepository.InsertEntityAsync(paragraph);
+            }
+
+            foreach (var picture in project.Pictures)
+            {
+                picture.ProjectId = project.Id;
+                await _wrapperRepository.PictureRepository.InsertEntityAsync(picture);
+            }
+
+            foreach (var technology in _mapper.ProjectTo<DAL.Entities.Technology>(projectDTO.TechnologyDTOs.AsQueryable()))
+            {
+                await _wrapperRepository.ProjectTechnologyRepository.InsertEntityAsync(project, technology);
+            }
+
+            var response = await _wrapperRepository.ProjectRepository.InsertEntityAsync(project);
+            await _wrapperRepository.Save();
+
+            return new ResponseEntity<GetProjectDTO>(HttpStatusCode.Created, null, _mapper.Map<GetProjectDTO>(response));
+        }
+
+        public async Task<ResponseEntity<GetProjectDTO>> UpdateProjectAsync(UpdateProjectDTO updateProjectDTO)
+        {
+            var project = _mapper.Map<UpdateProjectDTO, DAL.Entities.Project>(updateProjectDTO);
+            var country = await _wrapperRepository.CountryRepository.FindByIdAsync(project.CountryId);
+
+            if (country is null)
+            {
+                throw NotFoundException.Default<GetBlogDTO>();
+            }
+            else if(country != project.Country)
+            {
+                project.Country = country;
+            }
+            
+            foreach (var paragraph in project.Paragraphs)
+            {
+                if (paragraph.ProjectId != project.Id)
+                {
+                    paragraph.ProjectId = project.Id;
+                    await _wrapperRepository.ParagraphRepository.UploadEntityAsync(paragraph);
+                }
+            }
+
+            foreach (var picture in project.Pictures)
+            {
+                if (picture.ProjectId != project.Id)
+                {
+                    picture.ProjectId = project.Id;
+                    await _wrapperRepository.PictureRepository.UploadEntityAsync(picture);
+                }
+            }
+            var projectTechnologies = await _wrapperRepository.ProjectTechnologyRepository.GetProjectTechnologiesByIdAsync(project.Id, 
+                include:
+                (projectTech) =>
+                projectTech.
+                Include(tech => tech.Technology).
+                Include(project => project.Project));
+
+            var technologies = _mapper.ProjectTo<DAL.Entities.Technology>(updateProjectDTO.TechnologyDTOs.AsQueryable());
+
+            foreach (var technology in technologies)
+            {
+                if(projectTechnologies.Any(pt => pt.Technology.Id == technology.Id)!)
+                {
+                    await _wrapperRepository.ProjectTechnologyRepository.InsertEntityAsync(project, technology);
+                }
+                
+               
+            }
+            foreach (var technology in projectTechnologies)
+            {
+                if (technologies.Any(pt => pt.Id == technology.TechnologyId)!)
+                {
+                    await _wrapperRepository.ProjectTechnologyRepository.DeleteEntityByIdAsync(project.Id,technology.TechnologyId);
+                }
+            }
+
+            var response = await _wrapperRepository.ProjectRepository.UploadEntityAsync(project);
+            await _wrapperRepository.Save();
+
+            return new ResponseEntity<GetProjectDTO>(HttpStatusCode.Created, null, _mapper.Map<GetProjectDTO>(response));
+
+        }
+
         public Task<ResponseEntity<IEnumerable<GetProjectDTO>>> GetAllProjectsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseEntity<GetProjectDTO>> GetProjectByIdAsync(Guid id)
+        public async Task<ResponseEntity<GetProjectDTO>> GetProjectByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        /* public async Task<ResponseEntity<IEnumerable<GetProjectDTO>>> GetAllProjectsAsync()
-         {
-             var projects = await _wrapperRepository.ProjectRepository.GetAllInformationAsync(
-                 include:
-                 (project) =>
-                 project
-                 .Include(paragraphs => paragraphs.Paragraphs)
-                 .Include(technology => technology.ProjectTechnologies)
-                 .Include(customer => customer.Customer)
-                 .Include(country => country.Country)
-                 .Include(rating => rating.Ratings)
-                 .Include(pictures => pictures.Pictures));
-
-             var projectTechnologies = _wrapperRepository.ProjectTechnologyRepository.GetAllTechnologiesAsync(projectDto.Id);
-
-             projectDto.TechnologyDTOs =
-                 _mapper.Map<IQueryable<Technology>>,< List < GetTechnologyDTO >> (projectTechnologies);
-
-             var projectsDto = _mapper.Map<ResponseEntity<IEnumerable<DAL.Entities.Project>>, ResponseEntity<IEnumerable<GetProjectDTO>>>(projects);
-
-             foreach (var projectDto in projectsDto.Result!)
-             {
-                 var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync(predicate: rating => rating.ProjectId == projectDto.Id);
-
-
-                 foreach (var rating in ratings.Result!)
-                 {
-                     projectDto.Mark += rating.Mark;
-                 }
-                 projectDto.RatingCount = ratings.Result.Count();
-                 projectDto.Mark = projectDto.Mark / projectDto.RatingCount;
-             }
-
-
-
-             return projectsDto;
-         }
-
-         public async Task<ResponseEntity<GetProjectDTO>> GetProjectByIdAsync(Guid id)
-         {
-             var project = await _wrapperRepository.ProjectRepository.GetEntityByIdAsync(id,
+            var project = await _wrapperRepository.ProjectRepository.GetEntityByIdAsync(id,
                  include: (project =>
                  project
                  .Include(paragraphs => paragraphs.Paragraphs)
@@ -87,34 +146,30 @@ namespace BLL.Services.Project
                  .Include(rating => rating.Ratings)
                  .Include(pictures => pictures.Pictures)));
 
-             var projectDto = _mapper.Map<ResponseEntity<GetProjectDTO>>(project);
+            var technologies = await _wrapperRepository.ProjectTechnologyRepository.GetAllTechnologiesByIdAsync(id);
 
-             var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync(predicate: rating => rating.ProjectId == projectDto.Result.Id);
+            var projectDto = _mapper.Map<GetProjectDTO>(project);
 
+            *//*var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync(predicate: rating => rating.ProjectId == projectDto.Id);*//*
 
-             foreach (var rating in ratings.Result!)
-             {
-                 projectDto.Result.Mark += rating.Mark;
-             }
-             projectDto.Result.RatingCount = ratings.Result.Count();
-             projectDto.Result.Mark = projectDto.Result.Mark / projectDto.Result.RatingCount;
+            projectDto.TechnologyDTOs = await technologies.ProjectTo<GetTechnologyDTO>(_mapper.ConfigurationProvider).ToListAsync();
 
-             return projectDto;
-         }*/
+            foreach (var rating in project.Ratings!)
+            {
+                projectDto.Mark += rating.Mark;
+            }
+            projectDto.RatingCount = project.Ratings.Count();
+            projectDto.Mark = projectDto.Mark / projectDto.RatingCount;
+                
+            return new ResponseEntity<GetProjectDTO>(HttpStatusCode.OK, null, projectDto);
+        }
 
-        public Task<ResponseEntity<GetProjectDTO>> InsertProjectAsync(InsertProjectDTO projectDTO)
+        public Task<ResponseEntity<IEnumerable<GetTopProjectDTO>>> GetTopProjectsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseEntity<GetProjectDTO>> UpdateProjectAsync(UpdateProjectDTO updateProjectDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<ResponseEntity<IEnumerable<GetProjectDTO>>> IProjectService.DeleteProjectByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
+*/

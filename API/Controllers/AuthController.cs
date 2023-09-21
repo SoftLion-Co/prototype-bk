@@ -26,5 +26,15 @@ namespace API.Controllers
         {
             return await _authService.SignUpAsync(model);
         }
+        [HttpGet("send-code")]
+        public async Task<ResponseEntity> SendCodeAsync(string email)
+        {
+            return await _authService.SendCodeAsync(email);
+        }
+        [HttpPut("change-password")]
+        public async Task<ResponseEntity> ChangePasswordAsync(SignInModel model)
+        {
+            return await _authService.ChangePassword(model);
+        }
     }
 }

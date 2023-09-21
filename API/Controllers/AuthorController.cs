@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/author")]
 
     public class AuthorController : ControllerBase
@@ -32,6 +31,7 @@ namespace API.Controllers
         ///  All shart informations about authors 
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetTopAuthorDTO</returns>
+        [AllowAnonymous]
         [HttpGet("get-short-all")]
         public async Task<IActionResult> GetAllTopAuthorsAsync()
         {

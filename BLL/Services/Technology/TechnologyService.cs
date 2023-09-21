@@ -23,7 +23,7 @@ namespace BLL.Services.Technology
             var entity = await _wrapperRepository.TechnologyRepository.FindByIdAsync(id) ?? throw NotFoundException.Default<DAL.Entities.Blog>();
             await _wrapperRepository.TechnologyRepository.DeleteEntityByIdAsync(entity);
             await _wrapperRepository.Save();
-            
+
             return new ResponseEntity(System.Net.HttpStatusCode.NoContent);
         }
 

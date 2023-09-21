@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Context.Configurations
 {
-    internal class OrderProjectConfiguration : BaseConfiguration<OrderProject>
+    public class OrderProjectConfiguration : BaseConfiguration<OrderProject>
     {
         public override void Configure(EntityTypeBuilder<OrderProject> builder)
         {

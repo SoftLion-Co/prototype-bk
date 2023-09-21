@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations
 {
-    internal class ParagraphConfiguration : BaseConfiguration<Paragraph>
+    public class ParagraphConfiguration : BaseConfiguration<Paragraph>
     {
         public override void Configure(EntityTypeBuilder<Paragraph> builder)
         {

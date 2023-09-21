@@ -4,6 +4,7 @@ using DAL.WrapperRepository.Interface;
 using BLL.DTOs.Exceptions;
 using System.Net;
 using BLL.DTOs.Response;
+using DAL.Repositories.Interfaces;
 
 namespace BLL.Services.Author
 {
@@ -29,9 +30,9 @@ namespace BLL.Services.Author
 
         public async Task<ResponseEntity<IEnumerable<GetTopAuthorDTO>>> GetAllTopAuthorsAsync()
         {
-            var authors = await _wrapperRepository.AuthorRepository.GetAllAsync(selector: author => new DAL.Entities.Author { Name = author.Name, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
+            var authors = await _wrapperRepository.AuthorRepository.GetAllAsync(selector: author => new DAL.Entities.Author { Fullname = author.Fullname, Avatar = author.Avatar, Employment = author.Employment, Id = author.Id });
             var result = _mapper.Map<IEnumerable<GetTopAuthorDTO>>(authors);
-            
+
             return new ResponseEntity<IEnumerable<GetTopAuthorDTO>>(HttpStatusCode.OK, result);
         }
 
@@ -50,7 +51,6 @@ namespace BLL.Services.Author
         {
             var author = _mapper.Map<InsertAuthorDTO, DAL.Entities.Author>(authorDTO);
             var response = await _wrapperRepository.AuthorRepository.InsertEntityAsync(author);
-            //TODO Implement exception handling if something goes wrong with Logger
             await _wrapperRepository.Save();
             
             return new ResponseEntity<GetAuthorDTO>(HttpStatusCode.Created, _mapper.Map<GetAuthorDTO>(response));
@@ -60,7 +60,6 @@ namespace BLL.Services.Author
         {
             var author = _mapper.Map<UpdateAuthorDTO, DAL.Entities.Author>(updateAuthorDTO);
             var response = await _wrapperRepository.AuthorRepository.UploadEntityAsync(author);
-            //TODO Implement exception handling if something goes wrong with Logger
             await _wrapperRepository.Save();
             
             return new ResponseEntity<GetAuthorDTO>(HttpStatusCode.OK, _mapper.Map<GetAuthorDTO>(response));

@@ -1,9 +1,11 @@
-﻿using BLL.DTOs.ProjectDTO;
+﻿/*using BLL.DTOs.ProjectDTO;
 using BLL.Services.Project;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/project")]
     public class ProjectController : ControllerBase
@@ -23,6 +25,17 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllProjectsAsync()
         {
             var response = await _projectService.GetAllProjectsAsync();
+            return Ok(response);
+        }
+        /// <summary>
+        /// 
+        /// Short information about all projects
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
+        [HttpGet("get-short-all")]
+        public async Task<IActionResult> GetTopProjectsAsync()
+        {
+            var response = await _projectService.GetTopProjectsAsync();
             return Ok(response);
         }
         /// <summary>
@@ -67,3 +80,4 @@ namespace API.Controllers
         }
     }
 }
+*/

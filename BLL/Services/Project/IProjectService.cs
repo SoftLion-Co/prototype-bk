@@ -9,6 +9,7 @@ namespace BLL.Services.Project
         Task<ResponseEntity<GetProjectDTO>> GetProjectByIdAsync(Guid id);
         Task<ResponseEntity<GetProjectDTO>> InsertProjectAsync(InsertProjectDTO projectDTO);
         Task<ResponseEntity<GetProjectDTO>> UpdateProjectAsync(UpdateProjectDTO updateProjectDTO);
-        Task<ResponseEntity<IEnumerable<GetProjectDTO>>> DeleteProjectByIdAsync(Guid id);
+        Task<ResponseEntity> DeleteProjectByIdAsync(Guid id);
+        Task<ResponseEntity<IEnumerable<GetTopProjectDTO>>> GetTopProjectsAsync();
     }
 }

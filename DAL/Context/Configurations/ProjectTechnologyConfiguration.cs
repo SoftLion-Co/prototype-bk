@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Context.Configurations
 {
-    internal class ProjectTechnologyConfiguration : IEntityTypeConfiguration<ProjectTechnology>
+    public class ProjectTechnologyConfiguration : IEntityTypeConfiguration<ProjectTechnology>
     {
         public void Configure(EntityTypeBuilder<ProjectTechnology> builder)
         {

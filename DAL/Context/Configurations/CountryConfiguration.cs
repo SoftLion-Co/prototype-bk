@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations
 {
-    internal class CountryConfiguration : BaseConfiguration<Country>
+    public class CountryConfiguration : BaseConfiguration<Country>
     {
         public override void Configure(EntityTypeBuilder<Country> builder)
         {

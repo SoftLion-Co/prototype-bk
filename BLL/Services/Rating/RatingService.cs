@@ -17,6 +17,11 @@ namespace BLL.Services.Rating
             _wrapperRepository = wrapperRepository;
             _mapper = mapper;
         }
+        public async Task<ResponseEntity<GetRatingDTO>> InsertRatingAsync(InsertRatingDTO model)
+        {
+            var entity = await _wrapperRepository.RatingRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Rating>(model));
+            return new ResponseEntity<GetRatingDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetRatingDTO>(entity));
+        }
 
         public async Task<ResponseEntity<GetRatingDTO>> CreateRatingAsync(InsertRatingDTO model)
         {
@@ -31,7 +36,7 @@ namespace BLL.Services.Rating
             return new ResponseEntity<IEnumerable<GetRatingDTO>>(System.Net.HttpStatusCode.OK, result);
         }
 
-        public async Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsByProjectIdAsync(Guid projectId)
+            public async Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsByProjectIdAsync(Guid projectId)
         {
             var ratings = await _wrapperRepository.RatingRepository.GetAllAsync(predicate: rating => rating.ProjectId == projectId);
             var result = _mapper.Map<IEnumerable<GetRatingDTO>>(ratings);

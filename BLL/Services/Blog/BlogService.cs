@@ -94,12 +94,10 @@ namespace BLL.Services.Blog
         {
             var blogs = await _wrapperRepository.BlogRepository
                 .GetAllAsync(
-                selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
-                include: blog => blog.Include(b => b.SVG));
-
+                 selector: blog => new DAL.Entities.Blog { Id = blog.Id, Title = blog.Title, Description = blog.Description, SVG = blog.SVG },
+                 include: blog => blog.Include(b => b.SVG));
             var result = _mapper.Map<IEnumerable<GetTopBlogDTO>>(blogs);
-            
-            return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created,  result);
+            return new ResponseEntity<IEnumerable<GetTopBlogDTO>>(HttpStatusCode.Created, result);
         }
 
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DAL.Context.Configurations
 {
-    internal class OrderBlogConfiguration : BaseConfiguration<OrderBlog>
+    public class OrderBlogConfiguration : BaseConfiguration<OrderBlog>
     {
         public override void Configure(EntityTypeBuilder<OrderBlog> builder)
         {
