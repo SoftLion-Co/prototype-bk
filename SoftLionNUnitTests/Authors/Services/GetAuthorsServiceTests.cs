@@ -63,8 +63,8 @@ public class GetAuthorsServiceTests
     {
         return new List<GetAuthorDTO>
         {
-            new() { Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Name = "Author 1" },
-            new() { Id = Guid.Parse("5962837b-ac6f-4a21-a161-588921f1fab2"), Name = "Author 2" }
+            new() { Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Fullname = "Author 1" },
+            new() { Id = Guid.Parse("5962837b-ac6f-4a21-a161-588921f1fab2"), Fullname = "Author 2" }
         };
     }
 
@@ -72,8 +72,8 @@ public class GetAuthorsServiceTests
     {
         return new List<Author>
         {
-            new() { Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Name = "Author 1" },
-            new() { Id = Guid.Parse("5962837b-ac6f-4a21-a161-588921f1fab2"), Name = "Author 2" }
+            new() { Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Fullname = "Author 1" },
+            new() { Id = Guid.Parse("5962837b-ac6f-4a21-a161-588921f1fab2"), Fullname = "Author 2" }
         };
     }
 
@@ -87,10 +87,8 @@ public class GetAuthorsServiceTests
             if (ReferenceEquals(x, y)) return 0;
             if (ReferenceEquals(null, y)) return 1;
             if (ReferenceEquals(null, x)) return -1;
-            var nameComparison = string.Compare(x.Name, y.Name, StringComparison.Ordinal);
+            var nameComparison = string.Compare(x.Fullname, y.Fullname, StringComparison.Ordinal);
             if (nameComparison != 0) return nameComparison;
-            var surnameComparison = string.Compare(x.Surname, y.Surname, StringComparison.Ordinal);
-            if (surnameComparison != 0) return surnameComparison;
             var employmentComparison = string.Compare(x.Employment, y.Employment, StringComparison.Ordinal);
             if (employmentComparison != 0) return employmentComparison;
             var avatarComparison = string.Compare(x.Avatar, y.Avatar, StringComparison.Ordinal);

@@ -17,7 +17,7 @@ namespace DAL.Context.Configurations
                 .HasOne(x => x.Country)
                 .WithMany(x => x.Projects)
                 .HasForeignKey(x => x.CountryId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
             builder
                 .HasOne(x => x.Customer)

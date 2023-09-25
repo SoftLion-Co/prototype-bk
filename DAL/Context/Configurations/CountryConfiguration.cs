@@ -16,7 +16,7 @@ namespace DAL.Context.Configurations
                 .HasMany(x => x.Projects)
                 .WithOne(x => x.Country)
                 .HasForeignKey(x=>x.CountryId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
+                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
         }
     }
 }

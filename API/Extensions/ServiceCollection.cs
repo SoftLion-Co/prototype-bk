@@ -15,14 +15,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
  using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using BLL.Services.Country;
-using BLL.Services.OrderBlog;
-using BLL.Services.Project;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using DAL.WrapperRepository.Interface;
+using DAL.WrapperRepository;
+using BLL.Services.AuthService;
+using BLL.Services.Country;
+using BLL.Services.Customer;
+using BLL.Services.OrderBlog;
 
 namespace API.Extensions
 {
@@ -49,32 +52,21 @@ namespace API.Extensions
         }
         public static IServiceCollection AddDb(this IServiceCollection services, IConfiguration Configuration)
         {
-            var connect = Configuration.GetSection("DatabaseSettings").GetConnectionString;
+            var conf = Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
 
-            /* var connectionString =
-                 $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";*/
-
-            /*services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(connectionString));*/
-            services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            return services;
-        }
-        public static IServiceCollection AddDb(this IServiceCollection services,
-            Func<DatabaseSettings> connectionConfiguration)
-        {
-            var conf = connectionConfiguration();
             if (conf is null)
             {
                 throw new NullReferenceException(nameof(conf));
             }
 
             var connectionString =
-                $@"Server={conf.Server};Database={conf.Database};User Id={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";
+                $@"Server={conf.Server},{conf.Port};Initial Catalog={conf.Database};User ID={conf.UserId};Password={conf.Password};TrustServerCertificate=true;";
 
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            /*services.AddDbContext<DataContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));*/
 
             return services;
         }
@@ -125,14 +117,16 @@ namespace API.Extensions
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICountryService, CountryService>();
-            services.AddScoped<IRatingService, RatingService>();
+            services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderBlogService, OrderBlogService>();
             services.AddScoped<IOrderProjectService, OrderProjectService>();
-            /*services.AddScoped<IProjectService, ProjectService>();*/
+            services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
 
+            services.AddScoped<IWrapperRepository, WrapperRepository>();
             services.AddExceptionHandlers(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;

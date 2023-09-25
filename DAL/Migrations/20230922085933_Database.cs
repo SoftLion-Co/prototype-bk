@@ -299,7 +299,7 @@ namespace DAL.Migrations
                         column: x => x.CountryId,
                         principalTable: "Country",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -430,8 +430,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"), "239344ff-ea8c-45cf-b8bf-14c8dd258ba5", "Customer", "CUSTOMER" },
-                    { new Guid("8379b56f-7881-48ae-bf99-a29f53059332"), "b76f9e7e-caad-4ce5-87c6-96bd75d2c84e", "Admin", "ADMIN" }
+                    { new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"), "0ddc911d-880a-4915-90f6-b8f556450c17", "Customer", "CUSTOMER" },
+                    { new Guid("8379b56f-7881-48ae-bf99-a29f53059332"), "9de5c485-aec3-47ed-bb21-ef896cb07402", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -439,8 +439,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedDateTime", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedDateTime", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"), 0, "b5447b6b-21ac-4c87-b5a1-6ba2f12ac215", new DateTime(2023, 9, 15, 17, 55, 12, 505, DateTimeKind.Local).AddTicks(443), "customer@gmail.com", true, "Danyil", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEKWK6n5/V45cyxCtANti8KAOGDs2MdfkYthuOYLuuhcRQRAY9D6yV/aez+QFubyk6A==", "0505874855", false, null, false, null, "DaniTer" },
-                    { new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"), 0, "f6999da4-a58b-42b5-8e44-778a7952af18", new DateTime(2023, 9, 15, 17, 55, 12, 662, DateTimeKind.Local).AddTicks(1968), "admin@gmail.com", true, "Danya", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEGzvFH0jvCiRnkKWb4hl9Vg1EuzgvPKg+XwLBqWtZU5xA1lWSg8b7P1y9Zg8wKrjYA==", "777", false, null, false, null, "Admin" }
+                    { new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"), 0, "6795b238-bcf9-4043-837a-67976a447150", new DateTime(2023, 9, 22, 11, 59, 33, 155, DateTimeKind.Local).AddTicks(4160), "customer@gmail.com", true, "Danyil", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEGbbtYeuk3jyMM5wh9YxAXGhgG8OSxindzDXPYVex8fGirwfrXv+k5JCEYJ4yv65zg==", "0505874855", false, null, false, null, "DaniTer" },
+                    { new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"), 0, "622324fe-0193-440c-b56e-a4a70f3da7e2", new DateTime(2023, 9, 22, 11, 59, 33, 295, DateTimeKind.Local).AddTicks(3674), "admin@gmail.com", true, "Danya", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEBB1t7rScBp1pTH1kyt4vOVbZgh/7WIYk2V9Enf4JL1vtyPKm5kZphcPo4bcM0xNGA==", "777", false, null, false, null, "Admin" }
                 });
 
             migrationBuilder.InsertData(

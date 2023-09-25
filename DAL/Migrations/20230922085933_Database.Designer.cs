@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230915145513_Database")]
+    [Migration("20230922085933_Database")]
     partial class Database
     {
         /// <inheritdoc />
@@ -204,14 +204,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b5447b6b-21ac-4c87-b5a1-6ba2f12ac215",
-                            CreatedDateTime = new DateTime(2023, 9, 15, 17, 55, 12, 505, DateTimeKind.Local).AddTicks(443),
+                            ConcurrencyStamp = "6795b238-bcf9-4043-837a-67976a447150",
+                            CreatedDateTime = new DateTime(2023, 9, 22, 11, 59, 33, 155, DateTimeKind.Local).AddTicks(4160),
                             Email = "customer@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danyil",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKWK6n5/V45cyxCtANti8KAOGDs2MdfkYthuOYLuuhcRQRAY9D6yV/aez+QFubyk6A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGbbtYeuk3jyMM5wh9YxAXGhgG8OSxindzDXPYVex8fGirwfrXv+k5JCEYJ4yv65zg==",
                             PhoneNumber = "0505874855",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -221,14 +221,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f6999da4-a58b-42b5-8e44-778a7952af18",
-                            CreatedDateTime = new DateTime(2023, 9, 15, 17, 55, 12, 662, DateTimeKind.Local).AddTicks(1968),
+                            ConcurrencyStamp = "622324fe-0193-440c-b56e-a4a70f3da7e2",
+                            CreatedDateTime = new DateTime(2023, 9, 22, 11, 59, 33, 295, DateTimeKind.Local).AddTicks(3674),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danya",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGzvFH0jvCiRnkKWb4hl9Vg1EuzgvPKg+XwLBqWtZU5xA1lWSg8b7P1y9Zg8wKrjYA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBB1t7rScBp1pTH1kyt4vOVbZgh/7WIYk2V9Enf4JL1vtyPKm5kZphcPo4bcM0xNGA==",
                             PhoneNumber = "777",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -559,14 +559,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = new Guid("8379b56f-7881-48ae-bf99-a29f53059332"),
-                            ConcurrencyStamp = "b76f9e7e-caad-4ce5-87c6-96bd75d2c84e",
+                            ConcurrencyStamp = "9de5c485-aec3-47ed-bb21-ef896cb07402",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"),
-                            ConcurrencyStamp = "239344ff-ea8c-45cf-b8bf-14c8dd258ba5",
+                            ConcurrencyStamp = "0ddc911d-880a-4915-90f6-b8f556450c17",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -737,7 +737,7 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Country", "Country")
                         .WithMany("Projects")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DAL.Entities.Customer", "Customer")

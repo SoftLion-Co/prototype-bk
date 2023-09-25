@@ -91,12 +91,12 @@ public class GetAuthorByIdTest
     {
         return new GetAuthorDTO
         {
-             Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Name = "Author 1" 
+             Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Fullname = "Author 1" 
         };
     }
 
     private static Author GetAuthor()
     {
-        return new Author { Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Name = "Author 1" };
+        return new Author { Id = Guid.Parse("1ca29d40-68be-42a2-84c3-9ac695f9cf5e"), Fullname = "Author 1" };
     }
 }
