@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "SL@1982"
+      SA_PASSWORD: "SL!database1982"
       MSSQL_PID: Express
     ports:
       - "1982:1982"
