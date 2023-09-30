@@ -2,24 +2,24 @@ version: '3.4'
 
 services:
   ms-sql-server:
+    container_name: ms-sql-server
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "SL!database1982"
-      MSSQL_PID: Express
     ports:
       - "1982:1982"
     networks:
-          - sl-network
+      - sl-network
   sl-backend:
+    container_name: sl-backend
     build: .
     ports:
       - "2891:1289"
     depends_on:
       - ms-sql-server
     networks:
-          - sl-network
+      - sl-network
 
 networks:
-    sl-network:
-        name: sl-network
+  sl-network:
