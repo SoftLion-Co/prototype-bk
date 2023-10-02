@@ -21,3 +21,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "API.dll"]
+
+ENV ASPNETCORE_URLS=http://+:2891/
+EXPOSE 1289
