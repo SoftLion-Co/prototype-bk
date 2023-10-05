@@ -59,8 +59,30 @@ namespace DAL.Repositories
 
             return technologies.AsQueryable();
         }
+        public async Task<IEnumerable<ProjectTechnology>> GetProjectTechnologiesByIdAsync(Guid id, Expression<Func<ProjectTechnology, ProjectTechnology>>? selector = null, Expression<Func<ProjectTechnology, bool>>? predicate = null, Func<IQueryable<ProjectTechnology>, IIncludableQueryable<ProjectTechnology, object>>? include = null)
+        {
+            var query = _context.ProjectTechnologies.AsNoTracking();
 
-        public async Task<IQueryable<ProjectTechnology>> GetProjectTechnologiesByIdAsync(Guid id, Expression<Func<ProjectTechnology, ProjectTechnology>>? selector = null, Expression<Func<ProjectTechnology, bool>>? predicate = null, Func<IQueryable<ProjectTechnology>, IIncludableQueryable<ProjectTechnology, object>>? include = null)
+            if (include is not null)
+            {
+                query = include(query);
+            }
+
+            if (predicate is not null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (selector is not null)
+            {
+                query = query.Select(selector);
+            }
+
+            return await query.AsNoTracking().ToListAsync();
+        }
+
+
+        /*public async Task<IQueryable<ProjectTechnology>> GetProjectTechnologiesByIdAsync(Guid id, Expression<Func<ProjectTechnology, ProjectTechnology>>? selector = null, Expression<Func<ProjectTechnology, bool>>? predicate = null, Func<IQueryable<ProjectTechnology>, IIncludableQueryable<ProjectTechnology, object>>? include = null)
         {
             var query = _context.ProjectTechnologies.AsNoTracking();
 
@@ -80,7 +102,7 @@ namespace DAL.Repositories
             }
 
             return query.AsNoTracking();
-        }
+        }*/
 
         public async Task InsertEntityAsync(Project project, Technology technology)
         {

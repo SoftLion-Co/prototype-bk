@@ -1,4 +1,5 @@
 ﻿using DAL.Context;
+using DAL.GenericRepository;
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
 using DAL.WrapperRepository.Interface;
@@ -11,18 +12,18 @@ namespace DAL.WrapperRepository
     {
         private readonly DataContext _context;
 
-        private ICountryRepository _countryRepository;
-        private ISVGRepository _svgRepository;
-        private IPictureRepository _pictureRepository;
-        private IProjectTechnologyRepository _projectTechnologyRepository;
-        private IParagraphRepository _paragraphRepository;
-        private IRatingRepository _ratingRepository;
-        private IAuthorRepository _authorRepository;
-        private IProjectRepository _projectRepository;
-        private IBlogRepository _blogRepository;
-        private IOrderProjectRepository _orderProjectRepository;
-        private IOrderBlogRepository _orderBlogRepository;
-        private ITechnologyRepository _technologyRepository;
+        private ICountryRepository? _countryRepository;
+        private ISVGRepository? _svgRepository;
+        private IPictureRepository? _pictureRepository;
+        private IProjectTechnologyRepository?_projectTechnologyRepository;
+        private IParagraphRepository? _paragraphRepository;
+        private IRatingRepository? _ratingRepository;
+        private IAuthorRepository? _authorRepository;
+        private IProjectRepository? _projectRepository;
+        private IBlogRepository? _blogRepository;
+        private IOrderProjectRepository? _orderProjectRepository;
+        private IOrderBlogRepository? _orderBlogRepository;
+        private ITechnologyRepository? _technologyRepository;
 
 
         public WrapperRepository(DataContext context)

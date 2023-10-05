@@ -1,15 +1,26 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
-COPY ["API/API.csproj", "./"]
-RUN dotnet restore "API.csproj"
+WORKDIR /app
+
+COPY ["API/API.csproj", "./src/API/"]
+COPY ["BLL/BLL.csproj", "./src/BLL/"]
+COPY ["DAL/DAL.csproj", "./src/DAL/"]
+
+WORKDIR /app/src/API
+RUN dotnet restore
+
+WORKDIR /app/src
 COPY . .
-WORKDIR "/src/API"
-RUN dotnet build "API.csproj" -c Release -o /app/build
-EXPOSE 1289
+
+WORKDIR /app/src/API
+RUN dotnet build -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "API.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
-COPY --from=build /app/build .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "API.dll"]
 
-
+ENV ASPNETCORE_URLS=http://+:2891/
+EXPOSE 1289

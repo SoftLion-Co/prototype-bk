@@ -146,11 +146,12 @@ public class AuthService : IAuthService
 
     public string Encrypt(string plainText)
     {
-        string encryptionKey = "Your192BitEncryptionKey123"; 
+        //string encryptionKey = "Your192BitEncryptionKey123"; 
 
         using (Aes aesAlg = Aes.Create())
         {
-            aesAlg.Key = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");//Encoding.UTF8.GetBytes(encryptionKey);
+            aesAlg.Key = Convert.FromBase64String("AAECAwQFBgcICQoLDA0ODw==");
+            //Encoding.UTF8.GetBytes(encryptionKey);
             aesAlg.IV = new byte[16]; 
 
             ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);

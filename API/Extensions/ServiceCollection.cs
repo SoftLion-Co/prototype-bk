@@ -31,6 +31,21 @@ namespace API.Extensions
 {
     public static class ServiceCollection
     {
+        public static void PrepPopulation(IApplicationBuilder app)
+        {
+            System.Console.WriteLine("Checking Migrations...");
+            using(var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                SeedData(serviceScope.ServiceProvider.GetService<DataContext>());
+            }
+        }
+        private static void SeedData(DataContext dataContext)
+        {
+            System.Console.WriteLine("Apling Migrations...");
+            dataContext.Database.Migrate();
+             
+        }
+
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
         

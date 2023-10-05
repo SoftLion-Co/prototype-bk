@@ -41,17 +41,19 @@ namespace API
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+           /* if (env.IsDevelopment())
+            {*/
                 app.UseSwagger();
                 app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger"); });
-            }
+           /* }*/
 
             app.UseCors();
             app.UseRouting();
             app.ConfigureCustomExceptionMiddleware();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            Extensions.ServiceCollection.PrepPopulation(app);
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

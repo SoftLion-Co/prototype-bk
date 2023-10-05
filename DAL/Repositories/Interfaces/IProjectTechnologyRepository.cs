@@ -10,8 +10,7 @@ namespace DAL.Repositories.Interfaces
             Expression<Func<ProjectTechnology, ProjectTechnology>>? selector = default,
             Expression<Func<ProjectTechnology, bool>>? predicate = default,
             Func<IQueryable<ProjectTechnology>, IIncludableQueryable<ProjectTechnology, object>>? include = default);
-
-        Task<IQueryable<ProjectTechnology>> GetProjectTechnologiesByIdAsync(Guid id, Expression<Func<ProjectTechnology, ProjectTechnology>>? selector = default, Expression<Func<ProjectTechnology, bool>>? predicate = default, Func<IQueryable<ProjectTechnology>, IIncludableQueryable<ProjectTechnology, object>>? include = default);
+        Task<IEnumerable<ProjectTechnology>> GetProjectTechnologiesByIdAsync(Guid id, Expression<Func<ProjectTechnology, ProjectTechnology>>? selector = default, Expression<Func<ProjectTechnology, bool>>? predicate = default, Func<IQueryable<ProjectTechnology>, IIncludableQueryable<ProjectTechnology, object>>? include = default);
         Task InsertEntityAsync(Project project, Technology technology);
         Task DeleteEntityByIdAsync(Guid projectId, Guid technologyId);
     }
