@@ -28,5 +28,11 @@ namespace DAL.Repositories
 
             return orderBlog;
         }
+
+        public async Task<OrderBlog> NewTypeOrderAsync(OrderBlog orderBlog)
+        {
+            orderBlog.OrderType = Enums.OrderTypeEnum.New;
+            return orderBlog;
+        }
     }
 }

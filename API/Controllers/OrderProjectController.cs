@@ -57,16 +57,6 @@ namespace API.Controllers
             return Ok(response);
         }
         /// <summary>
-        /// To update an orderProject by its Guid
-        /// </summary>
-        /// <returns>An ActionResult containing a ResponseEntity with GetOrderProjectDTO</returns>
-        [HttpPut]
-        public async Task<IActionResult> UpdateOrderProjectAsync([FromBody] UpdateOrderProjectDTO orderProjectDTO)
-        {
-            var response = await _orderProjectService.UpdateOrderProjectAsync(orderProjectDTO);
-            return Ok(response);
-        }
-        /// <summary>
         /// To delete an orderProject by its Guid
         /// </summary>
         /// <returns>An ActionResult</returns>

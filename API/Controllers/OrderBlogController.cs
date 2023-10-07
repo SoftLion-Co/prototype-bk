@@ -57,16 +57,6 @@ namespace API.Controllers
             return Ok(response);
         }
         /// <summary>
-        /// To update an orderBlog by its Guid
-        /// </summary>
-        /// <returns>An ActionResult containing a ResponseEntity with GetOrderBlogDTO</returns>
-        [HttpPut]
-        public async Task<IActionResult> UpdateOrderBlogAsync([FromBody] UpdateOrderBlogDTO orderBlogDTO)
-        {
-            var response = await _orderBlogService.UpdateOrderBlogAsync(orderBlogDTO);
-            return Ok(response);
-        }
-        /// <summary>
         /// To delete an orderBlog by its Guid
         /// </summary>
         /// <returns>An ActionResult</returns>

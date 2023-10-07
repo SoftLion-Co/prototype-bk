@@ -54,15 +54,11 @@ namespace BLL.Services.OrderProject
         public async Task<ResponseEntity<GetOrderProjectDTO>> InsertOrderProjectAsync(InsertOrderProjectDTO insertOrderProjectDTO)
         {
             var orderProject = await _wrapperRepository.OrderProjectRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.OrderProject>(insertOrderProjectDTO));
+            var changeOrderProject = await _wrapperRepository.OrderProjectRepository.NewTypeOrderAsync(orderProject);
 
-            return new ResponseEntity<GetOrderProjectDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderProjectDTO>(orderProject));
-        }
+            await _wrapperRepository.Save();
 
-        public async Task<ResponseEntity<GetOrderProjectDTO>> UpdateOrderProjectAsync(UpdateOrderProjectDTO updateOrderProjectDTO)
-        {
-            var orderProject = await _wrapperRepository.OrderProjectRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.OrderProject>(updateOrderProjectDTO));
-
-            return new ResponseEntity<GetOrderProjectDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderProjectDTO>(orderProject));
+            return new ResponseEntity<GetOrderProjectDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderProjectDTO>(changeOrderProject));
         }
     }
 }

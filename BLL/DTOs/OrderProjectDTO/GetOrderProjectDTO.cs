@@ -9,7 +9,7 @@ namespace BLL.DTOs.OrderProjectDTO
         public string NumberPhone { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string ShortDescription { get; set; } = null!;
-        public bool OrderType { get; set; } 
+        public bool? OrderType { get; set; } 
 
     }
 }

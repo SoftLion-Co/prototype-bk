@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs.OrderProjectStatusDTO;
 using DAL.Entities;
+using DAL.Enums;
 
 namespace BLL.AutoMapper
 {
@@ -7,9 +8,13 @@ namespace BLL.AutoMapper
     {
         public OrderProjectStatusProfile()
         {
-            CreateMap<OrderProjectStatus, GetOrderProjectStatusDTO>().ReverseMap();
-            CreateMap<InsertOrderProjectStatusDTO, OrderProjectStatus>().ReverseMap();
-            CreateMap<UpdateOrderProjectStatusDTO, OrderProjectStatus>().ReverseMap();
+            CreateMap<OrderProjectStatus, GetOrderProjectStatusDTO>().ForMember(
+                dest => dest.ProjectStatus,
+                opt => opt.MapFrom(src => (int)src.ProjectStatus)
+            );
+
+            CreateMap<InsertOrderProjectStatusDTO, OrderProjectStatus>();
+            CreateMap<UpdateOrderProjectStatusDTO, OrderProjectStatus>();
         }
     }
 }
