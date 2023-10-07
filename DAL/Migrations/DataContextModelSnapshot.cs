@@ -201,14 +201,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6795b238-bcf9-4043-837a-67976a447150",
-                            CreatedDateTime = new DateTime(2023, 9, 22, 11, 59, 33, 155, DateTimeKind.Local).AddTicks(4160),
+                            ConcurrencyStamp = "21d3a789-2ba8-40e4-a75a-33e66de551bb",
+                            CreatedDateTime = new DateTime(2023, 10, 7, 8, 1, 4, 84, DateTimeKind.Local).AddTicks(3223),
                             Email = "customer@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danyil",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGbbtYeuk3jyMM5wh9YxAXGhgG8OSxindzDXPYVex8fGirwfrXv+k5JCEYJ4yv65zg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA6sriFFaq3fkY9El32m4ugXKh628txeKARkh+7ES+gQl7RhS6Yqg3Ikdo5l0h6DGw==",
                             PhoneNumber = "0505874855",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -218,14 +218,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "622324fe-0193-440c-b56e-a4a70f3da7e2",
-                            CreatedDateTime = new DateTime(2023, 9, 22, 11, 59, 33, 295, DateTimeKind.Local).AddTicks(3674),
+                            ConcurrencyStamp = "075f1230-bdd4-4e29-a5c3-048ed71e42d4",
+                            CreatedDateTime = new DateTime(2023, 10, 7, 8, 1, 4, 298, DateTimeKind.Local).AddTicks(3695),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danya",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEBB1t7rScBp1pTH1kyt4vOVbZgh/7WIYk2V9Enf4JL1vtyPKm5kZphcPo4bcM0xNGA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAED32euKLdMqy4eiKZKpij5w7ea8um+cK4Rnj5Slr5FD89E8lvvg5YEMWzB7kJgu5yw==",
                             PhoneNumber = "777",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -301,6 +301,35 @@ namespace DAL.Migrations
                     b.ToTable("OrderProject", (string)null);
                 });
 
+            modelBuilder.Entity("DAL.Entities.OrderProjectStatus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProjectStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("OrderProjectStatus", (string)null);
+                });
+
             modelBuilder.Entity("DAL.Entities.Paragraph", b =>
                 {
                     b.Property<Guid>("Id")
@@ -335,6 +364,40 @@ namespace DAL.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Paragraph", (string)null);
+                });
+
+            modelBuilder.Entity("DAL.Entities.PeriodProgress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Designer")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Development")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberWeek")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("OrderProjectStatusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Security")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderProjectStatusId");
+
+                    b.ToTable("PeriodProgress", (string)null);
                 });
 
             modelBuilder.Entity("DAL.Entities.Picture", b =>
@@ -556,14 +619,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = new Guid("8379b56f-7881-48ae-bf99-a29f53059332"),
-                            ConcurrencyStamp = "9de5c485-aec3-47ed-bb21-ef896cb07402",
+                            ConcurrencyStamp = "0c202716-2503-41e9-a2ea-0f0c80f48d7d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"),
-                            ConcurrencyStamp = "0ddc911d-880a-4915-90f6-b8f556450c17",
+                            ConcurrencyStamp = "e437f1c8-3e38-4941-82e5-c6b991c1cfc3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -695,6 +758,17 @@ namespace DAL.Migrations
                     b.Navigation("Author");
                 });
 
+            modelBuilder.Entity("DAL.Entities.OrderProjectStatus", b =>
+                {
+                    b.HasOne("DAL.Entities.Customer", "Customer")
+                        .WithMany("OrderProjectStatuses")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("DAL.Entities.Paragraph", b =>
                 {
                     b.HasOne("DAL.Entities.Blog", "Blog")
@@ -710,6 +784,17 @@ namespace DAL.Migrations
                     b.Navigation("Blog");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("DAL.Entities.PeriodProgress", b =>
+                {
+                    b.HasOne("DAL.Entities.OrderProjectStatus", "OrderProjectStatus")
+                        .WithMany("PeriodProgresses")
+                        .HasForeignKey("OrderProjectStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderProjectStatus");
                 });
 
             modelBuilder.Entity("DAL.Entities.Picture", b =>
@@ -861,7 +946,14 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.Customer", b =>
                 {
+                    b.Navigation("OrderProjectStatuses");
+
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("DAL.Entities.OrderProjectStatus", b =>
+                {
+                    b.Navigation("PeriodProgresses");
                 });
 
             modelBuilder.Entity("DAL.Entities.Project", b =>

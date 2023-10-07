@@ -4,7 +4,7 @@
     {
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        //public Guid? BlogId { get; set; }
-        //public Guid? ProjectId { get; set; }
+        public Guid? BlogId { get; set; }
+        public Guid? ProjectId { get; set; }
     }
 }

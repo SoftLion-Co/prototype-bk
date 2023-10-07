@@ -10,5 +10,8 @@ namespace DAL.Entities
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         public DateTime? UpdatedDateTime { get; set; }
         public ICollection<Project>? Projects { get; set; }
+        public ICollection<OrderProjectStatus> OrderProjectStatuses { get; set; } = null!;
+
+
     }
 }

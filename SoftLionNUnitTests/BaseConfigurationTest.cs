@@ -1,4 +1,5 @@
-﻿using DAL.Context.Configurations;
+﻿
+using DAL.Context.Configurations.Base;
 using DAL.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -23,8 +23,10 @@ namespace DAL.Context
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<ProjectTechnology> ProjectTechnologies { get; set; }
+        public DbSet<OrderProjectStatus> OrderProjectStatuses { get; set; }
+        public DbSet<PeriodProgress> PeriodProgresses { get; set; }
 
-        //migrations : dotnet ef migrations add AddTableToDataBase --project ../MIG
+        //migrations : dotnet ef migrations add AddTableToDataBase --project ../DAL
         //database : dotnet ef database update
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 

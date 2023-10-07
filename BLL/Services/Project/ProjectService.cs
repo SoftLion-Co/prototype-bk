@@ -27,7 +27,7 @@ namespace BLL.Services.Project
             var entity = await _wrapperRepository.ProjectRepository.FindByIdAsync(id) ?? throw NotFoundException.Default<DAL.Entities.Project>();
             await _wrapperRepository.ProjectRepository.DeleteEntityByIdAsync(entity);
             await _wrapperRepository.Save();
-            
+
             return new ResponseEntity(HttpStatusCode.NoContent);
         }
 
@@ -74,11 +74,11 @@ namespace BLL.Services.Project
             {
                 throw NotFoundException.Default<GetBlogDTO>();
             }
-            else if(country != project.Country)
+            else if (country != project.Country)
             {
                 project.Country = country;
             }
-            
+
             foreach (var paragraph in project.Paragraphs)
             {
                 if (paragraph.ProjectId != project.Id)
@@ -96,7 +96,7 @@ namespace BLL.Services.Project
                     await _wrapperRepository.PictureRepository.UploadEntityAsync(picture);
                 }
             }
-            var projectTechnologies = await _wrapperRepository.ProjectTechnologyRepository.GetProjectTechnologiesByIdAsync(project.Id, 
+            var projectTechnologies = await _wrapperRepository.ProjectTechnologyRepository.GetProjectTechnologiesByIdAsync(project.Id,
                 include:
                 (projectTech) =>
                 projectTech.
@@ -107,18 +107,18 @@ namespace BLL.Services.Project
 
             foreach (var technology in technologies)
             {
-                if(projectTechnologies.Any(pt => pt.Technology.Id == technology.Id)!)
+                if (projectTechnologies.Any(pt => pt.Technology.Id == technology.Id)!)
                 {
                     await _wrapperRepository.ProjectTechnologyRepository.InsertEntityAsync(project, technology);
                 }
-                
-               
+
+
             }
             foreach (var technology in projectTechnologies)
             {
                 if (technologies.Any(pt => pt.Id == technology.TechnologyId)!)
                 {
-                    await _wrapperRepository.ProjectTechnologyRepository.DeleteEntityByIdAsync(project.Id,technology.TechnologyId);
+                    await _wrapperRepository.ProjectTechnologyRepository.DeleteEntityByIdAsync(project.Id, technology.TechnologyId);
                 }
             }
 
@@ -150,7 +150,7 @@ namespace BLL.Services.Project
 
             var projectDto = _mapper.Map<GetProjectDTO>(project);
 
-            *//*var ratings = await _wrapperRepository.RatingRepository.GetAllInformationAsync(predicate: rating => rating.ProjectId == projectDto.Id);*//*
+            var ratings = await _wrapperRepository.RatingRepository.GetAllAsync(predicate: rating => rating.ProjectId == projectDto.Id);
 
             projectDto.TechnologyDTOs = await technologies.ProjectTo<GetTechnologyDTO>(_mapper.ConfigurationProvider).ToListAsync();
 
@@ -160,7 +160,7 @@ namespace BLL.Services.Project
             }
             projectDto.RatingCount = project.Ratings.Count();
             projectDto.Mark = projectDto.Mark / projectDto.RatingCount;
-                
+
             return new ResponseEntity<GetProjectDTO>(HttpStatusCode.OK, null, projectDto);
         }
 
@@ -169,7 +169,7 @@ namespace BLL.Services.Project
             throw new NotImplementedException();
         }
 
-       
+
     }
 }
 */

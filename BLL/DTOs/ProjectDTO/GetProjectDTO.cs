@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs.Base;
 using BLL.DTOs.CountryDTO;
+using BLL.DTOs.CustomerDTO;
 using BLL.DTOs.ParagraphDTO;
 using BLL.DTOs.PictureDTO;
 using BLL.DTOs.TechnologyDTO;
@@ -17,7 +18,6 @@ namespace BLL.DTOs.ProjectDTO
         public string Description { get; set; } = null!;
         public string Period { get; set; } = null!;
         public int DateYear { get; set; }
-        public Guid? CustomerId { get; set; }
         public string RequestDescription { get; set; } = null!;
         public string RequestList { get; set; } = null!;
         public string SolutionDescription { get; set; } = null!;

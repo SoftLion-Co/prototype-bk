@@ -3,6 +3,7 @@ using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+
 namespace DAL.Context.Configurations
 {
     public class CountryConfiguration : BaseConfiguration<Country>

@@ -3,6 +3,7 @@
     public class InsertSVGDTO
     {
         public string Url { get; set; } = null!;
-        //public Guid BlogId { get; set; }
+        public Guid BlogId { get; set; }
+
     }
 }

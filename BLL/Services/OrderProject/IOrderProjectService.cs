@@ -10,6 +10,6 @@ namespace BLL.Services.OrderProject
         Task<ResponseEntity<GetOrderProjectDTO>> InsertOrderProjectAsync(InsertOrderProjectDTO insertOrderProjectDTO);
         Task<ResponseEntity<GetOrderProjectDTO>> UpdateOrderProjectAsync(UpdateOrderProjectDTO updateOrderProjectDTO);
         Task<ResponseEntity> DeleteOrderProjectByIdAsync(Guid id);
-        Task<ResponseEntity<GetOrderProjectDTO>> ChangeTypeOrderAsync(Guid id, int typeNumber);
+        Task<ResponseEntity<GetOrderProjectDTO>> ChangeTypeOrderAsync(Guid id, bool typeNumber);
     }
 }

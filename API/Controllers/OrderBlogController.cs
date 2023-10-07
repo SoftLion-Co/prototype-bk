@@ -31,7 +31,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetOrderBlogDTO</returns>
         [HttpPut("change-type")]
-        public async Task<IActionResult> ChangeTypeOrderAsync([FromQuery]Guid id, int typeNumber)
+        public async Task<IActionResult> ChangeTypeOrderAsync(Guid id, bool typeNumber)
         {
             var response = await _orderBlogService.ChangeTypeOrderAsync(id, typeNumber);
             return Ok(response);

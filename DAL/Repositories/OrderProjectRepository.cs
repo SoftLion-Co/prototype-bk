@@ -14,19 +14,13 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public async Task<OrderProject> ChangeTypeOrderAsync(Guid id, int typeNumber)
+        public async Task<OrderProject> ChangeTypeOrderAsync(OrderProject orderProject, bool typeNumber)
         {
-            var orderProject = await _context.Set<OrderProject>().FirstOrDefaultAsync(x => x.Id == id);
-            if (orderProject == null)
-            {
-                throw new NullReferenceException(nameof(orderProject));
-            }
-
-            if (typeNumber == 1)
+            if (typeNumber == true)
             {
                 orderProject.OrderType = Enums.OrderTypeEnum.Accepted;
             }
-            else if (typeNumber == 2)
+            else if (typeNumber == false)
             {
                 orderProject.OrderType = Enums.OrderTypeEnum.Rejected;
             }

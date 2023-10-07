@@ -11,7 +11,6 @@ namespace API.Validation
             RuleFor(dto => dto.Username).NotEmpty().MaximumLength(100);
             RuleFor(dto => dto.Email).NotEmpty().EmailAddress();
             RuleFor(dto => dto.ShortDescription).NotEmpty().MaximumLength(500);
-            RuleFor(dto => dto.OrderType).NotEmpty().IsInEnum();
         }
     }
 
@@ -24,7 +23,6 @@ namespace API.Validation
             RuleFor(dto => dto.Username).NotEmpty().MaximumLength(100);
             RuleFor(dto => dto.Email).NotEmpty().EmailAddress();
             RuleFor(dto => dto.ShortDescription).NotEmpty().MaximumLength(500);
-            RuleFor(dto => dto.OrderType).NotEmpty().IsInEnum();
         }
     }
 }
