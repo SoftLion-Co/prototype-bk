@@ -8,7 +8,7 @@ namespace API.Validation
     {
         public InsertOrderProjectValidator()
         {
-            RuleFor(dto => dto.NumberPhone).NotEmpty().Matches(@"^\d{10}$");
+            RuleFor(dto => dto.NumberPhone).NotEmpty().Matches(@"^\+\d+$");
             RuleFor(dto => dto.Email).NotEmpty().EmailAddress();
             RuleFor(dto => dto.ShortDescription).NotEmpty().MaximumLength(500);
         }
@@ -20,7 +20,7 @@ namespace API.Validation
         {
             Include(new UpdateBaseValidator());
 
-            RuleFor(dto => dto.NumberPhone).NotEmpty().Matches(@"^\d{10}$");
+            RuleFor(dto => dto.NumberPhone).NotEmpty().Matches(@"^\+\d+$");
             RuleFor(dto => dto.Email).NotEmpty().EmailAddress();
             RuleFor(dto => dto.ShortDescription).NotEmpty().MaximumLength(500);
         }
