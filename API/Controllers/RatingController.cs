@@ -19,7 +19,7 @@ namespace API.Controllers
         /// Return all ratings about blog 
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetRatingDTO</returns>
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         [HttpGet]
         public async Task<IActionResult> GetAllRatingsByProjectIdAsync([FromQuery]Guid id)
         {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using BLL.DTOs.Exceptions;
 using BLL.DTOs.RatingDTO;
 using BLL.DTOs.Response;
 using DAL.WrapperRepository.Interface;
@@ -19,6 +20,11 @@ namespace BLL.Services.Rating
         }
         public async Task<ResponseEntity<GetRatingDTO>> InsertRatingAsync(InsertRatingDTO model)
         {
+            var project = await _wrapperRepository.ProjectRepository.FindByIdAsync(model.ProjectId);
+            if(project == null)
+            {
+                throw NotFoundException.Default<DAL.Entities.Project>();
+            }
             var entity = await _wrapperRepository.RatingRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Rating>(model));
             return new ResponseEntity<GetRatingDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetRatingDTO>(entity));
         }
