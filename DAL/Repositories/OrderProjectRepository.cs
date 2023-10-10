@@ -30,11 +30,5 @@ namespace DAL.Repositories
             return orderProject;
         }
 
-        public async Task<OrderProject> NewTypeOrderAsync(OrderProject orderProject)
-        {
-            orderProject.OrderType = Enums.OrderTypeEnum.New;
-            return orderProject;
-        }
-
     }
 }

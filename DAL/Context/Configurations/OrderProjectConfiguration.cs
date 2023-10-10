@@ -15,7 +15,7 @@ namespace DAL.Context.Configurations
         public override void Configure(EntityTypeBuilder<OrderProject> builder)
         {
             builder.ToTable("OrderProject");
-            builder.Property(x => x.NumberPhone).HasMaxLength(12);
+            builder.Property(x => x.NumberPhone).HasMaxLength(20);
             builder.Property(x => x.Email).HasMaxLength(30);
         }
     }

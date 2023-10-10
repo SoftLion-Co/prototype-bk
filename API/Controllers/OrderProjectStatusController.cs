@@ -6,7 +6,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/order-project-status")]
-    public class OrderProjectStatusController :ControllerBase
+    public class OrderProjectStatusController : ControllerBase
     {
         private readonly IOrderProjectStatusService _orderProjectStatusService;
 
@@ -16,14 +16,25 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Information about a specific orderProjectStatus
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with GetOrderProjectStatusDTO</returns>
+        [HttpGet("customer/{id}")]
+        public async Task<IActionResult> GetOrderProjectStatusByCustomerIdAsync(Guid id)
+        {
+            var response = await _orderProjectStatusService.GetOrderProjectStatusByCustomerIdAsync(id);
+            return Ok(response);
+        }
+
+        /// <summary>
         ///  All informations about orderProjectStatuss 
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetOrderProjectStatusDTO</returns>
         /// InProgress =0, Completed =1,OnHold = 2,Canceled =3
         [HttpGet]
-        public async Task<IActionResult> GetAllOrderProjectStatussAsync()
+        public async Task<IActionResult> GetAllOrderProjectStatusesAsync()
         {
-            var response = await _orderProjectStatusService.GetAllOrderProjectStatussAsync();
+            var response = await _orderProjectStatusService.GetAllOrderProjectStatusesAsync();
             return Ok(response);
         }
         /// <summary>

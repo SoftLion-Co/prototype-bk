@@ -201,14 +201,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "21d3a789-2ba8-40e4-a75a-33e66de551bb",
-                            CreatedDateTime = new DateTime(2023, 10, 7, 8, 1, 4, 84, DateTimeKind.Local).AddTicks(3223),
+                            ConcurrencyStamp = "1458709c-5912-4147-a9b0-cae6a48be31f",
+                            CreatedDateTime = new DateTime(2023, 10, 9, 13, 34, 13, 873, DateTimeKind.Local).AddTicks(6364),
                             Email = "customer@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danyil",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEA6sriFFaq3fkY9El32m4ugXKh628txeKARkh+7ES+gQl7RhS6Yqg3Ikdo5l0h6DGw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGHFajodt3Zna0uKHAzC2lKc+jGcdPp0J/uUfowzRRe250as+VdxE1FAHvgyJaf0/w==",
                             PhoneNumber = "0505874855",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -218,14 +218,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "075f1230-bdd4-4e29-a5c3-048ed71e42d4",
-                            CreatedDateTime = new DateTime(2023, 10, 7, 8, 1, 4, 298, DateTimeKind.Local).AddTicks(3695),
+                            ConcurrencyStamp = "c71430b9-f520-4d73-b933-1f976c79cc2b",
+                            CreatedDateTime = new DateTime(2023, 10, 9, 13, 34, 13, 998, DateTimeKind.Local).AddTicks(7780),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danya",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAED32euKLdMqy4eiKZKpij5w7ea8um+cK4Rnj5Slr5FD89E8lvvg5YEMWzB7kJgu5yw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIjolE9tVHIEbvugp5s5gqQqHWBVVQDGTxRBb8+3Y2uXFyCQDcKJBBpEJ6RocVaMJQ==",
                             PhoneNumber = "777",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -283,8 +283,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("NumberPhone")
                         .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
@@ -313,8 +313,17 @@ namespace DAL.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Designer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Development")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ProjectStatus")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Security")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -619,14 +628,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = new Guid("8379b56f-7881-48ae-bf99-a29f53059332"),
-                            ConcurrencyStamp = "0c202716-2503-41e9-a2ea-0f0c80f48d7d",
+                            ConcurrencyStamp = "691cae7c-3da2-4e87-a639-1c344462bc85",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"),
-                            ConcurrencyStamp = "e437f1c8-3e38-4941-82e5-c6b991c1cfc3",
+                            ConcurrencyStamp = "6bf60bee-33fd-47af-9157-59f1408efa71",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

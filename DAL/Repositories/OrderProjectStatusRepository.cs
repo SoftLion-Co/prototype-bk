@@ -14,6 +14,11 @@ namespace DAL.Repositories
         {
             _context = context;
         }
+        public async Task<IEnumerable<OrderProjectStatus>> FindByCustomerId(Guid customerId)
+        {
+            return await _dbSet.Where(x => x.CustomerId == customerId).ToListAsync();
+        }
+
         public async Task<OrderProjectStatus> ChangeTypeAsync(OrderProjectStatus orderProjectStatus, int typeNumber)
         {
             if (typeNumber == 0)

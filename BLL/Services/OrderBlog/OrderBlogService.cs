@@ -55,11 +55,9 @@ namespace BLL.Services.OrderBlog
         {
             var orderBlog = await _wrapperRepository.OrderBlogRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.OrderBlog>(insertOrderBlogDTO));
 
-            var changeOrderBlog = await _wrapperRepository.OrderBlogRepository.NewTypeOrderAsync(orderBlog);
-
             await _wrapperRepository.Save();
 
-            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderBlogDTO>(changeOrderBlog));
+            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderBlogDTO>(orderBlog));
         }
     }
 }

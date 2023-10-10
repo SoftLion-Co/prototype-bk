@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231004153713_AddTableOrderProjectStatus")]
-    partial class AddTableOrderProjectStatus
+    [Migration("20231009103414_CreateDatabase")]
+    partial class CreateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,14 +204,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "600d9080-a01a-4b3b-bfd5-fc44a04ba2e2",
-                            CreatedDateTime = new DateTime(2023, 10, 4, 18, 37, 12, 82, DateTimeKind.Local).AddTicks(6845),
+                            ConcurrencyStamp = "1458709c-5912-4147-a9b0-cae6a48be31f",
+                            CreatedDateTime = new DateTime(2023, 10, 9, 13, 34, 13, 873, DateTimeKind.Local).AddTicks(6364),
                             Email = "customer@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danyil",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMQe8E4YsLP/UFRT+RqCuJEnWd2s/JGiXzCMyp+EI2VTWUjAxL47vLns+MYP/lJ1Ig==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGHFajodt3Zna0uKHAzC2lKc+jGcdPp0J/uUfowzRRe250as+VdxE1FAHvgyJaf0/w==",
                             PhoneNumber = "0505874855",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -221,14 +221,14 @@ namespace DAL.Migrations
                         {
                             Id = new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2332d6ea-de06-472e-b042-d6c6641e4849",
-                            CreatedDateTime = new DateTime(2023, 10, 4, 18, 37, 12, 348, DateTimeKind.Local).AddTicks(2541),
+                            ConcurrencyStamp = "c71430b9-f520-4d73-b933-1f976c79cc2b",
+                            CreatedDateTime = new DateTime(2023, 10, 9, 13, 34, 13, 998, DateTimeKind.Local).AddTicks(7780),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Danya",
                             LastName = "Terentiev",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEFRK4MnYk2LtHPwLdq/Z9/o74iQQ0JcMDZb7k+qmleq9z9MuQfI5GF95jF3yEL2GKA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIjolE9tVHIEbvugp5s5gqQqHWBVVQDGTxRBb8+3Y2uXFyCQDcKJBBpEJ6RocVaMJQ==",
                             PhoneNumber = "777",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -286,8 +286,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("NumberPhone")
                         .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("OrderType")
                         .HasColumnType("int");
@@ -316,12 +316,21 @@ namespace DAL.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Designer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Development")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProjectStatus")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Security")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDateTime")
                         .HasColumnType("datetime2");
@@ -384,13 +393,10 @@ namespace DAL.Migrations
                     b.Property<int>("Development")
                         .HasColumnType("int");
 
-                    b.Property<int>("Epset")
-                        .HasColumnType("int");
-
                     b.Property<int>("NumberWeek")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ProjectStatusId")
+                    b.Property<Guid>("OrderProjectStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Security")
@@ -401,7 +407,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectStatusId");
+                    b.HasIndex("OrderProjectStatusId");
 
                     b.ToTable("PeriodProgress", (string)null);
                 });
@@ -625,14 +631,14 @@ namespace DAL.Migrations
                         new
                         {
                             Id = new Guid("8379b56f-7881-48ae-bf99-a29f53059332"),
-                            ConcurrencyStamp = "621b4f3e-4738-4bbb-b571-ac833531ff82",
+                            ConcurrencyStamp = "691cae7c-3da2-4e87-a639-1c344462bc85",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"),
-                            ConcurrencyStamp = "132c50c6-c743-4b9d-826e-6c96a8b1dbfe",
+                            ConcurrencyStamp = "6bf60bee-33fd-47af-9157-59f1408efa71",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -794,13 +800,13 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.PeriodProgress", b =>
                 {
-                    b.HasOne("DAL.Entities.OrderProjectStatus", "ProjectStatus")
+                    b.HasOne("DAL.Entities.OrderProjectStatus", "OrderProjectStatus")
                         .WithMany("PeriodProgresses")
-                        .HasForeignKey("ProjectStatusId")
+                        .HasForeignKey("OrderProjectStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ProjectStatus");
+                    b.Navigation("OrderProjectStatus");
                 });
 
             modelBuilder.Entity("DAL.Entities.Picture", b =>

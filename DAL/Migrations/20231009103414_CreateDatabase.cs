@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Database : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -110,7 +110,7 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NumberPhone = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    NumberPhone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderType = table.Column<int>(type: "int", nullable: false),
@@ -243,6 +243,31 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderProjectStatus",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Designer = table.Column<bool>(type: "bit", nullable: false),
+                    Development = table.Column<bool>(type: "bit", nullable: false),
+                    Security = table.Column<bool>(type: "bit", nullable: false),
+                    ProjectStatus = table.Column<int>(type: "int", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderProjectStatus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderProjectStatus_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Blog",
                 columns: table => new
                 {
@@ -298,6 +323,30 @@ namespace DAL.Migrations
                         name: "FK_Project_Country_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Country",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PeriodProgress",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderProjectStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NumberWeek = table.Column<int>(type: "int", nullable: false),
+                    Designer = table.Column<int>(type: "int", nullable: false),
+                    Development = table.Column<int>(type: "int", nullable: false),
+                    Security = table.Column<int>(type: "int", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PeriodProgress", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PeriodProgress_OrderProjectStatus_OrderProjectStatusId",
+                        column: x => x.OrderProjectStatusId,
+                        principalTable: "OrderProjectStatus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -430,8 +479,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"), "0ddc911d-880a-4915-90f6-b8f556450c17", "Customer", "CUSTOMER" },
-                    { new Guid("8379b56f-7881-48ae-bf99-a29f53059332"), "9de5c485-aec3-47ed-bb21-ef896cb07402", "Admin", "ADMIN" }
+                    { new Guid("25d5bfcb-e10c-49a4-b936-6dd443f23e30"), "6bf60bee-33fd-47af-9157-59f1408efa71", "Customer", "CUSTOMER" },
+                    { new Guid("8379b56f-7881-48ae-bf99-a29f53059332"), "691cae7c-3da2-4e87-a639-1c344462bc85", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -439,8 +488,8 @@ namespace DAL.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedDateTime", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedDateTime", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"), 0, "6795b238-bcf9-4043-837a-67976a447150", new DateTime(2023, 9, 22, 11, 59, 33, 155, DateTimeKind.Local).AddTicks(4160), "customer@gmail.com", true, "Danyil", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEGbbtYeuk3jyMM5wh9YxAXGhgG8OSxindzDXPYVex8fGirwfrXv+k5JCEYJ4yv65zg==", "0505874855", false, null, false, null, "DaniTer" },
-                    { new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"), 0, "622324fe-0193-440c-b56e-a4a70f3da7e2", new DateTime(2023, 9, 22, 11, 59, 33, 295, DateTimeKind.Local).AddTicks(3674), "admin@gmail.com", true, "Danya", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEBB1t7rScBp1pTH1kyt4vOVbZgh/7WIYk2V9Enf4JL1vtyPKm5kZphcPo4bcM0xNGA==", "777", false, null, false, null, "Admin" }
+                    { new Guid("1d7f4741-2cb1-4baf-a1f9-65dd95208333"), 0, "1458709c-5912-4147-a9b0-cae6a48be31f", new DateTime(2023, 10, 9, 13, 34, 13, 873, DateTimeKind.Local).AddTicks(6364), "customer@gmail.com", true, "Danyil", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEGHFajodt3Zna0uKHAzC2lKc+jGcdPp0J/uUfowzRRe250as+VdxE1FAHvgyJaf0/w==", "0505874855", false, null, false, null, "DaniTer" },
+                    { new Guid("24143b4c-87a7-401d-830d-26f8eeaaa43a"), 0, "c71430b9-f520-4d73-b933-1f976c79cc2b", new DateTime(2023, 10, 9, 13, 34, 13, 998, DateTimeKind.Local).AddTicks(7780), "admin@gmail.com", true, "Danya", "Terentiev", false, null, null, null, "AQAAAAIAAYagAAAAEIjolE9tVHIEbvugp5s5gqQqHWBVVQDGTxRBb8+3Y2uXFyCQDcKJBBpEJ6RocVaMJQ==", "777", false, null, false, null, "Admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -497,6 +546,11 @@ namespace DAL.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderProjectStatus_CustomerId",
+                table: "OrderProjectStatus",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Paragraph_BlogId",
                 table: "Paragraph",
                 column: "BlogId");
@@ -505,6 +559,11 @@ namespace DAL.Migrations
                 name: "IX_Paragraph_ProjectId",
                 table: "Paragraph",
                 column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PeriodProgress_OrderProjectStatusId",
+                table: "PeriodProgress",
+                column: "OrderProjectStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Picture_BlogId",
@@ -571,6 +630,9 @@ namespace DAL.Migrations
                 name: "Paragraph");
 
             migrationBuilder.DropTable(
+                name: "PeriodProgress");
+
+            migrationBuilder.DropTable(
                 name: "Picture");
 
             migrationBuilder.DropTable(
@@ -584,6 +646,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "OrderProjectStatus");
 
             migrationBuilder.DropTable(
                 name: "Technology");
