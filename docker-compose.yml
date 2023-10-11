@@ -14,7 +14,15 @@ services:
     container_name: sl-backend
     build: .
     ports:
-      - "2891:2891"
+      - "9821:1289"
+      - "8921:1298"
+    environment:
+      ASPNETCORE_URLS: "https://+;http://+"
+      ASPNETCORE_HTTPS_PORT: "9821"
+      ASPNETCORE_ENVIRONMENT: "Development"
+    volumes:
+      - ./UserSecrets/:/root/.microsoft/usersecrets
+      - ./https:/root/.aspnet/https
     depends_on:
       - ms-sql-server
 

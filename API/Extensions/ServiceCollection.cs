@@ -87,7 +87,7 @@ namespace API.Extensions
         }
         public static IServiceCollection AddMetrics(this IServiceCollection services)
         {
-            services.AddOpenTelemetry().WithMetrics(builder => builder.AddConsoleExporter().AddAspNetCoreInstrumentation());
+            services.AddOpenTelemetry().WithMetrics(builder => builder.AddAspNetCoreInstrumentation());
             return services;
         }
         public static IServiceCollection AddValidation(this IServiceCollection services)
