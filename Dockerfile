@@ -22,5 +22,7 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "API.dll"]
 
+ENV ASPNETCORE_URLS = https://+9821/;http://+8921/
+
 EXPOSE 1289
 EXPOSE 1298
