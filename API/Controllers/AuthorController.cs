@@ -16,13 +16,6 @@ namespace API.Controllers
         {
             _authorService = authorService;
         }
-
-        [HttpGet("hi")]
-        public async Task<string> Get()
-        {
-            return await Task.FromResult("HI, welcome to our site");
-        }
-
         /// <summary>
         ///  All informations about authors 
         /// </summary>

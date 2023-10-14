@@ -14,7 +14,7 @@ services:
     container_name: sl-backend
     build: .
     ports:
-      - "2891:2891"
+      - "8921:8921"
     depends_on:
       - ms-sql-server
 

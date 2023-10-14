@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BLL.DTOs.OrderProjectDTO;
 using BLL.DTOs.Exceptions;
 using BLL.DTOs.Response;
 using DAL.WrapperRepository.Interface;
-using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services.OrderProject
 {
@@ -20,12 +18,13 @@ namespace BLL.Services.OrderProject
             _mapper = mapper;
         }
 
-        public async Task<ResponseEntity<GetOrderProjectDTO>> ChangeTypeOrderAsync(Guid id, int typeNumber)
+        public async Task<ResponseEntity<GetOrderProjectDTO>> ChangeTypeOrderAsync(Guid id, bool typeNumber)
         {
-            var orderProject = await _wrapperRepository.OrderProjectRepository.ChangeTypeOrderAsync(id, typeNumber);
+            var orderProject = await _wrapperRepository.OrderProjectRepository.FindByIdAsync(id);
+            var changeOrderProject = await _wrapperRepository.OrderProjectRepository.ChangeTypeOrderAsync(orderProject, typeNumber);
             await _wrapperRepository.Save();
             
-            return new ResponseEntity<GetOrderProjectDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderProjectDTO>(orderProject));
+            return new ResponseEntity<GetOrderProjectDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderProjectDTO>(changeOrderProject));
         }
 
         public async Task<ResponseEntity> DeleteOrderProjectByIdAsync(Guid id)
@@ -56,14 +55,9 @@ namespace BLL.Services.OrderProject
         {
             var orderProject = await _wrapperRepository.OrderProjectRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.OrderProject>(insertOrderProjectDTO));
 
+            await _wrapperRepository.Save();
+
             return new ResponseEntity<GetOrderProjectDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderProjectDTO>(orderProject));
-        }
-
-        public async Task<ResponseEntity<GetOrderProjectDTO>> UpdateOrderProjectAsync(UpdateOrderProjectDTO updateOrderProjectDTO)
-        {
-            var orderProject = await _wrapperRepository.OrderProjectRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.OrderProject>(updateOrderProjectDTO));
-
-            return new ResponseEntity<GetOrderProjectDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderProjectDTO>(orderProject));
         }
     }
 }

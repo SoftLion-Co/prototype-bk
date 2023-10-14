@@ -12,7 +12,6 @@ namespace BLL.AutoMapper
             CreateMap<Blog, GetBlogDTO>().ReverseMap();
             CreateMap<Blog, InsertBlogDTO>().ReverseMap();
             CreateMap<Blog, GetTopBlogDTO>().ReverseMap();
-            CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
         }
     }
 }

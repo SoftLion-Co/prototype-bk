@@ -19,11 +19,12 @@ namespace BLL.Services.OrderBlog
             _mapper = mapper;
         }
 
-        public async Task<ResponseEntity<GetOrderBlogDTO>> ChangeTypeOrderAsync(Guid id, int typeNumber)
+        public async Task<ResponseEntity<GetOrderBlogDTO>> ChangeTypeOrderAsync(Guid id, bool typeNumber)
         {
-            var orderBlog = await _wrapperRepository.OrderBlogRepository.ChangeTypeOrderAsync(id, typeNumber);
+            var orderBlog = await _wrapperRepository.OrderBlogRepository.FindByIdAsync(id);
+            var changeOrderBlog = await _wrapperRepository.OrderBlogRepository.ChangeTypeOrderAsync(orderBlog, typeNumber);
             await _wrapperRepository.Save();
-            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderBlogDTO>(orderBlog)) ;
+            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderBlogDTO>(changeOrderBlog)) ;
 
         }
 
@@ -54,14 +55,9 @@ namespace BLL.Services.OrderBlog
         {
             var orderBlog = await _wrapperRepository.OrderBlogRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.OrderBlog>(insertOrderBlogDTO));
 
+            await _wrapperRepository.Save();
+
             return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderBlogDTO>(orderBlog));
-        }
-
-        public async Task<ResponseEntity<GetOrderBlogDTO>> UpdateOrderBlogAsync(UpdateOrderBlogDTO updateOrderBlogDTO)
-        {
-            var orderBlog = await _wrapperRepository.OrderBlogRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.OrderBlog>(updateOrderBlogDTO));
-
-            return new ResponseEntity<GetOrderBlogDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderBlogDTO>(orderBlog));
         }
     }
 }

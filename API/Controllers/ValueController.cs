@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
@@ -10,7 +9,7 @@ namespace API.Controllers
         [HttpGet("hi")]
         public async Task<string> Get()
         {
-            return await Task.FromResult("HI HI HI");
+            return await Task.FromResult("HI, welcome to our site");
         }
     }
 }

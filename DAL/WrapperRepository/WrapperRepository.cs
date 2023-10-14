@@ -24,11 +24,36 @@ namespace DAL.WrapperRepository
         private IOrderProjectRepository? _orderProjectRepository;
         private IOrderBlogRepository? _orderBlogRepository;
         private ITechnologyRepository? _technologyRepository;
-
+        private IOrderProjectStatusRepository? _orderProjectStatusRepository;
+        private IPeriodProgressRepository? _periodProgressRepository;
 
         public WrapperRepository(DataContext context)
         {
             _context = context;
+        }
+
+        public IPeriodProgressRepository PeriodProgressRepository
+        {
+            get
+            {
+                if (_periodProgressRepository == null)
+                {
+                    _periodProgressRepository = new PeriodProgressRepository(_context);
+                }
+                return _periodProgressRepository;
+            }
+        }
+
+        public IOrderProjectStatusRepository OrderProjectStatusRepository
+        {
+            get
+            {
+                if (_orderProjectStatusRepository == null)
+                {
+                    _orderProjectStatusRepository = new OrderProjectStatusRepository(_context);
+                }
+                return _orderProjectStatusRepository;
+            }
         }
 
         public ICountryRepository CountryRepository
@@ -175,6 +200,8 @@ namespace DAL.WrapperRepository
 
             }
         }
+
+        
 
         public async Task<int> Save() => await _context.SaveChangesAsync();
     }

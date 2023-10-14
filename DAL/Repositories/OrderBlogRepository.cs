@@ -2,7 +2,6 @@
 using DAL.Entities;
 using DAL.GenericRepository;
 using DAL.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -14,19 +13,13 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public async Task<OrderBlog> ChangeTypeOrderAsync(Guid id, int typeNumber)
+        public async Task<OrderBlog> ChangeTypeOrderAsync(OrderBlog orderBlog, bool typeNumber)
         {
-            var orderBlog = await _context.Set<OrderBlog>().FirstOrDefaultAsync(x=>x.Id == id);
-            if (orderBlog == null)
-            {
-                throw new NullReferenceException(nameof(orderBlog));
-            }
-
-            if (typeNumber == 1)
+            if (typeNumber == true)
             {
                 orderBlog.OrderType = Enums.OrderTypeEnum.Accepted;
             }
-            else if(typeNumber == 2)
+            else if(typeNumber == false)
             {
                 orderBlog.OrderType = Enums.OrderTypeEnum.Rejected;
             }

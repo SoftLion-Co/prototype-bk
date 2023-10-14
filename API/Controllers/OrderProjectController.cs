@@ -31,7 +31,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetOrderProjectDTO</returns>
         [HttpPut("change-type")]
-        public async Task<IActionResult> ChangeTypeOrderAsync([FromBody] Guid id, int typeNumber)
+        public async Task<IActionResult> ChangeTypeOrderAsync(Guid id, bool typeNumber)
         {
             var response = await _orderProjectService.ChangeTypeOrderAsync(id, typeNumber);
             return Ok(response);
@@ -54,16 +54,6 @@ namespace API.Controllers
         public async Task<IActionResult> CreateOrderProjectAsync([FromBody] InsertOrderProjectDTO orderProjectDTO)
         {
             var response = await _orderProjectService.InsertOrderProjectAsync(orderProjectDTO);
-            return Ok(response);
-        }
-        /// <summary>
-        /// To update an orderProject by its Guid
-        /// </summary>
-        /// <returns>An ActionResult containing a ResponseEntity with GetOrderProjectDTO</returns>
-        [HttpPut]
-        public async Task<IActionResult> UpdateOrderProjectAsync([FromBody] UpdateOrderProjectDTO orderProjectDTO)
-        {
-            var response = await _orderProjectService.UpdateOrderProjectAsync(orderProjectDTO);
             return Ok(response);
         }
         /// <summary>

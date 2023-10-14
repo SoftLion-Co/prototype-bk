@@ -8,8 +8,7 @@ namespace BLL.Services.OrderProject
         Task<ResponseEntity<IEnumerable<GetOrderProjectDTO>>> GetAllOrderProjectsAsync();
         Task<ResponseEntity<GetOrderProjectDTO>> GetOrderProjectByIdAsync(Guid id);
         Task<ResponseEntity<GetOrderProjectDTO>> InsertOrderProjectAsync(InsertOrderProjectDTO insertOrderProjectDTO);
-        Task<ResponseEntity<GetOrderProjectDTO>> UpdateOrderProjectAsync(UpdateOrderProjectDTO updateOrderProjectDTO);
         Task<ResponseEntity> DeleteOrderProjectByIdAsync(Guid id);
-        Task<ResponseEntity<GetOrderProjectDTO>> ChangeTypeOrderAsync(Guid id, int typeNumber);
+        Task<ResponseEntity<GetOrderProjectDTO>> ChangeTypeOrderAsync(Guid id, bool typeNumber);
     }
 }

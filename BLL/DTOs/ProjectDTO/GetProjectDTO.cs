@@ -1,13 +1,9 @@
 ﻿using BLL.DTOs.Base;
 using BLL.DTOs.CountryDTO;
+using BLL.DTOs.CustomerDTO;
 using BLL.DTOs.ParagraphDTO;
 using BLL.DTOs.PictureDTO;
 using BLL.DTOs.TechnologyDTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.DTOs.ProjectDTO
 {
@@ -17,7 +13,6 @@ namespace BLL.DTOs.ProjectDTO
         public string Description { get; set; } = null!;
         public string Period { get; set; } = null!;
         public int DateYear { get; set; }
-        public Guid? CustomerId { get; set; }
         public string RequestDescription { get; set; } = null!;
         public string RequestList { get; set; } = null!;
         public string SolutionDescription { get; set; } = null!;
@@ -26,10 +21,10 @@ namespace BLL.DTOs.ProjectDTO
         public string ResultThirdParagraph { get; set; } = null!;
         public int RatingCount { get; set; }
         public double Mark { get; set; }
-        public List<GetPictureDTO> PictureDTOs { get; set; } = null!;
-        public List<GetParagraphDTO> ParagraphDTOs { get; set; } = null!;
-        public List<GetTechnologyDTO> TechnologyDTOs { get; set; } = null!;
-        public GetCountryDTO GetCountryDTO { get; set; } = null!;
+        public List<GetPictureDTO> Pictures { get; set; } = null!;
+        public List<GetParagraphDTO> Paragraphs { get; set; } = null!;
+        public List<GetTechnologyDTO> Technologies { get; set; } = null!;
+        public GetCountryDTO Country { get; set; } = null!;
 
 
     }

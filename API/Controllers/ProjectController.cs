@@ -1,11 +1,10 @@
-﻿/*using BLL.DTOs.ProjectDTO;
+﻿using BLL.DTOs.ProjectDTO;
 using BLL.Services.Project;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/project")]
     public class ProjectController : ControllerBase
@@ -80,4 +79,3 @@ namespace API.Controllers
         }
     }
 }
-*/

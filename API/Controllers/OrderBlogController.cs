@@ -31,7 +31,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetOrderBlogDTO</returns>
         [HttpPut("change-type")]
-        public async Task<IActionResult> ChangeTypeOrderAsync([FromQuery]Guid id, int typeNumber)
+        public async Task<IActionResult> ChangeTypeOrderAsync(Guid id, bool typeNumber)
         {
             var response = await _orderBlogService.ChangeTypeOrderAsync(id, typeNumber);
             return Ok(response);
@@ -54,16 +54,6 @@ namespace API.Controllers
         public async Task<IActionResult> CreateOrderBlogAsync([FromBody] InsertOrderBlogDTO orderBlogDTO)
         {
             var response = await _orderBlogService.InsertOrderBlogAsync(orderBlogDTO);
-            return Ok(response);
-        }
-        /// <summary>
-        /// To update an orderBlog by its Guid
-        /// </summary>
-        /// <returns>An ActionResult containing a ResponseEntity with GetOrderBlogDTO</returns>
-        [HttpPut]
-        public async Task<IActionResult> UpdateOrderBlogAsync([FromBody] UpdateOrderBlogDTO orderBlogDTO)
-        {
-            var response = await _orderBlogService.UpdateOrderBlogAsync(orderBlogDTO);
             return Ok(response);
         }
         /// <summary>

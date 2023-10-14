@@ -3,11 +3,6 @@ using BLL.DTOs.CountryDTO;
 using BLL.DTOs.ParagraphDTO;
 using BLL.DTOs.PictureDTO;
 using BLL.DTOs.TechnologyDTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.DTOs.ProjectDTO
 {
@@ -23,9 +18,9 @@ namespace BLL.DTOs.ProjectDTO
         public string ResultFirstParagraph { get; set; } = null!;
         public string ResultSecondParagraph { get; set; } = null!;
         public string ResultThirdParagraph { get; set; } = null!;
-        public List<GetPictureDTO> PictureDTOs { get; set; } = null!;
-        public List<GetParagraphDTO> ParagraphDTOs { get; set; } = null!;
-        public List<GetTechnologyDTO> TechnologyDTOs { get; set; } = null!;
-        public GetCountryDTO GetCountryDTO { get; set; } = null!;
+        public List<UpdatePictureDTO> Pictures { get; set; } = null!;
+        public List<UpdateParagraphDTO> Paragraphs { get; set; } = null!;
+        public List<UpdateTechnologyDTO> Technologies { get; set; } = null!;
+        public UpdateCountryDTO Country { get; set; } = null!;
     }
 }

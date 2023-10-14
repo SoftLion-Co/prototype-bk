@@ -15,10 +15,10 @@ namespace API.Validation
             RuleFor(dto => dto.RequestDescription).NotEmpty().MaximumLength(500);
             RuleFor(dto => dto.RequestList).NotEmpty();
             RuleFor(dto => dto.SolutionDescription).NotEmpty().MaximumLength(500);
-            RuleForEach(dto => dto.PictureDTOs).NotNull();
-            RuleForEach(dto => dto.ParagraphDTOs).NotNull();
-            RuleForEach(dto => dto.TechnologyDTOs).NotNull();
-            RuleFor(dto => dto.GetCountryDTO).NotNull();
+            RuleForEach(dto => dto.Pictures).NotNull();
+            RuleForEach(dto => dto.Paragraphs).NotNull();
+            RuleForEach(dto => dto.Technologies).NotNull();
+            RuleFor(dto => dto.Country).NotNull();
         }
     }
 
@@ -35,10 +35,10 @@ namespace API.Validation
             RuleFor(dto => dto.RequestDescription).NotEmpty().MaximumLength(500);
             RuleFor(dto => dto.RequestList).NotEmpty();
             RuleFor(dto => dto.SolutionDescription).NotEmpty().MaximumLength(500);
-            RuleForEach(dto => dto.PictureDTOs).NotNull();
-            RuleForEach(dto => dto.ParagraphDTOs).NotNull();
-            RuleForEach(dto => dto.TechnologyDTOs).NotNull();
-            RuleFor(dto => dto.GetCountryDTO).NotNull();
+            RuleForEach(dto => dto.Pictures).NotNull();
+            RuleForEach(dto => dto.Paragraphs).NotNull();
+            RuleForEach(dto => dto.Technologies).NotNull();
+            RuleFor(dto => dto.Country).NotNull();
         }
     }
 }
