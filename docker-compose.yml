@@ -14,11 +14,7 @@ services:
     container_name: sl-backend
     build: .
     ports:
-      - "9821:9821"
       - "8921:8921"
-    volumes:
-      - ./UserSecrets/:/root/.microsoft/usersecrets
-      - ./https:/root/.aspnet/https
     depends_on:
       - ms-sql-server
 

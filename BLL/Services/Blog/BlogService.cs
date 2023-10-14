@@ -73,12 +73,14 @@ namespace BLL.Services.Blog
             foreach (var paragraph in blog.Paragraphs)
             {
                 paragraph.BlogId = blog.Id;
+                paragraph.ProjectId = null;
                 await _wrapperRepository.ParagraphRepository.InsertEntityAsync(paragraph);
             }
 
             foreach (var picture in blog.Pictures)
             {
                 picture.BlogId = blog.Id;
+                picture.ProjectId = null;
                 await _wrapperRepository.PictureRepository.InsertEntityAsync(picture);
             }
 

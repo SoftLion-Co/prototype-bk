@@ -1,14 +1,11 @@
 ﻿using DAL.Entities;
 using DAL.GenericRepository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories.Interfaces
 {
     public interface IPictureRepository : IGenericRepository<Picture>
     {
+        Task<IEnumerable<Picture>> FindPicturesByProjectId(Guid projectOrBlogId, bool projectOrBlog);
+        Task<string> DeletePicturesByProjectId(IEnumerable<Picture> pictures);
     }
 }

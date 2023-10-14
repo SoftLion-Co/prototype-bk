@@ -26,6 +26,7 @@ using BLL.Services.AuthService;
 using BLL.Services.Country;
 using BLL.Services.Customer;
 using BLL.Services.OrderBlog;
+using BLL.Services.Project;
 
 namespace API.Extensions
 {
@@ -140,6 +141,7 @@ namespace API.Extensions
             services.AddScoped<IOrderProjectService, OrderProjectService>();
             services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             services.AddScoped<IWrapperRepository, WrapperRepository>();
             services.AddExceptionHandlers(AppDomain.CurrentDomain.GetAssemblies());
