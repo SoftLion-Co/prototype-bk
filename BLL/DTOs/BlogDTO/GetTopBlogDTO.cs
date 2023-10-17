@@ -9,5 +9,6 @@ namespace BLL.DTOs.BlogDTO
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public GetSVGDTO SVG { get; set; } = null!;
+        //добавити автора технології 
     }
 }

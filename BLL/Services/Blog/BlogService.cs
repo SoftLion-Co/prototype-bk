@@ -92,7 +92,7 @@ namespace BLL.Services.Blog
             return new ResponseEntity<GetBlogDTO>(HttpStatusCode.Created,  _mapper.Map<GetBlogDTO>(response));
         }
 
-        public async Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogs()
+        public async Task<ResponseEntity<IEnumerable<GetTopBlogDTO>>> GetTopBlogsAsync()
         {
             var blogs = await _wrapperRepository.BlogRepository
                 .GetAllAsync(
