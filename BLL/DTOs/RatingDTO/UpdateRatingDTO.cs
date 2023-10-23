@@ -6,6 +6,6 @@ namespace BLL.DTOs.RatingDTO
     public class UpdateRatingDTO : UpdateBaseDTO
     {
         public double Mark { get; set; }
-        public Guid ProjectId { get; set; }
+        public Guid BlogId { get; set; }
     }
 }

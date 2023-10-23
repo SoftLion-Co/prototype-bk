@@ -20,17 +20,11 @@ namespace BLL.Services.Rating
         }
         public async Task<ResponseEntity<GetRatingDTO>> InsertRatingAsync(InsertRatingDTO model)
         {
-            var project = await _wrapperRepository.ProjectRepository.FindByIdAsync(model.ProjectId);
-            if(project == null)
+            var blog = await _wrapperRepository.BlogRepository.FindByIdAsync(model.BlogId);
+            if(blog == null)
             {
-                throw NotFoundException.Default<DAL.Entities.Project>();
+                throw NotFoundException.Default<DAL.Entities.Blog>();
             }
-            var entity = await _wrapperRepository.RatingRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Rating>(model));
-            return new ResponseEntity<GetRatingDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetRatingDTO>(entity));
-        }
-
-        public async Task<ResponseEntity<GetRatingDTO>> CreateRatingAsync(InsertRatingDTO model)
-        {
             var entity = await _wrapperRepository.RatingRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Rating>(model));
             return new ResponseEntity<GetRatingDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetRatingDTO>(entity));
         }
@@ -42,9 +36,9 @@ namespace BLL.Services.Rating
             return new ResponseEntity<IEnumerable<GetRatingDTO>>(System.Net.HttpStatusCode.OK, result);
         }
 
-            public async Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsByProjectIdAsync(Guid projectId)
+        public async Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsByBlogIdAsync(Guid blogId)
         {
-            var ratings = await _wrapperRepository.RatingRepository.GetAllAsync(predicate: rating => rating.ProjectId == projectId);
+            var ratings = await _wrapperRepository.RatingRepository.GetAllAsync(predicate: rating => rating.BlogId == blogId);
             var result = _mapper.Map<IEnumerable<GetRatingDTO>>(ratings);
             return new ResponseEntity<IEnumerable<GetRatingDTO>>(System.Net.HttpStatusCode.OK, result);
         }

@@ -19,8 +19,6 @@ namespace BLL.DTOs.ProjectDTO
         public string ResultFirstParagraph { get; set; } = null!;
         public string ResultSecondParagraph { get; set; } = null!;
         public string ResultThirdParagraph { get; set; } = null!;
-        public int RatingCount { get; set; }
-        public double Mark { get; set; }
         public List<GetPictureDTO> Pictures { get; set; } = null!;
         public List<GetParagraphDTO> Paragraphs { get; set; } = null!;
         public List<GetTechnologyDTO> Technologies { get; set; } = null!;

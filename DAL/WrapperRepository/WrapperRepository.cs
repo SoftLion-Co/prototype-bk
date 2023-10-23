@@ -15,7 +15,7 @@ namespace DAL.WrapperRepository
         private ICountryRepository? _countryRepository;
         private ISVGRepository? _svgRepository;
         private IPictureRepository? _pictureRepository;
-        private IProjectTechnologyRepository?_projectTechnologyRepository;
+        private IProjectORBlogTechnologyRepository? _projectORBlogTechnologyRepository;
         private IParagraphRepository? _paragraphRepository;
         private IRatingRepository? _ratingRepository;
         private IAuthorRepository? _authorRepository;
@@ -188,15 +188,15 @@ namespace DAL.WrapperRepository
             }
         }
 
-        public IProjectTechnologyRepository ProjectTechnologyRepository
+        public IProjectORBlogTechnologyRepository ProjectORBlogTechnologyRepository
         {
             get
             {
-                if (_projectTechnologyRepository == null)
+                if (_projectORBlogTechnologyRepository == null)
                 {
-                    _projectTechnologyRepository = new ProjectTechnologyRepository(_context);
+                    _projectORBlogTechnologyRepository = new ProjectORBlogTechnologyRepository(_context);
                 }
-                return _projectTechnologyRepository;
+                return _projectORBlogTechnologyRepository;
 
             }
         }

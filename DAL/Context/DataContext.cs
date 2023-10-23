@@ -22,7 +22,7 @@ namespace DAL.Context
         public DbSet<Country> Countries { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Technology> Technologies { get; set; }
-        public DbSet<ProjectTechnology> ProjectTechnologies { get; set; }
+        public DbSet<ProjectORBlogTechnology> ProjectORBlogTechnologies { get; set; }
         public DbSet<OrderProjectStatus> OrderProjectStatuses { get; set; }
         public DbSet<PeriodProgress> PeriodProgresses { get; set; }
 

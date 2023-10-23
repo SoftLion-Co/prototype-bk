@@ -2,6 +2,7 @@
 using BLL.DTOs.ParagraphDTO;
 using BLL.DTOs.PictureDTO;
 using BLL.DTOs.SVGDTO;
+using BLL.DTOs.TechnologyDTO;
 
 namespace BLL.DTOs.BlogDTO
 {
@@ -10,6 +11,7 @@ namespace BLL.DTOs.BlogDTO
         public UpdateSVGDTO SVG { get; set; } = null!;
         public List<UpdatePictureDTO> Pictures { get; set; } = null!;
         public List<UpdateParagraphDTO> Paragraphs { get; set; } = null!;
+        public List<UpdateTechnologyDTO> Technologies { get; set; } = null!;
         public Guid AuthorId { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;

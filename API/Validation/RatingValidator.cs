@@ -8,7 +8,7 @@ namespace API.Validation
         public InsertRatingValidator()
         {
             RuleFor(dto => dto.Mark).InclusiveBetween(1, 5);
-            RuleFor(dto => dto.ProjectId).NotEmpty();
+            RuleFor(dto => dto.BlogId).NotEmpty();
         }
     }
     public class UpdateRatingValidator : AbstractValidator<UpdateRatingDTO>
@@ -18,7 +18,7 @@ namespace API.Validation
             Include(new UpdateBaseValidator());
 
             RuleFor(dto => dto.Mark).InclusiveBetween(1, 5);
-            RuleFor(dto => dto.ProjectId).NotEmpty();
+            RuleFor(dto => dto.BlogId).NotEmpty();
         }
     }
 }

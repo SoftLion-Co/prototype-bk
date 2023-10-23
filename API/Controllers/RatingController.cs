@@ -21,9 +21,9 @@ namespace API.Controllers
         /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetRatingDTO</returns>
         /*[Authorize(Roles = "Admin")]*/
         [HttpGet]
-        public async Task<IActionResult> GetAllRatingsByProjectIdAsync([FromQuery]Guid id)
+        public async Task<IActionResult> GetAllRatingsByBlogIdAsync([FromQuery]Guid id)
         {
-            var response = await _ratingService.GetAllRatingsByProjectIdAsync(id);
+            var response = await _ratingService.GetAllRatingsByBlogIdAsync(id);
             return Ok(response);
         }
         /// <summary>

@@ -16,12 +16,9 @@ namespace DAL.Entities
         public string ResultFirstParagraph { get; set; } = null!;
         public string ResultSecondParagraph { get; set; } = null!;
         public string ResultThirdParagraph { get; set; } = null!;
-        public Guid? CustomerId { get; set; }
-        public Customer? Customer { get; set; }
         public ICollection<Paragraph> Paragraphs { get; set; } = null!;
-        public ICollection<Rating> Ratings { get; set; } = null!;
         public ICollection<Picture> Pictures { get; set; } = null!;
-        public ICollection<ProjectTechnology> ProjectTechnologies { get; set; } = null!;
+        public ICollection<ProjectORBlogTechnology> ProjectORBlogTechnologies { get; set; } = null!;
 
     }
 }

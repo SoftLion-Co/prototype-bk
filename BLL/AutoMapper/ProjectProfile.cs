@@ -7,7 +7,7 @@ namespace BLL.AutoMapper
     {
         public ProjectProfile()
         {
-            CreateMap< Project, GetProjectDTO>().ForMember(dest => dest.RatingCount, opt=>opt.MapFrom(src=>src.Ratings.Count())).ForMember(dest => dest.Technologies, opt => opt.MapFrom(src => src.ProjectTechnologies.Select(pt => pt.Technology)));
+            CreateMap< Project, GetProjectDTO>().ReverseMap();
             CreateMap<InsertProjectDTO,  Project>().ReverseMap();
             CreateMap<UpdateProjectDTO,  Project>().ReverseMap();
         }

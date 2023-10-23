@@ -18,7 +18,7 @@ namespace DAL.WrapperRepository.Interface
         IOrderProjectRepository OrderProjectRepository { get; }
         ITechnologyRepository TechnologyRepository { get; }
         IOrderProjectStatusRepository OrderProjectStatusRepository { get; }
-        IProjectTechnologyRepository ProjectTechnologyRepository { get;  }
+        IProjectORBlogTechnologyRepository ProjectORBlogTechnologyRepository { get;  }
         IPeriodProgressRepository PeriodProgressRepository { get; }
     }
 }

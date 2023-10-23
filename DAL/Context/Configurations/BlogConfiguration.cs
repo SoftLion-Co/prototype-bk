@@ -17,7 +17,17 @@ namespace DAL.Context.Configurations
                 .HasOne(x => x.Author)
                 .WithMany(x => x.Blogs)
                 .HasForeignKey(x => x.AuthorId)
-                .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
+                .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
+            builder
+               .HasMany(x => x.Ratings)
+               .WithOne(x => x. Blog)
+               .HasForeignKey(x => x.BlogId)
+               .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
+            builder
+               .HasMany(x => x.ProjectORBlogTechnologies)
+               .WithOne(x => x.Blog)
+               .HasForeignKey(x => x.BlogId)
+               .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
 
         }
     }

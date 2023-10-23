@@ -7,6 +7,6 @@ namespace BLL.Services.Rating
     {
         Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsAsync();
         Task<ResponseEntity<GetRatingDTO>> InsertRatingAsync(InsertRatingDTO model);
-        Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsByProjectIdAsync(Guid projectId);
+        Task<ResponseEntity<IEnumerable<GetRatingDTO>>> GetAllRatingsByBlogIdAsync(Guid blogId);
     }
 }

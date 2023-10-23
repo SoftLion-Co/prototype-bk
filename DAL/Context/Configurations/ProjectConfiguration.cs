@@ -20,13 +20,7 @@ namespace DAL.Context.Configurations
                 .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
             builder
-                .HasOne(x => x.Customer)
-                .WithMany(x => x.Projects)
-                .HasForeignKey(x => x.CustomerId)
-                .OnDelete(deleteBehavior:DeleteBehavior.SetNull);
-
-            builder
-               .HasMany(x => x.ProjectTechnologies)
+               .HasMany(x => x.ProjectORBlogTechnologies)
                .WithOne(x => x.Project)
                .HasForeignKey(x => x.ProjectId)
                .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
@@ -36,12 +30,6 @@ namespace DAL.Context.Configurations
                 .WithOne(x => x.Project)
                 .HasForeignKey(x => x.ProjectId)
                 .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
-
-            builder
-               .HasMany(x => x.Ratings)
-               .WithOne(x => x.Project)
-               .HasForeignKey(x => x.ProjectId)
-               .OnDelete(deleteBehavior:DeleteBehavior.Cascade);
 
             builder
                .HasMany(x => x.Pictures)
