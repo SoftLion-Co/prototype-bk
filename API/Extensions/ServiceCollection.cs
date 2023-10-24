@@ -27,6 +27,9 @@ using BLL.Services.Country;
 using BLL.Services.Customer;
 using BLL.Services.OrderBlog;
 using BLL.Services.Project;
+using BLL.Services.OrderProjectStatusStatus;
+using BLL.Services.OrderProjectStatus;
+using BLL.Services.PeriodProgress;
 
 namespace API.Extensions
 {
@@ -139,6 +142,8 @@ namespace API.Extensions
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IOrderBlogService, OrderBlogService>();
             services.AddScoped<IOrderProjectService, OrderProjectService>();
+            services.AddScoped<IOrderProjectStatusService, OrderProjectStatusService>();
+            services.AddScoped<IPeriodProgressService, PeriodProgressService>();
             services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
             services.AddScoped<IProjectService, ProjectService>();
