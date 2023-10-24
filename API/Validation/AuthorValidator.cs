@@ -7,7 +7,7 @@ namespace API.Validation
     {
         public InsertAuthorValidator()
         {
-            RuleFor(author => author.Fullname).NotEmpty().Matches(@"^[A-Za-z\-]+$");
+            RuleFor(author => author.Fullname).NotEmpty().Matches("^[A-Za-z\\- ]+$");
 
             RuleFor(author => author.Employment).NotEmpty();
 
@@ -22,7 +22,8 @@ namespace API.Validation
         {
             Include(new UpdateBaseValidator());
 
-            RuleFor(author => author.Fullname).NotEmpty().Matches(@"^[A-Za-z\-]+$");
+            RuleFor(author => author.Fullname).NotEmpty().Matches("^[A-Za-z\\- ]+$");
+
             RuleFor(author => author.Employment).NotEmpty();
             RuleFor(author => author.Avatar).NotEmpty();
             RuleFor(author => author.Description).NotEmpty();

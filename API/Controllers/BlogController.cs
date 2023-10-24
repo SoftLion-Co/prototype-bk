@@ -42,7 +42,7 @@ namespace API.Controllers
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBlogByIdAsync([FromQuery] Guid id)
+        public async Task<IActionResult> GetBlogByIdAsync(Guid id)
         {
             var response = await _blogService.GetBlogByIdAsync(id);
             return Ok(response);

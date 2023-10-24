@@ -11,6 +11,5 @@ namespace DAL.Entities
         public DateTime? UpdatedDateTime { get; set; }
         public ICollection<OrderProjectStatus> OrderProjectStatuses { get; set; } = null!;
 
-
     }
 }
