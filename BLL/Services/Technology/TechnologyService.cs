@@ -46,12 +46,15 @@ namespace BLL.Services.Technology
         {
             var technology = await _wrapperRepository.TechnologyRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Technology>(insertTechnologyDTO));
 
+            await _wrapperRepository.Save();
+
             return new ResponseEntity<GetTechnologyDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetTechnologyDTO>(technology));
         }
 
         public async Task<ResponseEntity<GetTechnologyDTO>> UpdateTechnologyAsync(UpdateTechnologyDTO updateTechnologyDTO)
         {
             var technology = await _wrapperRepository.TechnologyRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.Technology>(updateTechnologyDTO));
+            await _wrapperRepository.Save();
 
             return new ResponseEntity<GetTechnologyDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetTechnologyDTO>(technology));
         }

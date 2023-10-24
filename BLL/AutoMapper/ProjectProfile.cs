@@ -8,6 +8,7 @@ namespace BLL.AutoMapper
         public ProjectProfile()
         {
             CreateMap< Project, GetProjectDTO>().ReverseMap();
+            CreateMap<Project, GetTopProjectDTO>().ReverseMap();
             CreateMap<InsertProjectDTO,  Project>().ReverseMap();
             CreateMap<UpdateProjectDTO,  Project>().ReverseMap();
         }

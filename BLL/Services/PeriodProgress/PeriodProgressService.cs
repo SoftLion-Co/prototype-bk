@@ -45,12 +45,16 @@ namespace BLL.Services.PeriodProgress
         {
             var periodProgress = await _wrapperRepository.PeriodProgressRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.PeriodProgress>(insertPeriodProgressDTO));
 
+            await _wrapperRepository.Save();
+
             return new ResponseEntity<GetPeriodProgressDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetPeriodProgressDTO>(periodProgress));
         }
 
         public async Task<ResponseEntity<GetPeriodProgressDTO>> UpdatePeriodProgressAsync(UpdatePeriodProgressDTO updatePeriodProgressDTO)
         {
             var periodProgress = await _wrapperRepository.PeriodProgressRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.PeriodProgress>(updatePeriodProgressDTO));
+
+            await _wrapperRepository.Save();
 
             return new ResponseEntity<GetPeriodProgressDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetPeriodProgressDTO>(periodProgress));
         }

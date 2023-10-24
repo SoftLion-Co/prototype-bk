@@ -1,9 +1,3 @@
-using Microsoft.OpenApi.Models;
-using System.Reflection;
-using API.Extensions;
-using DAL.Context;
-using Microsoft.EntityFrameworkCore;
-using Serilog;
 
 namespace API
 {

@@ -44,6 +44,7 @@ namespace BLL.Services.Country
         public async Task<ResponseEntity<GetCountryDTO>> InsertCountryAsync(InsertCountryDTO insertCountryDTO)
         {
             var country = await _wrapperRepository.CountryRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Country>(insertCountryDTO));
+            await _wrapperRepository.Save();
 
             return new ResponseEntity<GetCountryDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetCountryDTO>(country));
         }
@@ -51,6 +52,7 @@ namespace BLL.Services.Country
         public async Task<ResponseEntity<GetCountryDTO>> UpdateCountryAsync(UpdateCountryDTO updateCountryDTO)
         {
             var country = await _wrapperRepository.CountryRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.Country>(updateCountryDTO));
+            await _wrapperRepository.Save();
 
             return new ResponseEntity<GetCountryDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetCountryDTO>(country));
         }

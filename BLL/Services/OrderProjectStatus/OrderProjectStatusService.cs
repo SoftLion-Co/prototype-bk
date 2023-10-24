@@ -81,12 +81,15 @@ namespace BLL.Services.OrderProjectStatusStatus
         {
             var orderProjectStatus = await _wrapperRepository.OrderProjectStatusRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.OrderProjectStatus>(insertOrderProjectStatusDTO));
 
+            await _wrapperRepository.Save();
+
             return new ResponseEntity<GetOrderProjectStatusDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetOrderProjectStatusDTO>(orderProjectStatus));
         }
 
         public async Task<ResponseEntity<GetOrderProjectStatusDTO>> UpdateOrderProjectStatusAsync(UpdateOrderProjectStatusDTO updateOrderProjectStatusDTO)
         {
             var orderProjectStatus = await _wrapperRepository.OrderProjectStatusRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.OrderProjectStatus>(updateOrderProjectStatusDTO));
+            await _wrapperRepository.Save();
 
             return new ResponseEntity<GetOrderProjectStatusDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetOrderProjectStatusDTO>(orderProjectStatus));
         }

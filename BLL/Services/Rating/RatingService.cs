@@ -26,6 +26,8 @@ namespace BLL.Services.Rating
                 throw NotFoundException.Default<DAL.Entities.Blog>();
             }
             var entity = await _wrapperRepository.RatingRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Rating>(model));
+            await _wrapperRepository.Save();
+
             return new ResponseEntity<GetRatingDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetRatingDTO>(entity));
         }
 

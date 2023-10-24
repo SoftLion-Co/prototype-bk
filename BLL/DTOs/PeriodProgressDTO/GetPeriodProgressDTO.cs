@@ -5,7 +5,6 @@ namespace BLL.DTOs.PeriodProgressDTO
 {
     public class GetPeriodProgressDTO : GetBaseDto
     {
-        public GetOrderProjectStatusDTO GetOrderProjectStatusDTO { get; set; } = null!;
         public Guid OrderProjectStatusId { get; set; }
         public int NumberWeek { get; set; } = 0;
         public int Designer { get; set; } = 0;

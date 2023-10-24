@@ -1,10 +1,12 @@
 ﻿using BLL.DTOs.Base;
 using BLL.DTOs.CustomerDTO;
+using BLL.DTOs.PeriodProgressDTO;
 
 namespace BLL.DTOs.OrderProjectStatusDTO
 {
     public class GetOrderProjectStatusDTO : GetBaseDto
     {
+        public ICollection<GetPeriodProgressDTO>? PeriodProgresses { get; set; } 
         public Guid CustomerId { get; set; }
         public string Title { get; set; } = string.Empty;
         public int ProjectStatus { get; set; }
