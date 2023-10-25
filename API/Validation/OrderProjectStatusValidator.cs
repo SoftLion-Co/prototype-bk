@@ -9,7 +9,7 @@ namespace API.Validation
         {
             RuleFor(dto => dto.Title).NotEmpty().MaximumLength(100);
             RuleFor(dto => dto.CustomerId).NotNull();
-            RuleFor(dto=>dto.ProjectStatus).NotNull().GreaterThanOrEqualTo(0);
+            RuleFor(dto=>dto.ProjectStatus).NotNull().GreaterThanOrEqualTo(0).LessThanOrEqualTo(3);
         }
     }
 
@@ -21,7 +21,7 @@ namespace API.Validation
 
             RuleFor(dto => dto.Title).NotEmpty().MaximumLength(100);
             RuleFor(dto => dto.CustomerId).NotNull();
-            RuleFor(dto => dto.ProjectStatus).NotNull().GreaterThanOrEqualTo(0);
+            RuleFor(dto => dto.ProjectStatus).NotNull().GreaterThanOrEqualTo(0).LessThanOrEqualTo(3);
         }
     }
 }

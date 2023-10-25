@@ -1,6 +1,5 @@
 ﻿using BLL.DTOs.Base;
 using BLL.DTOs.CountryDTO;
-using BLL.DTOs.CustomerDTO;
 using BLL.DTOs.ParagraphDTO;
 using BLL.DTOs.PictureDTO;
 using BLL.DTOs.TechnologyDTO;
@@ -23,7 +22,5 @@ namespace BLL.DTOs.ProjectDTO
         public List<GetParagraphDTO> Paragraphs { get; set; } = null!;
         public List<GetTechnologyDTO> Technologies { get; set; } = null!;
         public GetCountryDTO Country { get; set; } = null!;
-
-
     }
 }

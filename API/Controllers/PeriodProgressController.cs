@@ -1,6 +1,5 @@
 ﻿using BLL.DTOs.PeriodProgressDTO;
 using BLL.Services.PeriodProgress;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

@@ -12,6 +12,6 @@ namespace BLL.DTOs.ProjectDTO
         public string Description { get; set; } = null!;
         public List<GetTechnologyDTO> Technologies { get; set; } = null!;
         public GetPictureDTO Picture { get; set; } = null!;
-        public GetCountryDTO GetCountry { get; set; } = null!;
+        public GetCountryDTO Country { get; set; } = null!;
     }
 }

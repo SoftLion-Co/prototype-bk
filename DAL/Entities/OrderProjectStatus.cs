@@ -11,7 +11,7 @@ namespace DAL.Entities
         public bool Designer { get; set; } = true;
         public bool Development { get; set; } =true;
         public bool Security { get; set; } = true;
-        public ProjectStatusEnum ProjectStatus { get; set; }
+        public ProjectStatusEnum ProjectStatus { get; set; } 
         public ICollection<PeriodProgress> PeriodProgresses { get; set; } = null!;
 
     }
