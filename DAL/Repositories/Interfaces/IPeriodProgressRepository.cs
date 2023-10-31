@@ -5,5 +5,6 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IPeriodProgressRepository: IGenericRepository<PeriodProgress>
     {
+        Task<IEnumerable<PeriodProgress>> FindByOPSId(Guid opsId);
     }
 }

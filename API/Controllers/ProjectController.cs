@@ -1,6 +1,5 @@
 ﻿using BLL.DTOs.ProjectDTO;
 using BLL.Services.Project;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -60,8 +59,8 @@ namespace API.Controllers
         /// <summary>
         /// To update already existing project
         /// </summary>
-        /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragraphs, Pictures and SVG</returns>
-        [HttpPut]
+        /// <returns>An ActionResult containing a ResponseEntity with GetAuthorDTO also includes Paragra/*phs, Pictures and SVG</returns>
+       [HttpPut]
         public async Task<IActionResult> UpdateProjectAsync([FromBody] UpdateProjectDTO updateProjectDTO)
         {
             var response = await _projectService.UpdateProjectAsync(updateProjectDTO);

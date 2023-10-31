@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using BLL.DTOs.ProjectDTO;
 using BLL.DTOs.Exceptions;
 using BLL.DTOs.Response;
@@ -7,9 +6,8 @@ using BLL.DTOs.TechnologyDTO;
 using DAL.WrapperRepository.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
-using BLL.DTOs.BlogDTO;
-using DAL.Entities;
 using BLL.DTOs.CountryDTO;
+using DAL.Entities;
 
 namespace BLL.Services.Project
 {
@@ -69,11 +67,6 @@ namespace BLL.Services.Project
                 projectDto.Technologies = _mapper.Map<IEnumerable<DAL.Entities.Technology>,List<GetTechnologyDTO>>(technologies);
                 
             }
-            var paragraphs = await _wrapperRepository.ParagraphRepository.GetAllAsync();
-            foreach (var paragraph in paragraphs)
-            {
-                Console.WriteLine(paragraph); 
-            }
 
             return new ResponseEntity<IEnumerable<GetProjectDTO>>(HttpStatusCode.OK,projectsDTO);
         }
@@ -95,12 +88,6 @@ namespace BLL.Services.Project
                 var technologies = await _wrapperRepository.ProjectORBlogTechnologyRepository.GetAllTechnologiesByIdAsync(_mapper.Map<DAL.Entities.Project>(projectDto), null);
                 if (technologies == null || technologies.Count() == 0) { throw NotFoundException.Default<DAL.Entities.Technology>(); }
                 projectDto.Technologies = _mapper.Map<IEnumerable<DAL.Entities.Technology>, List<GetTechnologyDTO>>(technologies);
-
-            }
-            var paragraphs = await _wrapperRepository.ParagraphRepository.GetAllAsync();
-            foreach (var paragraph in paragraphs)
-            {
-                Console.WriteLine(paragraph);
             }
 
             return new ResponseEntity<IEnumerable<GetTopProjectDTO>>(HttpStatusCode.OK, projectsDTO);
@@ -108,14 +95,16 @@ namespace BLL.Services.Project
         public async Task<ResponseEntity<GetProjectDTO>> InsertProjectAsync(InsertProjectDTO projectDTO)
         {
             var project = _mapper.Map<InsertProjectDTO, DAL.Entities.Project>(projectDTO);
-            var country = await _wrapperRepository.CountryRepository.FindByIdAsync(project.Country.Id);
+            
+            var countries = await _wrapperRepository.CountryRepository.GetAllExistingAsync();
+            var country = countries.FirstOrDefault(x => x.Code == projectDTO.Country.Code);
 
             if (country is null)
             {
                 country = await _wrapperRepository.CountryRepository.InsertEntityAsync(_mapper.Map<InsertCountryDTO,DAL.Entities.Country>(projectDTO.Country));
             }
             project.Country = country;
-            project.CountryId = country.Id;
+
 
             foreach (var paragraph in project.Paragraphs)
             {
@@ -131,16 +120,23 @@ namespace BLL.Services.Project
                 await _wrapperRepository.PictureRepository.InsertEntityAsync(picture);
             }
 
+            var technologies = await _wrapperRepository.TechnologyRepository.GetAllExistingAsync();
+
             foreach (var technologyDTO in _mapper.ProjectTo<DAL.Entities.Technology>(projectDTO.Technologies.AsQueryable()))
             {
-                var technology = await _wrapperRepository.TechnologyRepository.FindByIdAsync(technologyDTO.Id);
+                var technology = technologies.FirstOrDefault(x => x.Name == technologyDTO.Name);
+                
                 if(technology is null)
                 {
                     technology = await _wrapperRepository.TechnologyRepository.InsertEntityAsync(technologyDTO);
+                    await _wrapperRepository.Save();
                 }
+
                 await _wrapperRepository.ProjectORBlogTechnologyRepository.InsertEntityAsync(project, technology);
             }
+
             var response = await _wrapperRepository.ProjectRepository.InsertEntityAsync(project);
+            
             await _wrapperRepository.Save();
 
             return new ResponseEntity<GetProjectDTO>(HttpStatusCode.Created, _mapper.Map<GetProjectDTO>(response));
@@ -149,11 +145,13 @@ namespace BLL.Services.Project
         public async Task<ResponseEntity<GetProjectDTO>> UpdateProjectAsync(UpdateProjectDTO updateProjectDTO)
         {
             var project = _mapper.Map<UpdateProjectDTO, DAL.Entities.Project>(updateProjectDTO);
-            var country = await _wrapperRepository.CountryRepository.FindByIdAsync(project.Country.Id);
+            var countries = await _wrapperRepository.CountryRepository.GetAllExistingAsync();
+            var country = countries.FirstOrDefault(x => x.Code == project.Country.Code);
 
             if (country is null)
             {
-                country = await _wrapperRepository.CountryRepository.UploadEntityAsync(_mapper.Map<UpdateCountryDTO, DAL.Entities.Country>(updateProjectDTO.Country));
+                project.Country.Id = Guid.NewGuid();
+                country = await _wrapperRepository.CountryRepository.InsertEntityAsync(project.Country);
             }
             project.Country = country;
             project.CountryId = country.Id;
@@ -171,20 +169,28 @@ namespace BLL.Services.Project
                 picture.BlogId = null;
                 await _wrapperRepository.PictureRepository.UploadEntityAsync(picture);
             }
+
             var technologies = await _wrapperRepository.ProjectORBlogTechnologyRepository.GetAllTechnologiesByIdAsync(project, null);
+            var findtechnology = await _wrapperRepository.TechnologyRepository.GetAllExistingAsync();
 
             foreach (var technologyDTO in _mapper.ProjectTo<DAL.Entities.Technology>(updateProjectDTO.Technologies.AsQueryable()))
             {
                 var existingTechnology = technologies.FirstOrDefault(t => t.Name == technologyDTO.Name);
-                var findtechnology = _wrapperRepository.TechnologyRepository.GetAllAsync();
-                var existinOfAllTechnology = technologies.FirstOrDefault(t => t.Name == technologyDTO.Name);
+                var existinOfAllTechnology = findtechnology.FirstOrDefault(t => t.Name == technologyDTO.Name);
                 if (existinOfAllTechnology is null)
                 {
-                    await _wrapperRepository.TechnologyRepository.InsertEntityAsync(technologyDTO);
+                    var tech = await _wrapperRepository.TechnologyRepository.InsertEntityAsync(technologyDTO);
+                    await _wrapperRepository.ProjectORBlogTechnologyRepository.InsertEntityAsync(project, tech);
                 }
-                if (existingTechnology is null)
+                else if (existingTechnology is null)
                 {
+                    technologyDTO.Id = existinOfAllTechnology.Id;
                     await _wrapperRepository.ProjectORBlogTechnologyRepository.InsertEntityAsync(project, technologyDTO);
+                }
+                else
+                {
+                    technologyDTO.Id = existingTechnology.Id;
+                    await _wrapperRepository.TechnologyRepository.UploadEntityAsync(technologyDTO);
                 }
 
             }
@@ -195,7 +201,8 @@ namespace BLL.Services.Project
                     await _wrapperRepository.ProjectORBlogTechnologyRepository.DeleteEntityByIdAsync(project, null, technology.Id);
                 }
             }
-
+            var projectORBlogTechnologies = await _wrapperRepository.ProjectORBlogTechnologyRepository.GetProjectTechnologiesByProjectIdAsync(project.Id);
+            project.ProjectORBlogTechnologies = projectORBlogTechnologies.ToList();
                 var response = await _wrapperRepository.ProjectRepository.UploadEntityAsync(project);
             await _wrapperRepository.Save();
 

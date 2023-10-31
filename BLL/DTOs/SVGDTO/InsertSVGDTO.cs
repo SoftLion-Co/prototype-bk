@@ -1,8 +1,10 @@
-﻿namespace BLL.DTOs.SVG
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BLL.DTOs.SVG
 {
     public class InsertSVGDTO
     {
-        public string Url { get; set; } = null!;
+        public IFormFile Url { get; set; } = null!;
         public Guid BlogId { get; set; }
 
     }

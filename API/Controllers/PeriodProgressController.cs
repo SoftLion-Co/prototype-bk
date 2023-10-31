@@ -36,6 +36,16 @@ namespace API.Controllers
             return Ok(response);
         }
         /// <summary>
+        /// Information about a periodProgresses  by OPS id
+        /// </summary>
+        /// <returns>An ActionResult containing a ResponseEntity with GetPeriodProgressDTO</returns>
+        [HttpGet("order-project-status/{id}")]
+        public async Task<IActionResult> GetPeriodProgressByOPSIdAsync(Guid id)
+        {
+            var response = await _periodProgressService.GetGetPeriodProgressByOPSIdAsync(id);
+            return Ok(response);
+        }
+        /// <summary>
         /// To create an periodProgress
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetPeriodProgressDTO</returns>

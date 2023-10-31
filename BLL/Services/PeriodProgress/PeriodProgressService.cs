@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using BLL.DTOs.Exceptions;
+using BLL.DTOs.OrderProjectStatusDTO;
 using BLL.DTOs.PeriodProgressDTO;
 using BLL.DTOs.Response;
 using DAL.WrapperRepository.Interface;
+using Microsoft.AspNetCore.Identity;
 
 namespace BLL.Services.PeriodProgress
 {
@@ -48,6 +50,26 @@ namespace BLL.Services.PeriodProgress
             await _wrapperRepository.Save();
 
             return new ResponseEntity<GetPeriodProgressDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetPeriodProgressDTO>(periodProgress));
+        }
+        public async Task<ResponseEntity<IEnumerable<GetPeriodProgressDTO>>> GetGetPeriodProgressByOPSIdAsync(Guid opsId)
+        {
+            var ops = await _wrapperRepository.OrderProjectStatusRepository.FindByIdAsync(opsId);
+
+            if (ops == null)
+            {
+                throw NotFoundException.Default<DAL.Entities.OrderProjectStatus>();
+            }
+
+            var periodProgresses = await _wrapperRepository.PeriodProgressRepository.FindByOPSId(opsId);
+
+            if (periodProgresses == null)
+            {
+                throw NotFoundException.Default<DAL.Entities.OrderProjectStatus>();
+            }
+
+            var result = _mapper.Map<IEnumerable<GetPeriodProgressDTO>>(periodProgresses);
+
+            return new ResponseEntity<IEnumerable<GetPeriodProgressDTO>>(System.Net.HttpStatusCode.OK, result);
         }
 
         public async Task<ResponseEntity<GetPeriodProgressDTO>> UpdatePeriodProgressAsync(UpdatePeriodProgressDTO updatePeriodProgressDTO)

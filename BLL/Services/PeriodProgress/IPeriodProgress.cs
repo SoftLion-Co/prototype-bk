@@ -11,6 +11,7 @@ namespace BLL.Services.PeriodProgress
         Task<ResponseEntity<GetPeriodProgressDTO>> InsertPeriodProgressAsync(InsertPeriodProgressDTO insertPeriodProgressDTO);
         Task<ResponseEntity<GetPeriodProgressDTO>> UpdatePeriodProgressAsync(UpdatePeriodProgressDTO updatePeriodProgressDTO);
         Task<ResponseEntity> DeletePeriodProgressByIdAsync(Guid id);
-        
+        Task<ResponseEntity<IEnumerable<GetPeriodProgressDTO>>> GetGetPeriodProgressByOPSIdAsync(Guid opsId);
+
     }
 }

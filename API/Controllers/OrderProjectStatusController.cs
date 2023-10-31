@@ -38,16 +38,6 @@ namespace API.Controllers
             return Ok(response);
         }
         /// <summary>
-        ///  To update type of orderProjectStatus by id
-        /// </summary>
-        /// <returns>An ActionResult containing a ResponseEntity with an IEnumerable of GetOrderProjectStatusDTO</returns>
-        [HttpPut("change-type")]
-        public async Task<IActionResult> ChangeTypeAsync(Guid id, int typeNumber)
-        {
-            var response = await _orderProjectStatusService.ChangeTypeAsync(id, typeNumber);
-            return Ok(response);
-        }
-        /// <summary>
         /// Information about a specific orderProjectStatus
         /// </summary>
         /// <returns>An ActionResult containing a ResponseEntity with GetOrderProjectStatusDTO</returns>

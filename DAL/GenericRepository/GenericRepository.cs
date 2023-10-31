@@ -47,7 +47,7 @@ namespace DAL.GenericRepository
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
         Expression<Func<TEntity, TEntity>>? selector = default)
         {
-            var query = _dbSet.AsNoTracking();
+            var query = _dbSet.AsQueryable();
 
             if (include is not null)
             {
@@ -66,6 +66,44 @@ namespace DAL.GenericRepository
 
             return query.AsNoTracking();
         }
+        public async Task<IEnumerable<TEntity>> GetAllExistingAsync(
+          Expression<Func<TEntity, TEntity>>? selector = default,
+          Expression<Func<TEntity, bool>>? predicate = default,
+          Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
+        {
+            var entities = await Task.Run(() => GetQueryable2(predicate, include, selector));
+
+            if (entities == null)
+            {
+                throw new NullReferenceException("not found");
+            }
+
+            return await entities.ToListAsync();
+        }
+        private IQueryable<TEntity> GetQueryable2(
+        Expression<Func<TEntity, bool>>? predicate = default,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Expression<Func<TEntity, TEntity>>? selector = default)
+        {
+            var query = _dbSet.AsQueryable();
+
+            if (include is not null)
+            {
+                query = include(query);
+            }
+
+            if (predicate is not null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (selector is not null)
+            {
+                query = query.Select(selector);
+            }
+
+            return query;
+        }
 
         public async Task<TEntity> GetEntityByIdAsync(
             Guid id,
@@ -73,7 +111,6 @@ namespace DAL.GenericRepository
             Expression<Func<TEntity, bool>>? predicate = default,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
         {
-
             return await GetQueryable(predicate, include, selector).FirstOrDefaultAsync(x => x.Id == id);
         }
     
@@ -85,7 +122,6 @@ namespace DAL.GenericRepository
 
         public async Task<TEntity> UploadEntityAsync(TEntity entity)
         {
-
             var result = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == entity.Id);
 
             if(result == null)
@@ -93,7 +129,10 @@ namespace DAL.GenericRepository
                 throw new NullReferenceException($"{entity.Id} not found");
             }
 
+            entity.UpdatedDateTime = DateTime.Now;
+            entity.CreatedDateTime = result.CreatedDateTime;
             _dbSet.Entry(result).CurrentValues.SetValues(entity);
+            _dbSet.Entry(entity).State = EntityState.Modified;
 
             return entity;
         }

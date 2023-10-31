@@ -10,5 +10,8 @@ namespace DAL.Repositories
         public CountryRepository(DataContext context) : base(context)
         {
         }
+
+
+
     }
 }

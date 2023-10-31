@@ -22,6 +22,7 @@ namespace BLL.Services.Country
         {
             var entity = await _wrapperRepository.CountryRepository.FindByIdAsync(id) ?? throw NotFoundException.Default<DAL.Entities.Country>();
             await _wrapperRepository.CountryRepository.DeleteEntityByIdAsync(entity);
+            await _wrapperRepository.Save();
 
             return new ResponseEntity(System.Net.HttpStatusCode.NoContent);
         }

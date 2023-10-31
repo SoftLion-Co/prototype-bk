@@ -20,6 +20,5 @@ namespace BLL.DTOs.BlogDTO
         public GetAuthorDTO Author { get; set; } = null!;
         public double? ReadingTime { get; set; }
         public List<GetRatingDTO> Ratings { get; set; } = null!;
-
     }
 }

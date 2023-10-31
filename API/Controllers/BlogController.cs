@@ -11,10 +11,11 @@ namespace API.Controllers
     public class BlogController : ControllerBase
     {
         private readonly IBlogService _blogService;
-
-        public BlogController(IBlogService blogService)
+        IWebHostEnvironment _appEnvironment;
+        public BlogController(IBlogService blogService, IWebHostEnvironment appEnvironment)
         {
             _blogService = blogService;
+            _appEnvironment = appEnvironment;
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBlogAsync([FromBody] InsertBlogDTO insertBlogDTO)
         {
-            var response = await _blogService.InsertBlogAsync(insertBlogDTO);
+            var response = await _blogService.InsertBlogAsync(insertBlogDTO, _appEnvironment);
             return Ok(response);
         }
 
@@ -66,7 +67,7 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateBlogAsync([FromBody] UpdateBlogDTO updateBlogDTO)
         {
-            var response = await _blogService.UpdateBlogAsync(updateBlogDTO);
+            var response = await _blogService.UpdateBlogAsync(updateBlogDTO, _appEnvironment);
             return Ok(response);
         }
 
