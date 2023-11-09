@@ -24,7 +24,7 @@ namespace DAL.Context
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<ProjectORBlogTechnology> ProjectORBlogTechnologies { get; set; }
         public DbSet<OrderProjectStatus> OrderProjectStatuses { get; set; }
-        public DbSet<PeriodProgress> PeriodProgresses { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         //migrations : dotnet ef migrations add AddTableToDataBase --project ../DAL
         //database : dotnet ef database update

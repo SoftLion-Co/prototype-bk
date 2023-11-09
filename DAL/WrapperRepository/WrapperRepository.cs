@@ -1,5 +1,4 @@
 ﻿using DAL.Context;
-using DAL.GenericRepository;
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
 using DAL.WrapperRepository.Interface;
@@ -26,10 +25,23 @@ namespace DAL.WrapperRepository
         private ITechnologyRepository? _technologyRepository;
         private IOrderProjectStatusRepository? _orderProjectStatusRepository;
         private IPeriodProgressRepository? _periodProgressRepository;
+        private IServiceRepository? _serviceRepository;
 
         public WrapperRepository(DataContext context)
         {
             _context = context;
+        }
+
+        public IServiceRepository ServiceRepository
+        {
+            get
+            {
+                if (_periodProgressRepository == null)
+                {
+                    _serviceRepository = new ServiceRepository(_context);
+                }
+                return _serviceRepository;
+            }
         }
 
         public IPeriodProgressRepository PeriodProgressRepository

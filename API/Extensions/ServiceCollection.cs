@@ -30,6 +30,7 @@ using BLL.Services.Project;
 using BLL.Services.OrderProjectStatusStatus;
 using BLL.Services.OrderProjectStatus;
 using BLL.Services.PeriodProgress;
+using BLL.Services.Service;
 
 namespace API.Extensions
 {
@@ -119,7 +120,7 @@ namespace API.Extensions
                 .AddUserManager<UserManager<IdentityUser<Guid>>>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.AddIdentityCore<Customer>(x =>
             {
                 x.User.RequireUniqueEmail = true;
@@ -147,6 +148,7 @@ namespace API.Extensions
             services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<ITechnologyService, TechnologyService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IServiceService, ServiceService>();
 
             services.AddScoped<IWrapperRepository, WrapperRepository>();
             services.AddExceptionHandlers(AppDomain.CurrentDomain.GetAssemblies());

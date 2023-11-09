@@ -17,6 +17,11 @@ namespace DAL.Context.Configurations
                 .HasForeignKey(p => p.OrderProjectStatusId)
                 .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
 
+            builder
+                .HasOne(x => x.Service)
+                .WithMany(x => x.PeriodProgresses)
+                .HasForeignKey(p => p.ServiceId)
+                .OnDelete(deleteBehavior: DeleteBehavior.Cascade);
         }
     }
 }

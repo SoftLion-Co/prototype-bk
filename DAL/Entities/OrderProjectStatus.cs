@@ -1,4 +1,5 @@
-﻿using DAL.Entities.Base;
+﻿using DAL.Entities;
+using DAL.Entities.Base;
 using DAL.Enums;
 
 namespace DAL.Entities
@@ -7,12 +8,9 @@ namespace DAL.Entities
     {
         public Customer Customer { get; set; } = null!;
         public Guid CustomerId { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public bool Design { get; set; } = true;
-        public bool Development { get; set; } =true;
-        public bool Security { get; set; } = true;
+        public string Title { get; set; } = null!;
         public ProjectStatusEnum ProjectStatus { get; set; } 
         public ICollection<PeriodProgress> PeriodProgresses { get; set; } = null!;
-
     }
 }
+

@@ -45,11 +45,24 @@ namespace BLL.Services.PeriodProgress
 
         public async Task<ResponseEntity<GetPeriodProgressDTO>> InsertPeriodProgressAsync(InsertPeriodProgressDTO insertPeriodProgressDTO)
         {
-            var periodProgress = await _wrapperRepository.PeriodProgressRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.PeriodProgress>(insertPeriodProgressDTO));
+            var periodProgress = _mapper.Map<DAL.Entities.PeriodProgress>(insertPeriodProgressDTO);
+            
+            var services = await _wrapperRepository.ServiceRepository.GetAllExistingAsync();
+            var service = services.FirstOrDefault(x=>x.Title ==insertPeriodProgressDTO.Service.Title);
+            if (service == null)
+            {
+                await _wrapperRepository.ServiceRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Service>(insertPeriodProgressDTO.Service));
+            }
+            else
+            {
+                periodProgress.Service = service;
+            }
 
+            var result = await _wrapperRepository.PeriodProgressRepository.InsertEntityAsync(periodProgress);
+            
             await _wrapperRepository.Save();
 
-            return new ResponseEntity<GetPeriodProgressDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetPeriodProgressDTO>(periodProgress));
+            return new ResponseEntity<GetPeriodProgressDTO>(System.Net.HttpStatusCode.Created, _mapper.Map<GetPeriodProgressDTO>(result));
         }
         public async Task<ResponseEntity<IEnumerable<GetPeriodProgressDTO>>> GetGetPeriodProgressByOPSIdAsync(Guid opsId)
         {
@@ -74,11 +87,24 @@ namespace BLL.Services.PeriodProgress
 
         public async Task<ResponseEntity<GetPeriodProgressDTO>> UpdatePeriodProgressAsync(UpdatePeriodProgressDTO updatePeriodProgressDTO)
         {
-            var periodProgress = await _wrapperRepository.PeriodProgressRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.PeriodProgress>(updatePeriodProgressDTO));
+            var periodProgress = _mapper.Map<DAL.Entities.PeriodProgress>(updatePeriodProgressDTO);
+
+            var service = await _wrapperRepository.ServiceRepository.GetEntityByIdAsync(updatePeriodProgressDTO.Service.Id);
+            if (service == null)
+            {
+                await _wrapperRepository.ServiceRepository.InsertEntityAsync(_mapper.Map<DAL.Entities.Service>(updatePeriodProgressDTO.Service));
+            }
+            else
+            {
+                await _wrapperRepository.ServiceRepository.UploadEntityAsync(_mapper.Map<DAL.Entities.Service>(updatePeriodProgressDTO.Service));
+                periodProgress.Service = service;
+            }
+
+            var result = await _wrapperRepository.PeriodProgressRepository.UploadEntityAsync(periodProgress);
 
             await _wrapperRepository.Save();
 
-            return new ResponseEntity<GetPeriodProgressDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetPeriodProgressDTO>(periodProgress));
+            return new ResponseEntity<GetPeriodProgressDTO>(System.Net.HttpStatusCode.OK, _mapper.Map<GetPeriodProgressDTO>(result));
         }
     }
 }
