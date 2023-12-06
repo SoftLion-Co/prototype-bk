@@ -1,4 +1,5 @@
-﻿using BLL.DTOs.CustomerDTO;
+﻿using Azure;
+using BLL.DTOs.CustomerDTO;
 using BLL.DTOs.Response;
 using BLL.Services.Customer;
 using Microsoft.AspNetCore.Mvc;
@@ -19,35 +20,39 @@ public class CustomerController : ControllerBase
     /// </summary>
     /// <returns>The ResponseEntity with GetCustomerDto</returns>
     [HttpGet]
-    public async Task<ResponseEntity> GetAllBlogsAsync()
+    public async Task<IActionResult> GetAllCustomersAsync()
     {
-        return await _customerService.GetAllCustomersAsync();
+        var response = await _customerService.GetAllCustomersAsync();
+        return Ok(response);
     }
     /// <summary>
     /// Information about a specific customer
     /// </summary>
     /// <returns>The ResponseEntity with GetCustomerDto</returns>
     [HttpGet("{id}")]
-    public async Task<ResponseEntity> GetBlogByIdAsync(Guid id)
+    public async Task<IActionResult> GetCustomerByIdAsync(Guid id)
     {
-        return await _customerService.GetCustomerByIdAsync(id);
+        var response = await _customerService.GetCustomerByIdAsync(id);
+        return Ok(response);
     }
     /// <summary>
     /// Deletes Customer by id
     /// </summary>
     /// <returns>The ResponseEntity with status code of the operation</returns>
     [HttpDelete("{id}")]
-    public async Task<ResponseEntity> DeleteCustomerByIdAsync(Guid id)
+    public async Task<IActionResult> DeleteCustomerByIdAsync(Guid id)
     {
-        return await _customerService.DeleteCustomerByIdAsync(id);
+        var response = await _customerService.DeleteCustomerByIdAsync(id);
+        return Ok(response);
     } 
     /// <summary>
     /// Deletes Customer by id
     /// </summary>
     /// <returns>The ResponseEntity with status code of the operation</returns>
     [HttpPut]
-    public async Task<ResponseEntity> UpdateCustomerAsync(UpdateCustomerDto model)
+    public async Task<IActionResult> UpdateCustomerAsync(UpdateCustomerDto model)
     {
-        return await _customerService.UpdateCustomerAsync(model);
+        var response = await _customerService.UpdateCustomerAsync(model);
+        return Ok(response);
     } 
 }

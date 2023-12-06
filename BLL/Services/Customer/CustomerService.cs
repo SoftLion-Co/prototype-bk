@@ -28,7 +28,7 @@ public class CustomerService : ICustomerService
 
     public async Task<ResponseEntity<GetCustomerDto>> GetCustomerByIdAsync(Guid id)
     {
-        var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
+        var user = await _userManager.Users.Include(x=>x.OrderProjectStatuses).ThenInclude(x=>x.PeriodProgresses).ThenInclude(x=>x.Service).FirstOrDefaultAsync(x => x.Id == id);
         if (user is null)
         {
             throw new NotFoundException("The user with such Id doesn't exist");
@@ -44,7 +44,12 @@ public class CustomerService : ICustomerService
             throw new NotFoundException("Customer with such id doesn't exist");
         }
         _mapper.Map(customerDto, customer);
+        if (string.IsNullOrEmpty(customer.SecurityStamp))
+        {
+            await _userManager.UpdateSecurityStampAsync(customer);
+        }
         await _userManager.UpdateAsync(customer);
+        
         var responseDto = _mapper.Map<GetCustomerDto>(customer);
         return new ResponseEntity<GetCustomerDto>(HttpStatusCode.OK, responseDto);
     }
